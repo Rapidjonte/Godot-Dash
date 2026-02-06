@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://bgiqlv2kr3ftq"]
+
+[ext_resource type="Script" uid="uid://ljvsqy3rhxo7" path="res://scriptsd/follow_cam_x.gd" id="1_4dvvg"]
+[ext_resource type="Script" uid="uid://bomypfkgcxy1n" path="res://scriptsd/sprite.gd" id="1_6e84v"]
+[ext_resource type="PackedScene" uid="uid://dv4dte71fxixw" path="res://prefabs/spike.tscn" id="3_4vge2"]
+[ext_resource type="PackedScene" uid="uid://cqirje3werngo" path="res://prefabs/block.tscn" id="4_4vge2"]
+
+[sub_resource type="Gradient" id="Gradient_wtcfe"]
+colors = PackedColorArray(0, 0, 0, 1, 8.57329e-08, 0.05978711, 0.10149621, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0e48y"]
+gradient = SubResource("Gradient_wtcfe")
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6e84v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6e84v"]
+size = Vector2(64, 64)
+
+[sub_resource type="Gradient" id="Gradient_y32ns"]
+colors = PackedColorArray(0.5157923, 0.6725292, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wtcfe"]
+gradient = SubResource("Gradient_y32ns")
+width = 32
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
+size = Vector2(28, 28)
+
+[node name="Node2D" type="Node2D" unique_id=1281902414]
+
+[node name="ground" type="RigidBody2D" parent="." unique_id=1589342909]
+position = Vector2(-8, 448)
+disable_mode = 1
+lock_rotation = true
+freeze = true
+script = ExtResource("1_4dvvg")
+offset = 567.0
+
+[node name="texture" type="TextureRect" parent="ground" unique_id=1285858162]
+offset_left = -24.0
+offset_right = 1144.0
+offset_bottom = 208.0
+scale = Vector2(1.1600001, 1)
+texture = SubResource("GradientTexture1D_0e48y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground" unique_id=815711605]
+shape = SubResource("WorldBoundaryShape2D_6e84v")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=925123651]
+position = Vector2(-32, 384)
+slide_on_ceiling = false
+script = ExtResource("1_6e84v")
+jumpStrength = 1260.0
+gravity = 6000.0
+spinSpeed = 7.29
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1103731386]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_6e84v")
+
+[node name="sprite" type="TextureRect" parent="CharacterBody2D" unique_id=1243348531]
+offset_right = 64.0
+offset_bottom = 64.0
+pivot_offset = Vector2(32, 32)
+texture = SubResource("GradientTexture1D_wtcfe")
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" unique_id=415769788]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D" unique_id=1811234025]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_rnjyy")
+
+[node name="cam" type="Camera2D" parent="." unique_id=73515690]
+position = Vector2(416, 320)
+offset = Vector2(160, 0)
+
+[node name="block" parent="." unique_id=1147703251 instance=ExtResource("4_4vge2")]
+position = Vector2(576, 384)
+
+[node name="block2" parent="." unique_id=897512537 instance=ExtResource("4_4vge2")]
+position = Vector2(832, 384)
+
+[node name="block3" parent="." unique_id=687345478 instance=ExtResource("4_4vge2")]
+position = Vector2(832, 320)
+
+[node name="spike" parent="." unique_id=1516662880 instance=ExtResource("3_4vge2")]
+position = Vector2(1280, 384)
+
+[node name="spike2" parent="." unique_id=923665637 instance=ExtResource("3_4vge2")]
+position = Vector2(1344, 384)
+
+[node name="spike3" parent="." unique_id=2120076270 instance=ExtResource("3_4vge2")]
+position = Vector2(1408, 384)
+
+[connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]
