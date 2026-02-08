@@ -18,7 +18,6 @@ freeze = true
 position = Vector2(32, 32)
 shape = SubResource("RectangleShape2D_rnjyy")
 one_way_collision = true
-one_way_collision_margin = 20.6
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1186400863]
 offset_right = 64.0

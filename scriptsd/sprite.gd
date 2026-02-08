@@ -20,18 +20,21 @@ func _process(delta: float) -> void:
 		velocity.y += gravity * delta
 		$sprite.rotation += spinSpeed * delta
 	else:
-		$sprite.rotation = deg_to_rad(round(rad_to_deg($sprite.rotation) / 90) * 90)
-	move_and_slide()
-	collision_check()
-	
+		var target = deg_to_rad(round(rad_to_deg($sprite.rotation) / 90.0) * 90.0)
+		$sprite.rotation = lerp_angle($sprite.rotation, target, 30.0 * delta)
+
 	if $"../cam".position.x < position.x:
 		$"../cam".position.x = position.x
 	
-	if Input.is_action_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("reset"):
+		die()
+	
+	if Input.is_action_pressed("jump") and (is_on_floor() and velocity.y >= 0):
 		print("jumped")
 		velocity.y -= jumpStrength
-		move_and_slide()
-		collision_check()
+	
+	move_and_slide()
+	collision_check()
 
 func collision_check():
 	for i in get_slide_collision_count():

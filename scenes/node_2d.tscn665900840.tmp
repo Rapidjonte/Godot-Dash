@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ljvsqy3rhxo7" path="res://scriptsd/follow_cam_x.gd" id="1_4dvvg"]
 [ext_resource type="Script" uid="uid://bomypfkgcxy1n" path="res://scriptsd/sprite.gd" id="1_6e84v"]
+[ext_resource type="PackedScene" uid="uid://dv4dte71fxixw" path="res://prefabs/spike.tscn" id="3_4vge2"]
 [ext_resource type="PackedScene" uid="uid://cqirje3werngo" path="res://prefabs/block.tscn" id="4_4vge2"]
 
 [sub_resource type="Gradient" id="Gradient_wtcfe"]
@@ -23,7 +24,6 @@ gradient = SubResource("Gradient_y32ns")
 width = 32
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
-size = Vector2(18, 18)
 
 [node name="Node2D" type="Node2D" unique_id=1281902414]
 
@@ -49,8 +49,8 @@ shape = SubResource("WorldBoundaryShape2D_6e84v")
 position = Vector2(-32, 384)
 slide_on_ceiling = false
 script = ExtResource("1_6e84v")
-jumpStrength = 1176.79
-gravity = 5512.14
+jumpStrength = 1287.0
+gravity = 6000.0
 spinSpeed = 7.29
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1103731386]
@@ -74,27 +74,44 @@ position = Vector2(416, 320)
 offset = Vector2(160, 0)
 
 [node name="block" parent="." unique_id=1147703251 instance=ExtResource("4_4vge2")]
-position = Vector2(448, 384)
+position = Vector2(96, 320)
 
-[node name="block2" parent="." unique_id=500990815 instance=ExtResource("4_4vge2")]
-position = Vector2(704, 320)
+[node name="block4" parent="." unique_id=57313663 instance=ExtResource("4_4vge2")]
+position = Vector2(96, 384)
 
-[node name="block3" parent="." unique_id=643178503 instance=ExtResource("4_4vge2")]
-position = Vector2(960, 256)
+[node name="block2" parent="." unique_id=897512537 instance=ExtResource("4_4vge2")]
+position = Vector2(288, 384)
 
-[node name="block4" parent="." unique_id=387587619 instance=ExtResource("4_4vge2")]
-position = Vector2(1216, 192)
+[node name="block3" parent="." unique_id=1461206222 instance=ExtResource("4_4vge2")]
+position = Vector2(544, 128)
 
-[node name="block5" parent="." unique_id=822648833 instance=ExtResource("4_4vge2")]
-position = Vector2(1472, 128)
+[node name="block5" parent="." unique_id=354615303 instance=ExtResource("4_4vge2")]
+position = Vector2(608, 128)
 
-[node name="block6" parent="." unique_id=843029139 instance=ExtResource("4_4vge2")]
-position = Vector2(1728, 64)
+[node name="spike" parent="." unique_id=1516662880 instance=ExtResource("3_4vge2")]
+position = Vector2(352, 384)
 
-[node name="block7" parent="." unique_id=449574731 instance=ExtResource("4_4vge2")]
-position = Vector2(1984, 0)
+[node name="spike2" parent="." unique_id=923665637 instance=ExtResource("3_4vge2")]
+position = Vector2(416, 384)
 
-[node name="block8" parent="." unique_id=1927905601 instance=ExtResource("4_4vge2")]
-position = Vector2(2240, -64)
+[node name="spike3" parent="." unique_id=2120076270 instance=ExtResource("3_4vge2")]
+position = Vector2(480, 384)
+
+[node name="spike7" parent="." unique_id=2116486000 instance=ExtResource("3_4vge2")]
+position = Vector2(608, 256)
+rotation = 3.1415927
+
+[node name="spike8" parent="." unique_id=1137244255 instance=ExtResource("3_4vge2")]
+position = Vector2(672, 256)
+rotation = 3.1415927
+
+[node name="spike4" parent="." unique_id=393536047 instance=ExtResource("3_4vge2")]
+position = Vector2(672, 384)
+
+[node name="spike5" parent="." unique_id=2146543238 instance=ExtResource("3_4vge2")]
+position = Vector2(736, 384)
+
+[node name="spike6" parent="." unique_id=1169615857 instance=ExtResource("3_4vge2")]
+position = Vector2(800, 384)
 
 [connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]
