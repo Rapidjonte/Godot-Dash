@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://bgiqlv2kr3ftq"]
 
 [ext_resource type="Script" uid="uid://ljvsqy3rhxo7" path="res://scriptsd/follow_cam_x.gd" id="1_4dvvg"]
+[ext_resource type="Script" uid="uid://d1g5ww70mi205" path="res://scenes/node_2d.gd" id="1_04qyp"]
 [ext_resource type="Script" uid="uid://bomypfkgcxy1n" path="res://scriptsd/sprite.gd" id="1_6e84v"]
+[ext_resource type="PackedScene" uid="uid://dv4dte71fxixw" path="res://prefabs/spike.tscn" id="4_04qyp"]
 [ext_resource type="PackedScene" uid="uid://cqirje3werngo" path="res://prefabs/block.tscn" id="4_4vge2"]
 
 [sub_resource type="Gradient" id="Gradient_wtcfe"]
@@ -23,9 +25,9 @@ gradient = SubResource("Gradient_y32ns")
 width = 32
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
-size = Vector2(18, 18)
 
 [node name="Node2D" type="Node2D" unique_id=1281902414]
+script = ExtResource("1_04qyp")
 
 [node name="ground" type="RigidBody2D" parent="." unique_id=1589342909]
 position = Vector2(-8, 448)
@@ -49,8 +51,8 @@ shape = SubResource("WorldBoundaryShape2D_6e84v")
 position = Vector2(-32, 384)
 slide_on_ceiling = false
 script = ExtResource("1_6e84v")
-jumpStrength = 1176.79
-gravity = 5512.14
+jumpStrength = 1169.35
+gravity = 5572.945
 spinSpeed = 7.29
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1103731386]
@@ -73,28 +75,159 @@ shape = SubResource("RectangleShape2D_rnjyy")
 position = Vector2(416, 320)
 offset = Vector2(160, 0)
 
-[node name="block" parent="." unique_id=1147703251 instance=ExtResource("4_4vge2")]
-position = Vector2(448, 384)
+[node name="level" type="Node2D" parent="." unique_id=1245710370 groups=["Persist"]]
+position = Vector2(528, 384)
 
-[node name="block2" parent="." unique_id=500990815 instance=ExtResource("4_4vge2")]
-position = Vector2(704, 320)
+[node name="block" parent="level" unique_id=1147703251 instance=ExtResource("4_4vge2")]
+position = Vector2(176, 0)
 
-[node name="block3" parent="." unique_id=643178503 instance=ExtResource("4_4vge2")]
-position = Vector2(960, 256)
+[node name="block17" parent="level" unique_id=93833930 instance=ExtResource("4_4vge2")]
+position = Vector2(-48, 0)
 
-[node name="block4" parent="." unique_id=387587619 instance=ExtResource("4_4vge2")]
-position = Vector2(1216, 192)
+[node name="block18" parent="level" unique_id=1339029781 instance=ExtResource("4_4vge2")]
+position = Vector2(-48, -64)
 
-[node name="block5" parent="." unique_id=822648833 instance=ExtResource("4_4vge2")]
-position = Vector2(1472, 128)
+[node name="block2" parent="level" unique_id=88700948 instance=ExtResource("4_4vge2")]
+position = Vector2(432, -64)
 
-[node name="block6" parent="." unique_id=843029139 instance=ExtResource("4_4vge2")]
-position = Vector2(1728, 64)
+[node name="block3" parent="level" unique_id=2134679354 instance=ExtResource("4_4vge2")]
+position = Vector2(688, -128)
 
-[node name="block7" parent="." unique_id=449574731 instance=ExtResource("4_4vge2")]
-position = Vector2(1984, 0)
+[node name="block4" parent="level" unique_id=23806796 instance=ExtResource("4_4vge2")]
+position = Vector2(944, -192)
 
-[node name="block8" parent="." unique_id=1927905601 instance=ExtResource("4_4vge2")]
-position = Vector2(2240, -64)
+[node name="block5" parent="level" unique_id=634162619 instance=ExtResource("4_4vge2")]
+position = Vector2(1200, -256)
+
+[node name="block6" parent="level" unique_id=1446985937 instance=ExtResource("4_4vge2")]
+position = Vector2(1456, -320)
+
+[node name="block7" parent="level" unique_id=1369675610 instance=ExtResource("4_4vge2")]
+position = Vector2(1712, -384)
+
+[node name="block8" parent="level" unique_id=879585867 instance=ExtResource("4_4vge2")]
+position = Vector2(1968, -448)
+
+[node name="block9" parent="level" unique_id=1430802961 instance=ExtResource("4_4vge2")]
+position = Vector2(2224, -512)
+
+[node name="block10" parent="level" unique_id=1763009537 instance=ExtResource("4_4vge2")]
+position = Vector2(2480, -576)
+
+[node name="block11" parent="level" unique_id=605968220 instance=ExtResource("4_4vge2")]
+position = Vector2(2736, -640)
+
+[node name="block12" parent="level" unique_id=550315008 instance=ExtResource("4_4vge2")]
+position = Vector2(2992, -704)
+
+[node name="block13" parent="level" unique_id=87431854 instance=ExtResource("4_4vge2")]
+position = Vector2(3248, -768)
+
+[node name="block14" parent="level" unique_id=24925535 instance=ExtResource("4_4vge2")]
+position = Vector2(3504, -832)
+
+[node name="block15" parent="level" unique_id=852534215 instance=ExtResource("4_4vge2")]
+position = Vector2(3760, -896)
+
+[node name="block16" parent="level" unique_id=1570951664 instance=ExtResource("4_4vge2")]
+position = Vector2(4016, -960)
+
+[node name="block19" parent="level" unique_id=1033424105 instance=ExtResource("4_4vge2")]
+position = Vector2(4272, -1024)
+
+[node name="block20" parent="level" unique_id=1666401431 instance=ExtResource("4_4vge2")]
+position = Vector2(4528, -1088)
+
+[node name="block21" parent="level" unique_id=329693522 instance=ExtResource("4_4vge2")]
+position = Vector2(4784, -1152)
+
+[node name="block22" parent="level" unique_id=860526880 instance=ExtResource("4_4vge2")]
+position = Vector2(5040, -1216)
+
+[node name="block23" parent="level" unique_id=64964480 instance=ExtResource("4_4vge2")]
+position = Vector2(5296, -1280)
+
+[node name="block24" parent="level" unique_id=914564503 instance=ExtResource("4_4vge2")]
+position = Vector2(5552, -1344)
+
+[node name="block25" parent="level" unique_id=1015845917 instance=ExtResource("4_4vge2")]
+position = Vector2(5808, -1408)
+
+[node name="block26" parent="level" unique_id=324786779 instance=ExtResource("4_4vge2")]
+position = Vector2(6064, -1472)
+
+[node name="block27" parent="level" unique_id=1717208920 instance=ExtResource("4_4vge2")]
+position = Vector2(6320, -1536)
+
+[node name="block28" parent="level" unique_id=107889094 instance=ExtResource("4_4vge2")]
+position = Vector2(6576, -1600)
+
+[node name="block29" parent="level" unique_id=1768603514 instance=ExtResource("4_4vge2")]
+position = Vector2(6832, -1664)
+
+[node name="block30" parent="level" unique_id=48830130 instance=ExtResource("4_4vge2")]
+position = Vector2(7088, -1728)
+
+[node name="block31" parent="level" unique_id=409912330 instance=ExtResource("4_4vge2")]
+position = Vector2(7344, -1792)
+
+[node name="block32" parent="level" unique_id=1370642684 instance=ExtResource("4_4vge2")]
+position = Vector2(7600, -1856)
+
+[node name="block33" parent="level" unique_id=201677976 instance=ExtResource("4_4vge2")]
+position = Vector2(7856, -1920)
+
+[node name="block34" parent="level" unique_id=1117411587 instance=ExtResource("4_4vge2")]
+position = Vector2(8112, -1984)
+
+[node name="block35" parent="level" unique_id=105585567 instance=ExtResource("4_4vge2")]
+position = Vector2(8368, -2048)
+
+[node name="block36" parent="level" unique_id=1543095763 instance=ExtResource("4_4vge2")]
+position = Vector2(8624, -2112)
+
+[node name="block37" parent="level" unique_id=904652816 instance=ExtResource("4_4vge2")]
+position = Vector2(8880, -2176)
+
+[node name="block38" parent="level" unique_id=688801991 instance=ExtResource("4_4vge2")]
+position = Vector2(9136, -2240)
+
+[node name="block39" parent="level" unique_id=1466544505 instance=ExtResource("4_4vge2")]
+position = Vector2(9392, -2304)
+
+[node name="block40" parent="level" unique_id=258974710 instance=ExtResource("4_4vge2")]
+position = Vector2(9648, -2368)
+
+[node name="block41" parent="level" unique_id=1256220417 instance=ExtResource("4_4vge2")]
+position = Vector2(9904, -2432)
+
+[node name="block42" parent="level" unique_id=1214293757 instance=ExtResource("4_4vge2")]
+position = Vector2(10160, -2496)
+
+[node name="block43" parent="level" unique_id=1097921348 instance=ExtResource("4_4vge2")]
+position = Vector2(10416, -2560)
+
+[node name="block44" parent="level" unique_id=1765545900 instance=ExtResource("4_4vge2")]
+position = Vector2(10672, -2624)
+
+[node name="block45" parent="level" unique_id=526401850 instance=ExtResource("4_4vge2")]
+position = Vector2(10928, -2688)
+
+[node name="block46" parent="level" unique_id=1406230620 instance=ExtResource("4_4vge2")]
+position = Vector2(11184, -2752)
+
+[node name="block47" parent="level" unique_id=348016103 instance=ExtResource("4_4vge2")]
+position = Vector2(11440, -2816)
+
+[node name="block48" parent="level" unique_id=1662324433 instance=ExtResource("4_4vge2")]
+position = Vector2(11696, -2880)
+
+[node name="spike" parent="level" unique_id=993808541 instance=ExtResource("4_04qyp")]
+position = Vector2(48, -128)
+rotation = -3.1415925
+
+[node name="spike2" parent="level" unique_id=1342597722 instance=ExtResource("4_04qyp")]
+position = Vector2(112, -128)
+rotation = -3.1415925
 
 [connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]

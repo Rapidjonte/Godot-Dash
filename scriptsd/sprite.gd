@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 var time = 0;
+var paddingY = 70;
 
 const HALF_SPEED = 8.4
 const NORMAL_SPEED = 10.41667
@@ -13,7 +14,7 @@ const QUADRUPLE_SPEED = 19.2
 @export var spinSpeed: float
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	time += delta
 	position.x = 64 * time * 10.41667
 	if not is_on_floor():
@@ -25,6 +26,12 @@ func _process(delta: float) -> void:
 
 	if $"../cam".position.x < position.x:
 		$"../cam".position.x = position.x
+		
+	if $"../cam".position.y > position.y + paddingY:
+		$"../cam".position.y = position.y + paddingY
+	elif $"../cam".position.y < position.y - paddingY:
+		$"../cam".position.y = position.y - paddingY
+	
 	
 	if Input.is_action_just_pressed("reset"):
 		die()
