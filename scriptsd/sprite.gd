@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
-var time = 0;
 var paddingY = 70;
 
-const HALF_SPEED = 8.4
 const NORMAL_SPEED = 10.41667
+var speed = NORMAL_SPEED
+
+const HALF_SPEED = 8.4
 const DOUBLE_SPEED = 12.91667
 const TRIPLE_SPEED = 15.667
 const QUADRUPLE_SPEED = 19.2
@@ -13,24 +14,26 @@ const QUADRUPLE_SPEED = 19.2
 @export var gravity: float
 @export var spinSpeed: float
 
+@onready var sprite = $sprite
+@onready var cam = $"../cam"
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	time += delta
-	position.x = 64 * time * 10.41667
+	position.x += 64 * delta * speed
 	if not is_on_floor():
 		velocity.y += gravity * delta
-		$sprite.rotation += spinSpeed * delta
+		sprite.rotation += spinSpeed * delta
 	else:
-		var target = deg_to_rad(round(rad_to_deg($sprite.rotation) / 90.0) * 90.0)
-		$sprite.rotation = lerp_angle($sprite.rotation, target, 30.0 * delta)
+		var target = deg_to_rad(round(rad_to_deg(sprite.rotation) / 90.0) * 90.0)
+		sprite.rotation = lerp_angle(sprite.rotation, target, 30.0 * delta)
 
-	if $"../cam".position.x < position.x:
-		$"../cam".position.x = position.x
+	if cam.position.x < position.x:
+		cam.position.x = position.x
 		
-	if $"../cam".position.y > position.y + paddingY:
-		$"../cam".position.y = position.y + paddingY
-	elif $"../cam".position.y < position.y - paddingY:
-		$"../cam".position.y = position.y - paddingY
+	if cam.position.y > position.y + paddingY:
+		cam.position.y = position.y + paddingY
+	elif cam.position.y < position.y - paddingY:
+		cam.position.y = position.y - paddingY
 	
 	
 	if Input.is_action_just_pressed("reset"):
