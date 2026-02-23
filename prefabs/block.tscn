@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cqirje3werngo"]
+
+[ext_resource type="Script" uid="uid://c76hgv0bkuoj7" path="res://scriptsd/ground_snap_bugfix.gd" id="1_oyk0l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
+size = Vector2(64, 64)
+
+[sub_resource type="Gradient" id="Gradient_r01qh"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_oyk0l"]
+gradient = SubResource("Gradient_r01qh")
+
+[node name="block" type="RigidBody2D" unique_id=1147703251]
+z_index = 1
+disable_mode = 1
+lock_rotation = true
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1417532286]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_rnjyy")
+one_way_collision = true
+script = ExtResource("1_oyk0l")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1186400863]
+offset_right = 64.0
+offset_bottom = 64.0
+texture = SubResource("GradientTexture1D_oyk0l")
+expand_mode = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dhukhtt0dpp8"]
+
+[ext_resource type="Script" uid="uid://b7b03pw5fuygd" path="res://scripts/set_speed.gd" id="1_0k3m5"]
+[ext_resource type="Texture2D" uid="uid://dwj7h631408ks" path="res://images/SpeedPortal_.webp" id="1_dpeht"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
+size = Vector2(74, 92)
+
+[node name="Area2D" type="Area2D" unique_id=484844631]
+
+[node name="SpeedPortal" type="Sprite2D" parent="." unique_id=1338465947]
+position = Vector2(-1.1920929e-07, -2.3841858e-07)
+scale = Vector2(0.53237414, 0.53237396)
+texture = ExtResource("1_dpeht")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=745313364]
+shape = SubResource("RectangleShape2D_rnjyy")
+script = ExtResource("1_0k3m5")
+targetSpeed = 8.4
+
+[connection signal="body_shape_entered" from="." to="CollisionShape2D" method="_on_area_2d_body_shape_entered"]

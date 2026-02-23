@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dv4dte71fxixw"]
+
+[ext_resource type="Texture2D" uid="uid://b6ke8vdotox7t" path="res://images/shape-triangle.svg" id="1_r3xco"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
+size = Vector2(12, 25)
+
+[node name="spike" type="RigidBody2D" unique_id=1147703251]
+z_index = 1
+disable_mode = 1
+lock_rotation = true
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1417532286]
+position = Vector2(32, 32.5)
+shape = SubResource("RectangleShape2D_rnjyy")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1186400863]
+offset_left = -53.0
+offset_top = -53.002945
+offset_right = 117.0
+offset_bottom = 117.00012
+texture = ExtResource("1_r3xco")
+expand_mode = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
