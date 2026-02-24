@@ -3,12 +3,19 @@
 [ext_resource type="Script" uid="uid://ljvsqy3rhxo7" path="res://scripts/follow_cam_x.gd" id="1_4dvvg"]
 [ext_resource type="Script" uid="uid://d1g5ww70mi205" path="res://scripts/node_2d.gd" id="1_04qyp"]
 [ext_resource type="Script" uid="uid://bomypfkgcxy1n" path="res://scripts/sprite.gd" id="1_6e84v"]
+[ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="4_dubn7"]
 [ext_resource type="PackedScene" uid="uid://cqirje3werngo" path="res://prefabs/block.tscn" id="4_fws66"]
 [ext_resource type="PackedScene" uid="uid://dv4dte71fxixw" path="res://prefabs/spike.tscn" id="5_hh0fu"]
 [ext_resource type="PackedScene" uid="uid://pg6arupg4uij" path="res://prefabs/3x_speed.tscn" id="6_3m5ht"]
 [ext_resource type="PackedScene" uid="uid://dhukhtt0dpp8" path="res://prefabs/half_speed.tscn" id="7_dubn7"]
 [ext_resource type="PackedScene" uid="uid://bbhqc0unrcg7f" path="res://prefabs/1x_speed.tscn" id="8_hh0fu"]
 [ext_resource type="PackedScene" uid="uid://bj0kwkfuf8xwe" path="res://prefabs/4x_speed.tscn" id="9_3m5ht"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dubn7"]
+font = ExtResource("4_dubn7")
+font_size = 53
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_wtcfe"]
 colors = PackedColorArray(0, 0, 0, 1, 8.57329e-08, 0.05978711, 0.10149621, 1)
@@ -30,8 +37,22 @@ width = 32
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 
+[sub_resource type="Theme" id="Theme_3m5ht"]
+default_font = ExtResource("4_dubn7")
+default_font_size = 18
+
 [node name="Node2D" type="Node2D" unique_id=1281902414]
 script = ExtResource("1_04qyp")
+
+[node name="attempts" type="Label" parent="." unique_id=107369597]
+modulate = Color(1, 1, 1, 0.6156863)
+z_index = 100
+offset_left = 52.0
+offset_top = 168.0
+offset_right = 385.0
+offset_bottom = 216.0
+text = "Attempt 1"
+label_settings = SubResource("LabelSettings_dubn7")
 
 [node name="ground" type="RigidBody2D" parent="." unique_id=1589342909]
 z_index = 2
@@ -79,6 +100,27 @@ shape = SubResource("RectangleShape2D_rnjyy")
 [node name="cam" type="Camera2D" parent="." unique_id=73515690]
 position = Vector2(416, 315.536)
 offset = Vector2(160, 0)
+
+[node name="Control" type="Control" parent="cam" unique_id=980306862]
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -416.0
+offset_top = -315.536
+offset_right = -416.0
+offset_bottom = -315.536
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="cam/Control" unique_id=1907325764]
+layout_mode = 0
+offset_left = 199.0
+offset_top = 17.0
+offset_right = 893.0
+offset_bottom = 40.0
+theme = SubResource("Theme_3m5ht")
 
 [node name="level" type="Node2D" parent="." unique_id=1245710370 groups=["Persist"]]
 position = Vector2(528, 384)

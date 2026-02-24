@@ -10,9 +10,13 @@ config_version=5
 
 [application]
 
-config/name="godot dash latest"
+config/name="Godot Dash"
 run/main_scene="uid://bgiqlv2kr3ftq"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+
+[autoload]
+
+Global="*uid://2ntem3nu41t4"
 
 [display]
 
