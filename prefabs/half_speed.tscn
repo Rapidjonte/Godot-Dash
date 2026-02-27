@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(74, 92)
 
-[node name="Area2D" type="Area2D" unique_id=484844631]
+[node name="half_speed" type="Area2D" unique_id=484844631]
 
 [node name="SpeedPortal" type="Sprite2D" parent="." unique_id=1338465947]
 position = Vector2(-1.1920929e-07, -2.3841858e-07)
