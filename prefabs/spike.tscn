@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dv4dte71fxixw"]
 
-[ext_resource type="Texture2D" uid="uid://b6ke8vdotox7t" path="res://images/shape-triangle.svg" id="1_r3xco"]
+[ext_resource type="Texture2D" uid="uid://drdq0wg2cluag" path="res://images/spikes/RegularSpike01.webp" id="1_r3xco"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(12, 25)
@@ -16,10 +16,9 @@ position = Vector2(32, 32.5)
 shape = SubResource("RectangleShape2D_rnjyy")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1186400863]
-offset_left = -53.0
-offset_top = -53.002945
-offset_right = 117.0
-offset_bottom = 117.00012
+offset_top = -0.0019836426
+offset_right = 64.0
+offset_bottom = 63.99917
 texture = ExtResource("1_r3xco")
 expand_mode = 1
 

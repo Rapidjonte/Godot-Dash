@@ -1,15 +1,10 @@
 [gd_scene format=3 uid="uid://cqirje3werngo"]
 
-[ext_resource type="Script" uid="uid://c76hgv0bkuoj7" path="res://scriptsd/ground_snap_bugfix.gd" id="1_oyk0l"]
+[ext_resource type="Script" uid="uid://c76hgv0bkuoj7" path="res://scripts/ground_snap_bugfix.gd" id="1_oyk0l"]
+[ext_resource type="Texture2D" uid="uid://blcj0elxv02lb" path="res://images/blocks/RegularBlock01.webp" id="2_tvf50"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(64, 64)
-
-[sub_resource type="Gradient" id="Gradient_r01qh"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_oyk0l"]
-gradient = SubResource("Gradient_r01qh")
 
 [node name="block" type="RigidBody2D" unique_id=1147703251]
 z_index = 1
@@ -26,7 +21,7 @@ script = ExtResource("1_oyk0l")
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1186400863]
 offset_right = 64.0
 offset_bottom = 64.0
-texture = SubResource("GradientTexture1D_oyk0l")
+texture = ExtResource("2_tvf50")
 expand_mode = 1
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

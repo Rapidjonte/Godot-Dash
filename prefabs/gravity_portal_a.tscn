@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://c5jws7x1v4ewu"]
+
+[ext_resource type="Texture2D" uid="uid://c24imfm5e6f5m" path="res://images/portals/GravityPortalA.webp" id="1_ilyj4"]
+[ext_resource type="Script" uid="uid://b0nnip5w250gp" path="res://scripts/grav_portal.gd" id="1_v0imb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
+size = Vector2(51, 156)
+
+[node name="gravity_portal_a" type="Area2D" unique_id=484844631]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=745313364]
+position = Vector2(4.5, 0)
+shape = SubResource("RectangleShape2D_rnjyy")
+script = ExtResource("1_v0imb")
+multiplier = -1
+force = true
+
+[node name="GravityPortalA" type="Sprite2D" parent="." unique_id=1522175718]
+scale = Vector2(0.532, 0.532)
+texture = ExtResource("1_ilyj4")
+
+[connection signal="body_shape_entered" from="." to="CollisionShape2D" method="_on_grav_portal_body_shape_entered"]

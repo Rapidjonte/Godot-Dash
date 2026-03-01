@@ -9,6 +9,6 @@ func _ready():
 	disabled = false
 
 func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
-	print("speed_changed")
-	disabled = true
-	character_body.speed = targetSpeed
+	if body == character_body:
+		disabled = true
+		character_body.speed = targetSpeed
