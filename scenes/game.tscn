@@ -1,0 +1,157 @@
+[gd_scene format=3 uid="uid://bgiqlv2kr3ftq"]
+
+[ext_resource type="Script" uid="uid://d1g5ww70mi205" path="res://scripts/node_2d.gd" id="1_lbhrr"]
+[ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="2_iywne"]
+[ext_resource type="Script" uid="uid://ljvsqy3rhxo7" path="res://scripts/follow_cam_x.gd" id="3_p57ef"]
+[ext_resource type="Script" uid="uid://bomypfkgcxy1n" path="res://scripts/sprite.gd" id="4_u5sy4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dubn7"]
+font = ExtResource("2_iywne")
+font_size = 53
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_wtcfe"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.021342413, 0.054678522, 0.13259092, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0e48y"]
+gradient = SubResource("Gradient_wtcfe")
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6e84v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6e84v"]
+size = Vector2(64, 64)
+
+[sub_resource type="Gradient" id="Gradient_y32ns"]
+colors = PackedColorArray(0.5157923, 0.6725292, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wtcfe"]
+gradient = SubResource("Gradient_y32ns")
+width = 32
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
+
+[sub_resource type="Gradient" id="Gradient_4vge2"]
+offsets = PackedFloat32Array(0, 0.37548065, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.6863632, 1, 1, 1, 0.16470589, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_04qyp"]
+gradient = SubResource("Gradient_4vge2")
+width = 32
+height = 32
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(-0.6, 0)
+
+[sub_resource type="Gradient" id="Gradient_04qyp"]
+offsets = PackedFloat32Array(0, 0.863547, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Theme" id="Theme_3m5ht"]
+default_font = ExtResource("2_iywne")
+default_font_size = 18
+
+[node name="main" type="Node2D" unique_id=1281902414]
+script = ExtResource("1_lbhrr")
+
+[node name="attempts" type="Label" parent="." unique_id=107369597]
+modulate = Color(1, 1, 1, 0.6156863)
+z_index = 100
+offset_left = 52.0
+offset_top = 168.0
+offset_right = 385.0
+offset_bottom = 216.0
+text = "Attempt 1"
+label_settings = SubResource("LabelSettings_dubn7")
+
+[node name="ground" type="RigidBody2D" parent="." unique_id=1589342909]
+z_index = 2
+position = Vector2(-8, 448)
+disable_mode = 1
+lock_rotation = true
+freeze = true
+script = ExtResource("3_p57ef")
+offset = 567.0
+
+[node name="texture" type="TextureRect" parent="ground" unique_id=1285858162]
+offset_left = -24.0
+offset_right = 1144.0
+offset_bottom = 208.0
+scale = Vector2(1.1600001, 1)
+texture = SubResource("GradientTexture1D_0e48y")
+
+[node name="ground_collision" type="CollisionShape2D" parent="ground" unique_id=815711605]
+shape = SubResource("WorldBoundaryShape2D_6e84v")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=925123651]
+position = Vector2(-32, 384)
+slide_on_ceiling = false
+script = ExtResource("4_u5sy4")
+jumpStrength = 1140.35
+gravity = 5572.945
+max_velocity = 1599.0
+spinSpeed = 7.29
+
+[node name="player_collision" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1103731386]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_6e84v")
+
+[node name="sprite" type="TextureRect" parent="CharacterBody2D" unique_id=1243348531]
+offset_right = 64.0
+offset_bottom = 64.0
+pivot_offset = Vector2(32, 32)
+texture = SubResource("GradientTexture1D_wtcfe")
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" unique_id=415769788]
+
+[node name="middle box" type="CollisionShape2D" parent="CharacterBody2D/Area2D" unique_id=1811234025]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_rnjyy")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="CharacterBody2D" unique_id=1020853306]
+z_index = 99
+position = Vector2(32, 32)
+emitting = false
+amount = 14
+texture = SubResource("GradientTexture2D_04qyp")
+lifetime = 1.45
+one_shot = true
+explosiveness = 1.0
+direction = Vector2(0, -1)
+initial_velocity_min = 398.85
+initial_velocity_max = 607.01
+angular_velocity_min = -103.28
+angular_velocity_max = 106.42
+angle_min = -86.3
+angle_max = 74.6
+color_ramp = SubResource("Gradient_04qyp")
+hue_variation_min = -0.4
+hue_variation_max = 0.44
+
+[node name="cam" type="Camera2D" parent="." unique_id=73515690]
+position = Vector2(416, 315.536)
+offset = Vector2(160, 0)
+
+[node name="Control" type="Control" parent="cam" unique_id=980306862]
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -416.0
+offset_top = -315.536
+offset_right = -416.0
+offset_bottom = -315.536
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="cam/Control" unique_id=1907325764]
+layout_mode = 0
+offset_left = 199.0
+offset_top = 17.0
+offset_right = 893.0
+offset_bottom = 40.0
+theme = SubResource("Theme_3m5ht")
+
+[connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]

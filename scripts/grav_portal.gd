@@ -12,14 +12,16 @@ func _on_grav_portal_body_shape_entered(body_rid: RID, body: Node2D, body_shape_
 	if body == character_body:
 		var prevGrav = character_body.gravity
 		
-		disabled = true
+		set_deferred("disabled", true)
 		if force:
 			character_body.gravity = abs(character_body.gravity) * multiplier
-			character_body.spinSpeed = abs(character_body.spinSpeed) * multiplier
 		else:
 			character_body.gravity *= multiplier
-			character_body.spinSpeed *= multiplier
-		
+			
 		if prevGrav != character_body.gravity:
+			Global.flip_blocks.emit()
+			character_body.spinSpeed *= -1
 			character_body.velocity.y += character_body.gravity * get_process_delta_time() * 0.1
 			character_body.velocity.y *= 0.6
+			character_body.up_direction.y *= -1
+			character_body.jumpStrength *= -1

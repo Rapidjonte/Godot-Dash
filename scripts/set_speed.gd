@@ -10,5 +10,5 @@ func _ready():
 
 func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	if body == character_body:
-		disabled = true
+		set_deferred("disabled", true)
 		character_body.speed = targetSpeed

@@ -3,6 +3,8 @@ extends Node
 var attempt = 0
 var paused = false
 
+var path = ""
+
 var endX = 128
 
 func calculate_end(level: Node):
@@ -10,3 +12,5 @@ func calculate_end(level: Node):
 	for node in level.get_children(true):
 		if node.position.x > endX:
 			endX = node.position.x + 128
+
+signal flip_blocks

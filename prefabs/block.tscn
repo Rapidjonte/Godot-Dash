@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cqirje3werngo"]
 
+[ext_resource type="Script" uid="uid://udpcsp2xnhg5" path="res://scripts/texture_override.gd" id="1_fvp74"]
 [ext_resource type="Script" uid="uid://c76hgv0bkuoj7" path="res://scripts/ground_snap_bugfix.gd" id="1_oyk0l"]
 [ext_resource type="Texture2D" uid="uid://blcj0elxv02lb" path="res://images/blocks/RegularBlock01.webp" id="2_tvf50"]
 
@@ -11,6 +12,7 @@ z_index = 1
 disable_mode = 1
 lock_rotation = true
 freeze = true
+script = ExtResource("1_fvp74")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1417532286]
 position = Vector2(32, 32)

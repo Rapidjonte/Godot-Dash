@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://d2pneeifygawe"]
+
+[ext_resource type="FontFile" uid="uid://dmeobsi61bvm" path="res://fonts/OXYGENE1.TTF" id="1_vjb58"]
+[ext_resource type="Script" uid="uid://dwsb43qbdtj2r" path="res://scripts/button.gd" id="1_yqeox"]
+[ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="3_con2f"]
+[ext_resource type="Texture2D" uid="uid://bnr03kfjgssvo" path="res://images/logo - Godot dash.png" id="4_mhnvy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mhnvy"]
+font = ExtResource("3_con2f")
+font_size = 30
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Menu" type="Node2D" unique_id=453109969]
+
+[node name="Button" type="Button" parent="." unique_id=1987997764]
+offset_left = 24.0
+offset_top = 512.0
+offset_right = 200.0
+offset_bottom = 624.0
+theme_override_fonts/font = ExtResource("1_vjb58")
+autowrap_mode = 2
+script = ExtResource("1_yqeox")
+levelPath = "res://levels/level.tscn"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Button" unique_id=1629955594]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.77272725
+anchor_bottom = 0.79464287
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Level 1:"
+label_settings = SubResource("LabelSettings_mhnvy")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="LogoGodotDash" type="Sprite2D" parent="." unique_id=1098272580]
+position = Vector2(576, 136)
+scale = Vector2(0.93224925, 0.94692737)
+texture = ExtResource("4_mhnvy")
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

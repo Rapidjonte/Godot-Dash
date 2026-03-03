@@ -23,12 +23,33 @@ const QUADRUPLE_SPEED = 19.2
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("reset"):
 		die(true)
+	if Input.is_action_just_pressed("exit"):
+		get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:	
-	if cam.position.x < position.x:
-		cam.position.x = position.x
+	if !Global.paused:
+		position.x += 64 * delta * speed
+		if not is_on_floor():
+			velocity.y += gravity * delta
+			sprite.rotation += spinSpeed * delta
+			if velocity.y > max_velocity:
+				velocity.y = max_velocity
+			if velocity.y < -max_velocity:
+				velocity.y = -max_velocity
+		else:
+			var target = deg_to_rad(round(rad_to_deg(sprite.rotation) / 90.0) * 90.0)
+			sprite.rotation = lerp_angle(sprite.rotation, target, 30.0 * delta)	
 		
+		if Input.is_action_pressed("jump") and (is_on_floor() and velocity.y >= 0):
+			velocity.y -= jumpStrength
+		
+		move_and_slide()
+		collision_check()
+		
+	update_cam(delta)
+	
+func update_cam(delta):
 	var easing: float = 7.0 # higher = faster response
 	
 	var upper_limit = position.y + paddingY
@@ -39,26 +60,8 @@ func _physics_process(delta: float) -> void:
 	elif cam.position.y < lower_limit:
 		cam.position.y = lerp(cam.position.y, lower_limit, easing * delta)
 		
-	if Global.paused:
-		return
-	
-	position.x += 64 * delta * speed
-	if not is_on_floor():
-		velocity.y += gravity * delta
-		sprite.rotation += spinSpeed * delta
-		if velocity.y > max_velocity:
-			velocity.y = max_velocity
-		if velocity.y < -max_velocity:
-			velocity.y = -max_velocity
-	else:
-		var target = deg_to_rad(round(rad_to_deg(sprite.rotation) / 90.0) * 90.0)
-		sprite.rotation = lerp_angle(sprite.rotation, target, 30.0 * delta)	
-	
-	if Input.is_action_pressed("jump") and (is_on_floor() and velocity.y >= 0):
-		velocity.y -= jumpStrength
-	
-	move_and_slide()
-	collision_check()
+	if cam.position.x < position.x:
+		cam.position.x = position.x
 
 func collision_check():
 	if Global.paused:
@@ -83,8 +86,4 @@ func die(instant: bool = false):
 		await get_tree().create_timer(1).timeout
 		# disable hitboxes
 	
-	var tree = get_tree()
-	if tree:
-		tree.reload_current_scene()
-	else:
-		die(true)
+	get_tree().reload_current_scene.call_deferred()

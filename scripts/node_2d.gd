@@ -4,7 +4,7 @@ func _ready() -> void:
 	Global.attempt += 1
 	$attempts.text = "Attempt " + str(Global.attempt)
 	
-	load_level("res://levels/level.tscn")
+	load_level(Global.path)
 
 func _process(delta: float) -> void:
 	if not Global.paused:

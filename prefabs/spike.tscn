@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dv4dte71fxixw"]
 
+[ext_resource type="Script" uid="uid://udpcsp2xnhg5" path="res://scripts/texture_override.gd" id="1_i4d64"]
 [ext_resource type="Texture2D" uid="uid://drdq0wg2cluag" path="res://images/spikes/RegularSpike01.webp" id="1_r3xco"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
@@ -10,6 +11,7 @@ z_index = 1
 disable_mode = 1
 lock_rotation = true
 freeze = true
+script = ExtResource("1_i4d64")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1417532286]
 position = Vector2(32, 32.5)
