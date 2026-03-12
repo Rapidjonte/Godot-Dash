@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://cdw43iovsdv3r"]
+
+[ext_resource type="Script" uid="uid://c5vge4f5nxcif" path="res://scripts/blue_orb.gd" id="1_vkpgr"]
+[ext_resource type="Texture2D" uid="uid://chtee5jj58one" path="res://images/orbs/GreenGravityRing.webp" id="2_vkpgr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
+size = Vector2(76, 76)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vkpgr"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_vkpgr"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bjwy1"]
+gradient = SubResource("Gradient_vkpgr")
+width = 8
+height = 8
+
+[sub_resource type="Curve" id="Curve_dyevb"]
+_data = [Vector2(0.19563672, 1), 0.0, 0.0, 0, 0, Vector2(0.6838366, 1), 0.0, 0.0, 0, 0, Vector2(0.9918791, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_enfvd"]
+curve = SubResource("Curve_dyevb")
+
+[sub_resource type="Curve" id="Curve_1u5tu"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.3322872, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_4g6t2"]
+curve = SubResource("Curve_1u5tu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_k1dgv"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 40.0
+emission_ring_inner_radius = 40.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_max = 70.5
+orbit_velocity_min = 0.51200014
+orbit_velocity_max = 0.51200014
+radial_velocity_min = -44.000023
+radial_velocity_max = -44.000023
+gravity = Vector3(0, 0, 0)
+scale_max = 1.5999999
+scale_curve = SubResource("CurveTexture_4g6t2")
+alpha_curve = SubResource("CurveTexture_enfvd")
+
+[node name="green_orb" type="Area2D" unique_id=484844631]
+z_index = -2
+script = ExtResource("1_vkpgr")
+boostStrength = -1201.0
+spin = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=745313364]
+shape = SubResource("RectangleShape2D_rnjyy")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1226750450]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+scale = Vector2(1.715, 1.715)
+pivot_offset = Vector2(20, 20)
+texture = ExtResource("2_vkpgr")
+expand_mode = 3
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1042173962]
+modulate = Color(0.31595126, 0.7796458, 0.24629891, 0.53333336)
+z_index = -2
+material = SubResource("CanvasItemMaterial_vkpgr")
+amount = 16
+texture = SubResource("GradientTexture2D_bjwy1")
+preprocess = 1.3
+speed_scale = 1.3
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_k1dgv")

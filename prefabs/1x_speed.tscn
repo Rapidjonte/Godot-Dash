@@ -1,10 +1,57 @@
 [gd_scene format=3 uid="uid://bbhqc0unrcg7f"]
 
 [ext_resource type="Script" uid="uid://b7b03pw5fuygd" path="res://scripts/set_speed.gd" id="1_vrsqo"]
-[ext_resource type="Texture2D" uid="uid://clqouq2ell5ud" path="res://images/SpeedPortal+.webp" id="2_3ya7q"]
+[ext_resource type="Texture2D" uid="uid://clqouq2ell5ud" path="res://images/portals/SpeedPortal+.webp" id="2_3ya7q"]
+[ext_resource type="Shader" uid="uid://dru5rwxb5rqdo" path="res://shaders/lightness.gdshader" id="2_mhece"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(70, 120)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tnhs4"]
+shader = ExtResource("2_mhece")
+shader_parameter/lightness = 0.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vrsqo"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_4hpkh"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3ya7q"]
+gradient = SubResource("Gradient_4hpkh")
+width = 8
+height = 8
+
+[sub_resource type="Curve" id="Curve_mhece"]
+_data = [Vector2(0.19563672, 1), 0.0, 0.0, 0, 0, Vector2(0.6838366, 1), 0.0, 0.0, 0, 0, Vector2(0.9918791, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ml2k8"]
+curve = SubResource("Curve_mhece")
+
+[sub_resource type="Curve" id="Curve_tnhs4"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.3322872, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_e1m15"]
+curve = SubResource("Curve_tnhs4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hxmcq"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -0.075, 0)
+emission_shape_scale = Vector3(2.195, 2.55, 1)
+emission_shape = 3
+emission_box_extents = Vector3(41.405, 54.05, 1)
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 30.0
+initial_velocity_max = 50.5
+gravity = Vector3(0, 0, 0)
+scale_min = 0.59999996
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_e1m15")
+alpha_curve = SubResource("CurveTexture_ml2k8")
 
 [node name="1x_speed" type="Area2D" unique_id=484844631]
 
@@ -13,8 +60,21 @@ shape = SubResource("RectangleShape2D_rnjyy")
 script = ExtResource("1_vrsqo")
 targetSpeed = 10.417
 
-[node name="SpeedPortal+" type="Sprite2D" parent="." unique_id=504189061]
+[node name="SpeedPortal" type="Sprite2D" parent="." unique_id=504189061]
+material = SubResource("ShaderMaterial_tnhs4")
 scale = Vector2(0.532, 0.532)
 texture = ExtResource("2_3ya7q")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1812458217]
+modulate = Color(0.5704896, 0.9442898, 0.8642784, 0.49411765)
+material = SubResource("CanvasItemMaterial_vrsqo")
+scale = Vector2(0.5318155, 0.51826113)
+amount = 10
+texture = SubResource("GradientTexture2D_3ya7q")
+lifetime = 0.54
+preprocess = 1.3
+speed_scale = 0.37
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_hxmcq")
 
 [connection signal="body_shape_entered" from="." to="CollisionShape2D" method="_on_area_2d_body_shape_entered"]

@@ -2,35 +2,45 @@
 
 [ext_resource type="Script" uid="uid://d1g5ww70mi205" path="res://scripts/node_2d.gd" id="1_lbhrr"]
 [ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="2_iywne"]
-[ext_resource type="Script" uid="uid://ljvsqy3rhxo7" path="res://scripts/follow_cam_x.gd" id="3_p57ef"]
+[ext_resource type="Script" uid="uid://ljvsqy3rhxo7" path="res://scripts/ground_script.gd" id="3_p57ef"]
+[ext_resource type="Texture2D" uid="uid://c708lwimqm01p" path="res://images/ground/groundSquare_01_001-uhd.png" id="4_p57ef"]
 [ext_resource type="Script" uid="uid://bomypfkgcxy1n" path="res://scripts/sprite.gd" id="4_u5sy4"]
+[ext_resource type="Texture2D" uid="uid://8w7is24iojs" path="res://images/bg/game_bg_01_001-uhd.png" id="5_iywne"]
+[ext_resource type="Texture2D" uid="uid://ype4q5ffqtx0" path="res://images/cubes/cube_371.png" id="6_gee14"]
+[ext_resource type="Script" uid="uid://c8ka8t08n5xf0" path="res://scripts/line_2d.gd" id="7_0tnpc"]
+[ext_resource type="Script" uid="uid://c23ly6o7rfkch" path="res://scripts/cam.gd" id="7_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://cmmvte7wddpqp" path="res://images/ground/line.png" id="7_u5sy4"]
+[ext_resource type="Script" uid="uid://iowxvugx06eo" path="res://scripts/counters.gd" id="8_vtaks"]
+[ext_resource type="Texture2D" uid="uid://dmtadlsknk8ok" path="res://images/slidergroove_02-uhd.png" id="9_dinhu"]
+[ext_resource type="Texture2D" uid="uid://bgbs07uahvnch" path="res://images/sliderBar2-uhd.png" id="10_kvuet"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dubn7"]
 font = ExtResource("2_iywne")
-font_size = 53
-outline_size = 7
+font_size = 58
+outline_size = 9
 outline_color = Color(0, 0, 0, 1)
+shadow_size = 14
+shadow_color = Color(0, 0, 0, 0.36078432)
+shadow_offset = Vector2(2, 2)
 
-[sub_resource type="Gradient" id="Gradient_wtcfe"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.021342413, 0.054678522, 0.13259092, 1)
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0tnpc"]
+blend_mode = 1
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_0e48y"]
-gradient = SubResource("Gradient_wtcfe")
+[sub_resource type="Curve" id="Curve_0tnpc"]
+_data = [Vector2(0.025000006, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6e84v"]
+[sub_resource type="Gradient" id="Gradient_0tnpc"]
+offsets = PackedFloat32Array(0, 0.43209878, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.061728418, 0.061728418, 0.061728418, 1, 0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtaks"]
+size = Vector2(1191, 282)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6e84v"]
 size = Vector2(64, 64)
 
-[sub_resource type="Gradient" id="Gradient_y32ns"]
-colors = PackedColorArray(0.5157923, 0.6725292, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_wtcfe"]
-gradient = SubResource("Gradient_y32ns")
-width = 32
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvuet"]
 
 [sub_resource type="Gradient" id="Gradient_4vge2"]
 offsets = PackedFloat32Array(0, 0.37548065, 1)
@@ -48,66 +58,143 @@ fill_to = Vector2(-0.6, 0)
 offsets = PackedFloat32Array(0, 0.863547, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gee14"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_ofbtx"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0tnpc"]
+gradient = SubResource("Gradient_ofbtx")
+width = 8
+height = 8
+
+[sub_resource type="Curve" id="Curve_vtaks"]
+_data = [Vector2(0.19563672, 1), 0.0, 0.0, 0, 0, Vector2(0.6838366, 1), 0.0, 0.0, 0, 0, Vector2(0.9918791, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_kd4pf"]
+curve = SubResource("Curve_vtaks")
+
+[sub_resource type="Curve" id="Curve_kvpfn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.3322872, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vu84t"]
+curve = SubResource("Curve_kvpfn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dinhu"]
+particle_flag_disable_z = true
+direction = Vector3(12.125, -98.5, 0)
+spread = 76.765
+initial_velocity_min = 107.689995
+initial_velocity_max = 107.689995
+gravity = Vector3(0, 422.335, 0)
+scale_max = 1.4
+scale_curve = SubResource("CurveTexture_vu84t")
+alpha_curve = SubResource("CurveTexture_kd4pf")
+
+[sub_resource type="LabelSettings" id="LabelSettings_0tnpc"]
+font = ExtResource("2_iywne")
+font_size = 26
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvuet"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 34
+corner_radius_top_right = 34
+corner_radius_bottom_right = 34
+corner_radius_bottom_left = 34
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ir15t"]
+
 [sub_resource type="Theme" id="Theme_3m5ht"]
 default_font = ExtResource("2_iywne")
-default_font_size = 18
+default_font_size = 19
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dinhu"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_trtic"]
+texture = ExtResource("10_kvuet")
+axis_stretch_horizontal = 1
+modulate_color = Color(0.99985725, 0.82434523, 0.9999997, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kvuet"]
+font = ExtResource("2_iywne")
+font_size = 33
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.36078432)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u5sy4"]
+blend_mode = 1
 
 [node name="main" type="Node2D" unique_id=1281902414]
 script = ExtResource("1_lbhrr")
 
 [node name="attempts" type="Label" parent="." unique_id=107369597]
-modulate = Color(1, 1, 1, 0.6156863)
 z_index = 100
-offset_left = 52.0
-offset_top = 168.0
-offset_right = 385.0
-offset_bottom = 216.0
+offset_left = 75.0
+offset_top = 157.0
+offset_right = 408.0
+offset_bottom = 205.0
 text = "Attempt 1"
 label_settings = SubResource("LabelSettings_dubn7")
 
-[node name="ground" type="RigidBody2D" parent="." unique_id=1589342909]
-z_index = 2
-position = Vector2(-8, 448)
+[node name="Line2D" type="Line2D" parent="." unique_id=1218393500]
+modulate = Color(1, 1, 1, 0.39215687)
+material = SubResource("CanvasItemMaterial_0tnpc")
+position = Vector2(-32, 384)
+width = 13.92
+width_curve = SubResource("Curve_0tnpc")
+gradient = SubResource("Gradient_0tnpc")
+script = ExtResource("7_0tnpc")
+MAX_LENGTH = 71
+
+[node name="ground" type="RigidBody2D" parent="." unique_id=1147703251]
+z_index = 100
+z_as_relative = false
+position = Vector2(578.51, 480)
 disable_mode = 1
 lock_rotation = true
 freeze = true
 script = ExtResource("3_p57ef")
-offset = 567.0
 
-[node name="texture" type="TextureRect" parent="ground" unique_id=1285858162]
-offset_left = -24.0
-offset_right = 1144.0
-offset_bottom = 208.0
-scale = Vector2(1.1600001, 1)
-texture = SubResource("GradientTexture1D_0e48y")
-
-[node name="ground_collision" type="CollisionShape2D" parent="ground" unique_id=815711605]
-shape = SubResource("WorldBoundaryShape2D_6e84v")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground" unique_id=1417532286]
+position = Vector2(4.98999, 109)
+shape = SubResource("RectangleShape2D_vtaks")
+one_way_collision = true
+one_way_collision_margin = 81.5
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=925123651]
 position = Vector2(-32, 384)
 slide_on_ceiling = false
 script = ExtResource("4_u5sy4")
-jumpStrength = 1140.35
-gravity = 5572.945
-max_velocity = 1599.0
-spinSpeed = 7.29
+jumpStrength = 1236.515
+gravity = 5762.985
+max_velocity = 2008.405
+spinSpeed = 7.79
+
+[node name="sprite" type="TextureRect" parent="CharacterBody2D" unique_id=880710354]
+offset_left = -2.885
+offset_right = 66.95221
+offset_bottom = 63.0
+scale = Vector2(1.075, 1.075)
+pivot_offset = Vector2(34.89, 32)
+texture = ExtResource("6_gee14")
+expand_mode = 1
 
 [node name="player_collision" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1103731386]
 position = Vector2(32, 32)
 shape = SubResource("RectangleShape2D_6e84v")
 
-[node name="sprite" type="TextureRect" parent="CharacterBody2D" unique_id=1243348531]
-offset_right = 64.0
-offset_bottom = 64.0
-pivot_offset = Vector2(32, 32)
-texture = SubResource("GradientTexture1D_wtcfe")
-
 [node name="Area2D" type="Area2D" parent="CharacterBody2D" unique_id=415769788]
 
 [node name="middle box" type="CollisionShape2D" parent="CharacterBody2D/Area2D" unique_id=1811234025]
 position = Vector2(32, 32)
-shape = SubResource("RectangleShape2D_rnjyy")
+shape = SubResource("RectangleShape2D_kvuet")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="CharacterBody2D" unique_id=1020853306]
 z_index = 99
@@ -129,12 +216,33 @@ color_ramp = SubResource("Gradient_04qyp")
 hue_variation_min = -0.4
 hue_variation_max = 0.44
 
+[node name="friction" type="GPUParticles2D" parent="CharacterBody2D" unique_id=485545047]
+modulate = Color(0.99999934, 0.58628637, 0.81418395, 0.53333336)
+material = SubResource("CanvasItemMaterial_gee14")
+position = Vector2(1, 60)
+amount = 20
+texture = SubResource("GradientTexture2D_0tnpc")
+lifetime = 0.27
+preprocess = 1.3
+speed_scale = 1.1
+process_material = SubResource("ParticleProcessMaterial_dinhu")
+
+[node name="Area2D2" type="Area2D" parent="CharacterBody2D" unique_id=1940220481]
+
+[node name="spinbox" type="CollisionShape2D" parent="CharacterBody2D/Area2D2" unique_id=286044485]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_6e84v")
+
+[node name="SpiderRay" type="RayCast2D" parent="CharacterBody2D" unique_id=1076433354]
+position = Vector2(32, 32)
+
 [node name="cam" type="Camera2D" parent="." unique_id=73515690]
 position = Vector2(416, 315.536)
 offset = Vector2(160, 0)
+script = ExtResource("7_kvpfn")
 
 [node name="Control" type="Control" parent="cam" unique_id=980306862]
-z_index = 100
+z_index = 300
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -145,13 +253,193 @@ offset_right = -416.0
 offset_bottom = -315.536
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("8_vtaks")
 
-[node name="ProgressBar" type="ProgressBar" parent="cam/Control" unique_id=1907325764]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="cam/Control" unique_id=1477573444]
+z_index = 1
 layout_mode = 0
-offset_left = 199.0
-offset_top = 17.0
-offset_right = 893.0
-offset_bottom = 40.0
-theme = SubResource("Theme_3m5ht")
+offset_left = 360.0
+offset_right = 1200.0
+offset_bottom = 44.0
+scale = Vector2(0.512, 0.512)
+texture_over = ExtResource("9_dinhu")
+texture_progress = ExtResource("10_kvuet")
+tint_progress = Color(1, 0.89411765, 1, 1)
 
+[node name="cps" type="Label" parent="cam/Control" unique_id=1134825589]
+modulate = Color(1, 1, 1, 0.3647059)
+z_index = 100
+layout_mode = 0
+offset_left = 9.0
+offset_top = 28.0
+offset_right = 342.0
+offset_bottom = 76.0
+text = "0 CPS"
+label_settings = SubResource("LabelSettings_0tnpc")
+
+[node name="fps" type="Label" parent="cam/Control" unique_id=1205230314]
+modulate = Color(1, 1, 1, 0.3647059)
+z_index = 100
+layout_mode = 0
+offset_left = 9.0
+offset_top = 3.0
+offset_right = 342.0
+offset_bottom = 51.0
+text = "0 FPS"
+label_settings = SubResource("LabelSettings_0tnpc")
+
+[node name="Panel" type="Panel" parent="cam/Control" unique_id=166877871]
+clip_contents = true
+layout_mode = 0
+offset_left = 366.0
+offset_top = 3.6
+offset_right = 785.0
+offset_bottom = 18.599997
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvuet")
+
+[node name="ProgressBar" type="ProgressBar" parent="cam/Control/Panel" unique_id=1907325764]
+material = SubResource("ShaderMaterial_ir15t")
+layout_mode = 0
+offset_left = -6.0000005
+offset_right = 833.8437
+offset_bottom = 31.249998
+scale = Vector2(0.512, 0.512)
+theme = SubResource("Theme_3m5ht")
+theme_override_styles/background = SubResource("StyleBoxEmpty_dinhu")
+theme_override_styles/fill = SubResource("StyleBoxTexture_trtic")
+show_percentage = false
+
+[node name="percent" type="Label" parent="cam/Control" unique_id=1091973487]
+z_index = 100
+layout_mode = 0
+offset_left = 799.0
+offset_top = 5.0
+offset_right = 1132.0
+offset_bottom = 53.0
+text = "0%"
+label_settings = SubResource("LabelSettings_kvuet")
+
+[node name="background" type="ParallaxBackground" parent="." unique_id=1889764734]
+
+[node name="bg" type="ParallaxLayer" parent="background" unique_id=1544259678]
+modulate = Color(0.15686275, 0.49019608, 1, 1)
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(2048, 2048)
+
+[node name="GameBg01001Uhd" type="Sprite2D" parent="background/bg" unique_id=807334268]
+position = Vector2(315, -253)
+texture = ExtResource("5_iywne")
+
+[node name="ground_tiles" type="ParallaxBackground" parent="." unique_id=1469012404]
+layer = 100
+scroll_base_offset = Vector2(-20, 0)
+
+[node name="g" type="ParallaxLayer" parent="ground_tiles" unique_id=468833837]
+modulate = Color(0, 0.4, 1, 1)
+z_index = 200
+position = Vector2(-8, 448)
+motion_mirroring = Vector2(248, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ground_tiles/g" unique_id=422463003]
+position = Vector2(132, 124)
+scale = Vector2(0.484375, 0.484375)
+texture = ExtResource("4_p57ef")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ground_tiles/g" unique_id=474652768]
+position = Vector2(628, 124)
+scale = Vector2(0.484375, 0.484375)
+texture = ExtResource("4_p57ef")
+
+[node name="Sprite2D3" type="Sprite2D" parent="ground_tiles/g" unique_id=1833272736]
+position = Vector2(1124, 124)
+scale = Vector2(0.484375, 0.484375)
+texture = ExtResource("4_p57ef")
+
+[node name="line" type="ParallaxLayer" parent="ground_tiles" unique_id=551232234]
+z_index = 201
+motion_scale = Vector2(0, 1)
+
+[node name="Line" type="Sprite2D" parent="ground_tiles/line" unique_id=423257306]
+modulate = Color(1, 1, 1, 0.49019608)
+material = SubResource("CanvasItemMaterial_u5sy4")
+position = Vector2(576, 449.62)
+scale = Vector2(0.665, 0.665)
+texture = ExtResource("7_u5sy4")
+
+[node name="borders" type="ParallaxBackground" parent="." unique_id=1658534440]
+layer = 101
+scroll_base_offset = Vector2(-20, 0)
+
+[node name="g" type="ParallaxLayer" parent="borders" unique_id=936947431]
+modulate = Color(0, 0.4, 1, 1)
+z_index = 200
+position = Vector2(-8, 448)
+motion_scale = Vector2(1, 0)
+motion_mirroring = Vector2(248, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="borders/g" unique_id=1298693933]
+position = Vector2(132, 324.00003)
+scale = Vector2(0.484375, 0.484375)
+texture = ExtResource("4_p57ef")
+
+[node name="Sprite2D2" type="Sprite2D" parent="borders/g" unique_id=346229852]
+position = Vector2(628, 324.00003)
+scale = Vector2(0.484375, 0.484375)
+texture = ExtResource("4_p57ef")
+
+[node name="Sprite2D3" type="Sprite2D" parent="borders/g" unique_id=1427200261]
+position = Vector2(1124, 324.00003)
+scale = Vector2(0.484375, 0.484375)
+texture = ExtResource("4_p57ef")
+
+[node name="line" type="ParallaxLayer" parent="borders" unique_id=972839159]
+z_index = 201
+position = Vector2(-27, 200)
+motion_scale = Vector2(0, 0)
+
+[node name="Line" type="Sprite2D" parent="borders/line" unique_id=2032561587]
+modulate = Color(1, 1, 1, 0.49019608)
+material = SubResource("CanvasItemMaterial_u5sy4")
+position = Vector2(576, 449.62)
+scale = Vector2(0.665, 0.665)
+texture = ExtResource("7_u5sy4")
+
+[node name="g2" type="ParallaxLayer" parent="borders" unique_id=294812447]
+modulate = Color(0, 0.4, 1, 1)
+z_index = 200
+position = Vector2(-16, 896)
+rotation = -3.1415925
+motion_scale = Vector2(1, 0)
+motion_mirroring = Vector2(248, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="borders/g2" unique_id=140547941]
+position = Vector2(-1379.9999, 1020)
+scale = Vector2(0.484375, 0.484375)
+texture = ExtResource("4_p57ef")
+
+[node name="Sprite2D2" type="Sprite2D" parent="borders/g2" unique_id=67262091]
+position = Vector2(-883.9999, 1020)
+scale = Vector2(0.484375, 0.484375)
+texture = ExtResource("4_p57ef")
+
+[node name="Sprite2D3" type="Sprite2D" parent="borders/g2" unique_id=919940391]
+position = Vector2(-387.9999, 1020)
+scale = Vector2(0.484375, 0.484375)
+texture = ExtResource("4_p57ef")
+
+[node name="line2" type="ParallaxLayer" parent="borders" unique_id=208105884]
+z_index = 201
+position = Vector2(563, 20.325)
+rotation = -3.1415925
+motion_scale = Vector2(0, 0)
+
+[node name="Line" type="Sprite2D" parent="borders/line2" unique_id=1025245886]
+modulate = Color(1, 1, 1, 0.49019608)
+material = SubResource("CanvasItemMaterial_u5sy4")
+position = Vector2(-26, 22.000002)
+scale = Vector2(0.665, 0.665)
+texture = ExtResource("7_u5sy4")
+
+[connection signal="body_entered" from="ground" to="ground" method="_on_body_entered"]
 [connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="CharacterBody2D/Area2D2" to="CharacterBody2D" method="_on_area_2d_2_body_entered"]

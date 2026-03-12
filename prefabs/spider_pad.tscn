@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://dqnmyqed6275w"]
+
+[ext_resource type="Script" uid="uid://bgt78mfunfbsg" path="res://scripts/spider_pad.gd" id="1_hnlis"]
+[ext_resource type="Texture2D" uid="uid://mn20dre6ghb" path="res://images/pads/TeleportationPad.webp" id="2_hnlis"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
+size = Vector2(62, 23)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_sguyq"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_sguyq"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fnr8i"]
+gradient = SubResource("Gradient_sguyq")
+width = 8
+height = 8
+
+[sub_resource type="Curve" id="Curve_h86mc"]
+_data = [Vector2(0.19563672, 1), 0.0, 0.0, 0, 0, Vector2(0.6838366, 1), 0.0, 0.0, 0, 0, Vector2(0.9918791, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_w4ugc"]
+curve = SubResource("Curve_h86mc")
+
+[sub_resource type="Curve" id="Curve_a4yd4"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.3322872, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_6tytf"]
+curve = SubResource("Curve_a4yd4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tjfwy"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, 29.225, 0)
+emission_shape_scale = Vector3(0.865, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(31.615, 1, 1)
+direction = Vector3(0, -47.08, 0)
+spread = 9.0
+initial_velocity_min = 76.92
+initial_velocity_max = 138.45
+gravity = Vector3(0, 0, 0)
+scale_min = 0.79999995
+scale_curve = SubResource("CurveTexture_6tytf")
+alpha_curve = SubResource("CurveTexture_w4ugc")
+
+[node name="spider_pad" type="Area2D" unique_id=484844631]
+z_index = -1
+script = ExtResource("1_hnlis")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=745313364]
+position = Vector2(0, 25.5)
+shape = SubResource("RectangleShape2D_rnjyy")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1226750450]
+offset_left = -53.855
+offset_top = 25.317068
+offset_right = 61.145
+offset_bottom = 67.90921
+rotation = -6.2831855
+scale = Vector2(0.542, 0.542)
+pivot_offset = Vector2(49.5, -33.52)
+texture = ExtResource("2_hnlis")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=231217935]
+modulate = Color(0.74509805, 0.31764707, 0.9411765, 0.49411765)
+material = SubResource("CanvasItemMaterial_sguyq")
+amount = 20
+texture = SubResource("GradientTexture2D_fnr8i")
+preprocess = 1.3
+speed_scale = 1.8
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_tjfwy")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

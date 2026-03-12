@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://dhukhtt0dpp8"]
+
+[ext_resource type="Script" uid="uid://b7b03pw5fuygd" path="res://scripts/set_speed.gd" id="1_0k3m5"]
+[ext_resource type="Shader" uid="uid://dru5rwxb5rqdo" path="res://shaders/lightness.gdshader" id="1_7a5bl"]
+[ext_resource type="Texture2D" uid="uid://dwj7h631408ks" path="res://images/portals/SpeedPortal_.webp" id="1_dpeht"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ynthx"]
+shader = ExtResource("1_7a5bl")
+shader_parameter/lightness = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
+size = Vector2(74, 92)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_s6pvf"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_4hpkh"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7a5bl"]
+gradient = SubResource("Gradient_4hpkh")
+width = 8
+height = 8
+
+[sub_resource type="Curve" id="Curve_ynthx"]
+_data = [Vector2(0.19563672, 1), 0.0, 0.0, 0, 0, Vector2(0.6838366, 1), 0.0, 0.0, 0, 0, Vector2(0.9918791, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ml2k8"]
+curve = SubResource("Curve_ynthx")
+
+[sub_resource type="Curve" id="Curve_q8ufx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.3322872, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_e1m15"]
+curve = SubResource("Curve_q8ufx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wjs3x"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -0.075, 0)
+emission_shape_scale = Vector3(1.195, 1.09, 1)
+emission_shape = 3
+emission_box_extents = Vector3(41.405, 54.05, 1)
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 30.0
+initial_velocity_max = 50.5
+gravity = Vector3(0, 0, 0)
+scale_min = 0.59999996
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_e1m15")
+alpha_curve = SubResource("CurveTexture_ml2k8")
+
+[node name="0_5x_speed" type="Area2D" unique_id=484844631]
+
+[node name="SpeedPortal" type="Sprite2D" parent="." unique_id=1338465947]
+material = SubResource("ShaderMaterial_ynthx")
+position = Vector2(-1.1920929e-07, -2.3841858e-07)
+scale = Vector2(0.53237414, 0.53237396)
+texture = ExtResource("1_dpeht")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=745313364]
+shape = SubResource("RectangleShape2D_rnjyy")
+script = ExtResource("1_0k3m5")
+targetSpeed = 8.4
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=633297806]
+modulate = Color(0.94796425, 0.8605587, 0.53701293, 0.49411765)
+material = SubResource("CanvasItemMaterial_s6pvf")
+scale = Vector2(0.9996532, 0.9741751)
+amount = 10
+texture = SubResource("GradientTexture2D_7a5bl")
+lifetime = 0.54
+preprocess = 1.3
+speed_scale = 0.37
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_wjs3x")
+
+[connection signal="body_shape_entered" from="." to="CollisionShape2D" method="_on_area_2d_body_shape_entered"]

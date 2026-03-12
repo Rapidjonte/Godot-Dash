@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://4jic53md8msq"]
+
+[ext_resource type="Texture2D" uid="uid://cv2ehtnokjsmx" path="res://images/triggers/ColourTrigger.webp" id="1_aglux"]
+[ext_resource type="Script" uid="uid://ltdwuvug8xcp" path="res://scripts/color_trigger.gd" id="2_aosji"]
+[ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="2_muc0r"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_aosji"]
+font = ExtResource("2_muc0r")
+font_size = 27
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 7
+shadow_color = Color(0, 0, 0, 0.54901963)
+
+[node name="color_trigger" type="TextureRect" unique_id=1889468697]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("1_aglux")
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("2_aosji")
+targetID = "bg"
+targetColor = Color(0.37260303, 0.37260288, 0.3726029, 1)
+
+[node name="Label" type="Label" parent="." unique_id=478935577]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 53.0
+text = "bg"
+label_settings = SubResource("LabelSettings_aosji")
+horizontal_alignment = 1
+vertical_alignment = 2

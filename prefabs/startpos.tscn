@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dqjsgeqqs11ww"]
+
+[ext_resource type="Texture2D" uid="uid://bgq83yb3ydwmi" path="res://images/triggers/edit_eStartPosBtn_001.png" id="1_tu6ki"]
+[ext_resource type="Script" uid="uid://0k2yp4aks5ue" path="res://scripts/startpos.gd" id="2_fbatj"]
+
+[node name="startpos" type="TextureRect" unique_id=1889468697]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("1_tu6ki")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_fbatj")

@@ -1,7 +1,7 @@
 extends RigidBody2D
 
-@export var texture: Texture
-@export var disable_collision: bool
+@export var texture : Texture
+@export var disable_collision : bool
 
 func _ready() -> void:
 	if texture != null and $TextureRect:

@@ -21,7 +21,7 @@ offset_bottom = 624.0
 theme_override_fonts/font = ExtResource("1_vjb58")
 autowrap_mode = 2
 script = ExtResource("1_yqeox")
-levelPath = "res://levels/level.tscn"
+levelPath = "res://levels/level1.tscn"
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Button" unique_id=1629955594]
@@ -31,7 +31,117 @@ anchor_right = 0.77272725
 anchor_bottom = 0.79464287
 offset_right = 40.0
 offset_bottom = 23.0
-text = "Level 1:"
+text = "Level 1:
+
+Madness"
+label_settings = SubResource("LabelSettings_mhnvy")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Button2" type="Button" parent="." unique_id=924412146]
+offset_left = 224.0
+offset_top = 512.0
+offset_right = 400.0
+offset_bottom = 624.0
+theme_override_fonts/font = ExtResource("1_vjb58")
+autowrap_mode = 2
+script = ExtResource("1_yqeox")
+levelPath = "res://levels/level2.tscn"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Button2" unique_id=634322354]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.77272725
+anchor_bottom = 0.79464287
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Level 2:
+
+New orbs"
+label_settings = SubResource("LabelSettings_mhnvy")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Button3" type="Button" parent="." unique_id=879783672]
+offset_left = 424.0
+offset_top = 512.0
+offset_right = 600.0
+offset_bottom = 624.0
+theme_override_fonts/font = ExtResource("1_vjb58")
+autowrap_mode = 2
+script = ExtResource("1_yqeox")
+levelPath = "res://levels/level3.tscn"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Button3" unique_id=1238634184]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.77272725
+anchor_bottom = 0.79464287
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Level 3:
+
+DEMON!"
+label_settings = SubResource("LabelSettings_mhnvy")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Button4" type="Button" parent="." unique_id=1603743762]
+offset_left = 624.0
+offset_top = 512.0
+offset_right = 800.0
+offset_bottom = 624.0
+theme_override_fonts/font = ExtResource("1_vjb58")
+autowrap_mode = 2
+script = ExtResource("1_yqeox")
+levelPath = "res://levels/level4.tscn"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Button4" unique_id=1719376331]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.77272725
+anchor_bottom = 0.79464287
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Level 4:
+
+Easier?"
+label_settings = SubResource("LabelSettings_mhnvy")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Button5" type="Button" parent="." unique_id=149039987]
+offset_left = 824.0
+offset_top = 512.0
+offset_right = 1000.0
+offset_bottom = 624.0
+theme_override_fonts/font = ExtResource("1_vjb58")
+autowrap_mode = 2
+script = ExtResource("1_yqeox")
+levelPath = "res://levels/level5.tscn"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Button5" unique_id=678617525]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.77272725
+anchor_bottom = 0.79464287
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Level 5:
+
+SHIP!"
 label_settings = SubResource("LabelSettings_mhnvy")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -44,3 +154,7 @@ scale = Vector2(0.93224925, 0.94692737)
 texture = ExtResource("4_mhnvy")
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
+[connection signal="pressed" from="Button2" to="Button2" method="_on_pressed"]
+[connection signal="pressed" from="Button3" to="Button3" method="_on_pressed"]
+[connection signal="pressed" from="Button4" to="Button4" method="_on_pressed"]
+[connection signal="pressed" from="Button5" to="Button5" method="_on_pressed"]
