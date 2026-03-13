@@ -164,3 +164,117 @@ texture = ExtResource("5_pdpul")
 [node name="block6" parent="." unique_id=401759538 instance=ExtResource("1_gjl0y")]
 position = Vector2(3360, -32)
 texture = ExtResource("5_pdpul")
+
+[node name="block37" parent="." unique_id=1521539077 instance=ExtResource("1_gjl0y")]
+position = Vector2(3616, -224)
+
+[node name="block38" parent="." unique_id=2111634853 instance=ExtResource("1_gjl0y")]
+position = Vector2(3872, -288)
+
+[node name="block39" parent="." unique_id=1491392184 instance=ExtResource("1_gjl0y")]
+position = Vector2(4128, -352)
+
+[node name="block40" parent="." unique_id=1527887354 instance=ExtResource("1_gjl0y")]
+position = Vector2(3872, -224)
+texture = ExtResource("4_61w3m")
+
+[node name="block41" parent="." unique_id=1189782883 instance=ExtResource("1_gjl0y")]
+position = Vector2(4128, -288)
+texture = ExtResource("5_pdpul")
+
+[node name="block42" parent="." unique_id=1939313876 instance=ExtResource("1_gjl0y")]
+position = Vector2(4128, -224)
+texture = ExtResource("5_pdpul")
+
+[node name="block43" parent="." unique_id=1029451401 instance=ExtResource("1_gjl0y")]
+position = Vector2(4384, -416)
+
+[node name="block44" parent="." unique_id=625345573 instance=ExtResource("1_gjl0y")]
+position = Vector2(4640, -480)
+
+[node name="block45" parent="." unique_id=812343663 instance=ExtResource("1_gjl0y")]
+position = Vector2(4640, -416)
+texture = ExtResource("5_pdpul")
+
+[node name="block46" parent="." unique_id=257219337 instance=ExtResource("1_gjl0y")]
+position = Vector2(4896, -544)
+
+[node name="block47" parent="." unique_id=1301286887 instance=ExtResource("1_gjl0y")]
+position = Vector2(5152, -608)
+
+[node name="block48" parent="." unique_id=1391346170 instance=ExtResource("1_gjl0y")]
+position = Vector2(5408, -672)
+
+[node name="block49" parent="." unique_id=1201724135 instance=ExtResource("1_gjl0y")]
+position = Vector2(5152, -544)
+texture = ExtResource("4_61w3m")
+
+[node name="block50" parent="." unique_id=920354809 instance=ExtResource("1_gjl0y")]
+position = Vector2(5408, -608)
+texture = ExtResource("5_pdpul")
+
+[node name="block51" parent="." unique_id=1725294750 instance=ExtResource("1_gjl0y")]
+position = Vector2(5408, -544)
+texture = ExtResource("5_pdpul")
+
+[node name="block52" parent="." unique_id=1476874768 instance=ExtResource("1_gjl0y")]
+position = Vector2(5664, -736)
+
+[node name="block53" parent="." unique_id=1387218223 instance=ExtResource("1_gjl0y")]
+position = Vector2(5920, -800)
+
+[node name="block54" parent="." unique_id=1250315620 instance=ExtResource("1_gjl0y")]
+position = Vector2(5920, -736)
+texture = ExtResource("5_pdpul")
+
+[node name="block55" parent="." unique_id=823828224 instance=ExtResource("1_gjl0y")]
+position = Vector2(6176, -864)
+
+[node name="block56" parent="." unique_id=2112556532 instance=ExtResource("1_gjl0y")]
+position = Vector2(6432, -928)
+
+[node name="block57" parent="." unique_id=216314723 instance=ExtResource("1_gjl0y")]
+position = Vector2(6688, -992)
+
+[node name="block58" parent="." unique_id=1893746759 instance=ExtResource("1_gjl0y")]
+position = Vector2(6432, -864)
+texture = ExtResource("4_61w3m")
+
+[node name="block59" parent="." unique_id=1525140981 instance=ExtResource("1_gjl0y")]
+position = Vector2(6688, -928)
+texture = ExtResource("5_pdpul")
+
+[node name="block60" parent="." unique_id=2079466263 instance=ExtResource("1_gjl0y")]
+position = Vector2(6688, -864)
+texture = ExtResource("5_pdpul")
+
+[node name="block61" parent="." unique_id=1352839144 instance=ExtResource("1_gjl0y")]
+position = Vector2(6944, -1056)
+
+[node name="block62" parent="." unique_id=87579627 instance=ExtResource("1_gjl0y")]
+position = Vector2(7200, -1120)
+
+[node name="block63" parent="." unique_id=1295991536 instance=ExtResource("1_gjl0y")]
+position = Vector2(7200, -1056)
+texture = ExtResource("5_pdpul")
+
+[node name="block64" parent="." unique_id=655494151 instance=ExtResource("1_gjl0y")]
+position = Vector2(7456, -1184)
+
+[node name="block65" parent="." unique_id=2056770172 instance=ExtResource("1_gjl0y")]
+position = Vector2(7712, -1248)
+
+[node name="block66" parent="." unique_id=1259621490 instance=ExtResource("1_gjl0y")]
+position = Vector2(7968, -1312)
+
+[node name="block67" parent="." unique_id=144631528 instance=ExtResource("1_gjl0y")]
+position = Vector2(7712, -1184)
+texture = ExtResource("4_61w3m")
+
+[node name="block68" parent="." unique_id=1742076859 instance=ExtResource("1_gjl0y")]
+position = Vector2(7968, -1248)
+texture = ExtResource("5_pdpul")
+
+[node name="block69" parent="." unique_id=125002130 instance=ExtResource("1_gjl0y")]
+position = Vector2(7968, -1184)
+texture = ExtResource("5_pdpul")
