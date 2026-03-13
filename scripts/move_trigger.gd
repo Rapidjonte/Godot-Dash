@@ -2,7 +2,10 @@ extends TextureRect
 
 @export var targetID : String
 @export var duration : float
-@export var targetAlpha : float
+@export var x_move : float
+@export var y_move : float
+@export var lock_to_player_x : bool
+@export var lock_to_player_y : bool
 @export var only_spawned : bool
 
 @onready var character_body = get_node("../../CharacterBody2D")
@@ -31,7 +34,7 @@ func activate(tween):
 	triggered = true
 	
 	for node in get_tree().get_nodes_in_group(targetID):
-		tween.parallel().tween_property(node, "modulate:a", targetAlpha, duration)	
-	
+		pass
+
 	await tween.finished
 	queue_free()

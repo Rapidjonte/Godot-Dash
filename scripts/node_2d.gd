@@ -9,7 +9,7 @@ func _process(delta: float) -> void:
 	queue_redraw()
 	if not Global.paused:
 		var progress = $CharacterBody2D.position.x / Global.endX
-		progress = max(progress, 0)
+		progress = min(max(progress, 0),1)
 		$cam/Control/Panel/ProgressBar.value = progress*100
 		$cam/Control/percent.text = str(floor(progress*10000)/100) + "%"
 		if progress >= 1:

@@ -1,8 +1,7 @@
 extends TextureRect
 
 @export var targetID : String
-@export var duration : float
-@export var targetAlpha : float
+@export var toggle : bool
 @export var only_spawned : bool
 
 @onready var character_body = get_node("../../CharacterBody2D")
@@ -31,7 +30,15 @@ func activate(tween):
 	triggered = true
 	
 	for node in get_tree().get_nodes_in_group(targetID):
-		tween.parallel().tween_property(node, "modulate:a", targetAlpha, duration)	
+		var collide = node.find_child("CollisionShape2D", true)
+		if toggle:
+			if collide:
+				collide.disabled = false
+			node.visible = true
+		else:
+			if collide:
+				collide.disabled = true
+			node.visible = false
 	
 	await tween.finished
 	queue_free()

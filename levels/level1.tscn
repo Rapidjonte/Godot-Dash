@@ -11,11 +11,11 @@
 
 [node name="level" type="Node2D" unique_id=40821179]
 
-[node name="big_spike" parent="." unique_id=1147703251 groups=["1"] instance=ExtResource("2_vnv7o")]
-position = Vector2(792, -32)
-
 [node name="big_spike2" parent="." unique_id=115139428 instance=ExtResource("2_vnv7o")]
 position = Vector2(1760, -32)
+
+[node name="big_spike5" parent="." unique_id=1147703251 instance=ExtResource("2_vnv7o")]
+position = Vector2(864, -32)
 
 [node name="big_spike3" parent="." unique_id=1150188068 instance=ExtResource("2_vnv7o")]
 position = Vector2(1824, -32)
