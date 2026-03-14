@@ -20,6 +20,8 @@ func _ready() -> void:
 	$friction.position.y = 60
 	_material.direction = Vector3(12.125,-98.5,0)
 	_material.gravity = Vector3(0,422.335,0)
+	
+	Global.border_blocks = 0
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("reset"):

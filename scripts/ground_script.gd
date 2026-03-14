@@ -10,9 +10,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	position.x = cam.position.x - offset
+	$"../ground2".position.x = cam.position.x - offset
 	if Global.border_blocks != 0:
 		$CollisionShape2D.position.y = cam.position.y-(Global.border_blocks*64)-15
-		$ground.position.y = cam.position.y-926-(Global.border_blocks*64)
+		$ground.position.y = cam.position.y-1054+(Global.border_blocks*64)
 		$ground/CollisionShape2D.disabled = false
 	else:
 		$ground/CollisionShape2D.disabled = true

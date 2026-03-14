@@ -3,6 +3,7 @@ extends Area2D
 var character_body
 
 var circle_scene: PackedScene = load("res://scenes/circle_effect.tscn")
+@export var gamemode_scene : PackedScene
 
 func _ready():
 	character_body = get_node("../../CharacterBody2D")
@@ -25,3 +26,6 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 		var node = circle_scene.instantiate()
 		node.scale = Vector2(0.35,0.35)
 		$GPUParticles2D.add_child(node)
+		
+		Global.border_blocks = 0
+		

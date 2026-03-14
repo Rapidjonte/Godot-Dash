@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://b575utufsy4mq" path="res://images/blocks/GridBlock08.webp" id="5_pdpul"]
 [ext_resource type="Texture2D" uid="uid://ukmw325x2s5y" path="res://images/blocks/GridBlock06.webp" id="6_omn1t"]
 [ext_resource type="Texture2D" uid="uid://dcnx3thlash4t" path="res://images/blocks/GridBlock05.webp" id="7_lf3p4"]
+[ext_resource type="PackedScene" uid="uid://bwixd4kkxhlrc" path="res://prefabs/ship_portal.tscn" id="9_omn1t"]
+[ext_resource type="PackedScene" uid="uid://c82ynw3eqr4bl" path="res://prefabs/red_pad.tscn" id="10_lf3p4"]
 
 [node name="level" type="Node2D" unique_id=40821179]
 
@@ -278,3 +280,9 @@ texture = ExtResource("5_pdpul")
 [node name="block69" parent="." unique_id=125002130 instance=ExtResource("1_gjl0y")]
 position = Vector2(7968, -1184)
 texture = ExtResource("5_pdpul")
+
+[node name="ship_portal" parent="." unique_id=484844631 instance=ExtResource("9_omn1t")]
+position = Vector2(552, -328)
+
+[node name="red_pad" parent="." unique_id=1938215401 instance=ExtResource("10_lf3p4")]
+position = Vector2(480, -32)
