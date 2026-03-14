@@ -32,7 +32,7 @@ func switch_gamemode():
 	new.position = Global.player.position
 	new.rotation = Global.player.rotation
 	new.speed = Global.player.speed
-	Global.player.call_deferred("get_parent").call_deferred("add_child", new)
+	Global.player.get_parent().add_child(new)
 	Global.player.visible = false
 	
 	Global.player = new

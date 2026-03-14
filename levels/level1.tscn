@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://dqnmyqed6275w" path="res://prefabs/spider_pad.tscn" id="26_wieee"]
 [ext_resource type="PackedScene" uid="uid://dlsxfv60tg8px" path="res://prefabs/spider_orb.tscn" id="27_xtf7k"]
 [ext_resource type="PackedScene" uid="uid://b6mkii2pikv2m" path="res://prefabs/yellow_pad.tscn" id="28_0nj7r"]
+[ext_resource type="PackedScene" uid="uid://bwixd4kkxhlrc" path="res://prefabs/ship_portal.tscn" id="29_0nj7r"]
 [ext_resource type="PackedScene" uid="uid://cyh6hyrha8p5r" path="res://prefabs/yellow_orb.tscn" id="29_4mjh6"]
 
 [node name="level" type="Node2D" unique_id=40821179]
@@ -392,3 +393,6 @@ position = Vector2(2472, -288)
 
 [node name="yellow_orb" parent="." unique_id=472994539 instance=ExtResource("29_4mjh6")]
 position = Vector2(2536, -192)
+
+[node name="ship_portal" parent="." unique_id=484844631 instance=ExtResource("29_0nj7r")]
+position = Vector2(560, -344)
