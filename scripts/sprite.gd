@@ -87,7 +87,7 @@ func collision_check():
 func _on_area_2d_2_body_entered(body: Node2D) -> void:
 	if Global.paused:
 		return
-	if body.name.contains("spike") and !Global.is_divisible_by_90(rad_to_deg(body.rotation)):
+	if body.name.contains("spike") and !Global.is_divisible_by_90(rad_to_deg(body.rotation)) :
 		die()
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
