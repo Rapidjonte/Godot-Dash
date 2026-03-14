@@ -4,9 +4,8 @@
 [ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="2_iywne"]
 [ext_resource type="Script" uid="uid://ljvsqy3rhxo7" path="res://scripts/ground_script.gd" id="3_p57ef"]
 [ext_resource type="Texture2D" uid="uid://c708lwimqm01p" path="res://images/ground/groundSquare_01_001-uhd.png" id="4_p57ef"]
-[ext_resource type="Script" uid="uid://bomypfkgcxy1n" path="res://scripts/sprite.gd" id="4_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://brxago3ouvnj" path="res://scenes/cube.tscn" id="5_dinhu"]
 [ext_resource type="Texture2D" uid="uid://8w7is24iojs" path="res://images/bg/game_bg_01_001-uhd.png" id="5_iywne"]
-[ext_resource type="Texture2D" uid="uid://ype4q5ffqtx0" path="res://images/cubes/cube_371.png" id="6_gee14"]
 [ext_resource type="Script" uid="uid://c8ka8t08n5xf0" path="res://scripts/line_2d.gd" id="7_0tnpc"]
 [ext_resource type="Script" uid="uid://c23ly6o7rfkch" path="res://scripts/cam.gd" id="7_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://cmmvte7wddpqp" path="res://images/ground/line.png" id="7_u5sy4"]
@@ -36,64 +35,6 @@ colors = PackedColorArray(1, 1, 1, 1, 0.061728418, 0.061728418, 0.061728418, 1, 
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vtaks"]
 size = Vector2(1191, 282)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6e84v"]
-size = Vector2(64, 64)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvuet"]
-
-[sub_resource type="Gradient" id="Gradient_4vge2"]
-offsets = PackedFloat32Array(0, 0.37548065, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 0.6863632, 1, 1, 1, 0.16470589, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_04qyp"]
-gradient = SubResource("Gradient_4vge2")
-width = 32
-height = 32
-fill = 2
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(-0.6, 0)
-
-[sub_resource type="Gradient" id="Gradient_04qyp"]
-offsets = PackedFloat32Array(0, 0.863547, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gee14"]
-blend_mode = 1
-
-[sub_resource type="Gradient" id="Gradient_ofbtx"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_0tnpc"]
-gradient = SubResource("Gradient_ofbtx")
-width = 8
-height = 8
-
-[sub_resource type="Curve" id="Curve_vtaks"]
-_data = [Vector2(0.19563672, 1), 0.0, 0.0, 0, 0, Vector2(0.6838366, 1), 0.0, 0.0, 0, 0, Vector2(0.9918791, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_kd4pf"]
-curve = SubResource("Curve_vtaks")
-
-[sub_resource type="Curve" id="Curve_kvpfn"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.3322872, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_vu84t"]
-curve = SubResource("Curve_kvpfn")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dinhu"]
-particle_flag_disable_z = true
-direction = Vector3(12.125, -98.5, 0)
-spread = 76.765
-initial_velocity_min = 107.689995
-initial_velocity_max = 107.689995
-gravity = Vector3(0, 422.335, 0)
-scale_max = 1.4
-scale_curve = SubResource("CurveTexture_vu84t")
-alpha_curve = SubResource("CurveTexture_kd4pf")
 
 [sub_resource type="LabelSettings" id="LabelSettings_0tnpc"]
 font = ExtResource("2_iywne")
@@ -197,73 +138,8 @@ shape = SubResource("RectangleShape2D_vtaks")
 one_way_collision = true
 one_way_collision_margin = 81.5
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=925123651]
+[node name="CharacterBody2D" parent="." unique_id=1621791113 instance=ExtResource("5_dinhu")]
 position = Vector2(-32, 384)
-slide_on_ceiling = false
-script = ExtResource("4_u5sy4")
-jumpStrength = 1236.515
-gravity = 5762.985
-max_velocity = 2008.405
-spinSpeed = 7.79
-
-[node name="sprite" type="TextureRect" parent="CharacterBody2D" unique_id=880710354]
-offset_left = -2.885
-offset_right = 66.95221
-offset_bottom = 63.0
-scale = Vector2(1.075, 1.075)
-pivot_offset = Vector2(34.89, 32)
-texture = ExtResource("6_gee14")
-expand_mode = 1
-
-[node name="player_collision" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1103731386]
-position = Vector2(32, 32)
-shape = SubResource("RectangleShape2D_6e84v")
-
-[node name="Area2D" type="Area2D" parent="CharacterBody2D" unique_id=415769788]
-
-[node name="middle box" type="CollisionShape2D" parent="CharacterBody2D/Area2D" unique_id=1811234025]
-position = Vector2(32, 32)
-shape = SubResource("RectangleShape2D_kvuet")
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="CharacterBody2D" unique_id=1020853306]
-z_index = 99
-position = Vector2(32, 32)
-emitting = false
-amount = 14
-texture = SubResource("GradientTexture2D_04qyp")
-lifetime = 1.45
-one_shot = true
-explosiveness = 1.0
-direction = Vector2(0, -1)
-initial_velocity_min = 398.85
-initial_velocity_max = 607.01
-angular_velocity_min = -103.28
-angular_velocity_max = 106.42
-angle_min = -86.3
-angle_max = 74.6
-color_ramp = SubResource("Gradient_04qyp")
-hue_variation_min = -0.4
-hue_variation_max = 0.44
-
-[node name="friction" type="GPUParticles2D" parent="CharacterBody2D" unique_id=485545047]
-modulate = Color(0.99999934, 0.58628637, 0.81418395, 0.53333336)
-material = SubResource("CanvasItemMaterial_gee14")
-position = Vector2(1, 60)
-amount = 20
-texture = SubResource("GradientTexture2D_0tnpc")
-lifetime = 0.27
-preprocess = 1.3
-speed_scale = 1.1
-process_material = SubResource("ParticleProcessMaterial_dinhu")
-
-[node name="Area2D2" type="Area2D" parent="CharacterBody2D" unique_id=1940220481]
-
-[node name="spinbox" type="CollisionShape2D" parent="CharacterBody2D/Area2D2" unique_id=286044485]
-position = Vector2(32, 32)
-shape = SubResource("RectangleShape2D_6e84v")
-
-[node name="SpiderRay" type="RayCast2D" parent="CharacterBody2D" unique_id=1076433354]
-position = Vector2(32, 32)
 
 [node name="cam" type="Camera2D" parent="." unique_id=73515690]
 position = Vector2(416, 315.536)
@@ -468,6 +344,3 @@ material = SubResource("CanvasItemMaterial_u5sy4")
 position = Vector2(-26, 22.000002)
 scale = Vector2(0.665, 0.665)
 texture = ExtResource("7_u5sy4")
-
-[connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="CharacterBody2D/Area2D2" to="CharacterBody2D" method="_on_area_2d_2_body_entered"]

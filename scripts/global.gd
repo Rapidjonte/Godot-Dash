@@ -2,6 +2,8 @@ extends Node
 
 signal flip_blocks
 
+var player : CharacterBody2D
+
 const NORMAL_SPEED := 10.41667
 const HALF_SPEED := 8.4
 const DOUBLE_SPEED := 12.91667

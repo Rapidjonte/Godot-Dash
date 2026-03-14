@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var speed = Global.NORMAL_SPEED
+var speed : float = Global.NORMAL_SPEED
 
 @export var jumpStrength : float
 @export var gravity : float
@@ -16,12 +16,15 @@ var maxExcessive = 160
 var quick_jump_disable = false
 
 func _ready() -> void:
+	Global.player = self
+	
 	var _material = $friction.process_material
 	$friction.position.y = 60
 	_material.direction = Vector3(12.125,-98.5,0)
 	_material.gravity = Vector3(0,422.335,0)
 	
 	Global.border_blocks = 0
+	Global.camera_y_lock = 0
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("reset"):

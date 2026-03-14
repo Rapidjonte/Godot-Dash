@@ -18,4 +18,4 @@ func _process(_delta):
 		add_point(point)
 
 func _get_position(): 
-	return Vector2($"../CharacterBody2D".position.x+64,$"../CharacterBody2D".position.y-352)
+	return Vector2(Global.player.position.x+64,Global.player.position.y-352)

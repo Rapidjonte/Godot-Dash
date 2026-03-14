@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bwecybdd6wk6l" path="res://scripts/gamemode_portal.gd" id="1_k8xu3"]
 [ext_resource type="Shader" uid="uid://dru5rwxb5rqdo" path="res://shaders/lightness.gdshader" id="2_4a0iw"]
+[ext_resource type="PackedScene" uid="uid://baynh7j3gk802" path="res://scenes/ship.tscn" id="2_q1qtf"]
 [ext_resource type="Texture2D" uid="uid://dwx0mh62dcske" path="res://images/portals/portal_04_back_001.png" id="4_k8xu3"]
 [ext_resource type="Texture2D" uid="uid://btitftfh14687" path="res://images/portals/portal_04_front_001.png" id="5_4a0iw"]
 
@@ -57,6 +58,7 @@ shader_parameter/lightness = 0.0
 [node name="ship_portal" type="Area2D" unique_id=484844631]
 z_index = -1
 script = ExtResource("1_k8xu3")
+gamemode_scene = ExtResource("2_q1qtf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=745313364]
 z_index = 2

@@ -1,16 +1,13 @@
 extends Area2D
 
-var character_body
-
 var circle_scene: PackedScene = load("res://scenes/circle_effect.tscn")
 @export var gamemode_scene : PackedScene
 
 func _ready():
-	character_body = get_node("../../CharacterBody2D")
 	$CollisionShape2D.disabled = false
 
 func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
-	if body == character_body:
+	if body == Global.player:
 		$CollisionShape2D.set_deferred("disabled", true)
 		
 		var mat = $PortalFront.material as ShaderMaterial
@@ -27,5 +24,15 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 		node.scale = Vector2(0.35,0.35)
 		$GPUParticles2D.add_child(node)
 		
-		Global.border_blocks = 0
-		
+		switch_gamemode()
+
+func switch_gamemode():
+	var new = gamemode_scene.instantiate()
+
+	new.position = Global.player.position
+	new.rotation = Global.player.rotation
+	new.speed = Global.player.speed
+	Global.player.call_deferred("get_parent").call_deferred("add_child", new)
+	Global.player.visible = false
+	
+	Global.player = new

@@ -1,25 +1,23 @@
 extends CollisionShape2D
 
-var character_body
 @export var multiplier: int
 @export var force: bool
 
 var circle_scene: PackedScene = load("res://scenes/circle_effect.tscn")
 
 func _ready():
-	character_body = get_node("../../../CharacterBody2D")
 	disabled = false
 
 func _on_grav_portal_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
-	if body == character_body:
-		var prevGrav = character_body.gravity
+	if body == Global.player:
+		var prevGrav = Global.player.gravity
 		
 		set_deferred("disabled", true)
 		var newGravity
 		if force:
-			newGravity = abs(character_body.gravity) * multiplier
+			newGravity = abs(Global.player.gravity) * multiplier
 		else:
-			newGravity = character_body.gravity * multiplier
+			newGravity = Global.player.gravity * multiplier
 			
 		var mat = $"../GravityPortal".material as ShaderMaterial
 		mat.set_shader_parameter("lightness", 0.99)
@@ -35,8 +33,8 @@ func _on_grav_portal_body_shape_entered(body_rid: RID, body: Node2D, body_shape_
 			if not Input.is_action_pressed("jump"):
 				Global.bufferable = true
 			
-			character_body.flip()
-			character_body.velocity.y *= 0.474
+			Global.player.flip()
+			Global.player.velocity.y *= 0.474
 			
 			#character_body.velocity.y += character_body.gravity * get_process_delta_time() * 0.1
 			#character_body.move_and_slide()

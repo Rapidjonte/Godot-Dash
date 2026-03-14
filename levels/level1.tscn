@@ -8,19 +8,37 @@
 [ext_resource type="Texture2D" uid="uid://b575utufsy4mq" path="res://images/blocks/GridBlock08.webp" id="5_pdpul"]
 [ext_resource type="Texture2D" uid="uid://ukmw325x2s5y" path="res://images/blocks/GridBlock06.webp" id="6_omn1t"]
 [ext_resource type="Texture2D" uid="uid://dcnx3thlash4t" path="res://images/blocks/GridBlock05.webp" id="7_lf3p4"]
-[ext_resource type="PackedScene" uid="uid://bwixd4kkxhlrc" path="res://prefabs/ship_portal.tscn" id="9_omn1t"]
 [ext_resource type="PackedScene" uid="uid://c82ynw3eqr4bl" path="res://prefabs/red_pad.tscn" id="10_lf3p4"]
+[ext_resource type="PackedScene" uid="uid://dhukhtt0dpp8" path="res://prefabs/0.5x_speed.tscn" id="11_jq2cn"]
+[ext_resource type="PackedScene" uid="uid://bbhqc0unrcg7f" path="res://prefabs/1x_speed.tscn" id="12_a5s8o"]
+[ext_resource type="PackedScene" uid="uid://c6xspwk10ky26" path="res://prefabs/2x_speed.tscn" id="13_ls4ot"]
+[ext_resource type="PackedScene" uid="uid://pg6arupg4uij" path="res://prefabs/3x_speed.tscn" id="14_tx362"]
+[ext_resource type="PackedScene" uid="uid://bj0kwkfuf8xwe" path="res://prefabs/4x_speed.tscn" id="15_l7nqg"]
+[ext_resource type="PackedScene" uid="uid://b8u1uuyuxggbp" path="res://prefabs/blue_orb.tscn" id="16_ls4ot"]
+[ext_resource type="PackedScene" uid="uid://b3m51ewy5xgs1" path="res://prefabs/blue_pad.tscn" id="17_tx362"]
+[ext_resource type="PackedScene" uid="uid://glmjr8s8mkn5" path="res://prefabs/flat_spike.tscn" id="18_tx362"]
+[ext_resource type="PackedScene" uid="uid://c5jws7x1v4ewu" path="res://prefabs/gravity_portal_a.tscn" id="19_ou4v7"]
+[ext_resource type="PackedScene" uid="uid://bcjmf6nvwhxlv" path="res://prefabs/gravity_portal_b.tscn" id="20_53hnx"]
+[ext_resource type="PackedScene" uid="uid://dcngtrpfx3ts6" path="res://prefabs/gravity_portal_c.tscn" id="21_mxqdg"]
+[ext_resource type="PackedScene" uid="uid://cdw43iovsdv3r" path="res://prefabs/green_orb.tscn" id="22_tv7bq"]
+[ext_resource type="PackedScene" uid="uid://uoi4oyno3aqw" path="res://prefabs/pink_orb.tscn" id="23_mxqdg"]
+[ext_resource type="PackedScene" uid="uid://dg7upnaoi1py1" path="res://prefabs/pink_pad.tscn" id="24_tv7bq"]
+[ext_resource type="PackedScene" uid="uid://ria0vtt1yyun" path="res://prefabs/saw.tscn" id="25_tv7bq"]
+[ext_resource type="PackedScene" uid="uid://dqnmyqed6275w" path="res://prefabs/spider_pad.tscn" id="26_wieee"]
+[ext_resource type="PackedScene" uid="uid://dlsxfv60tg8px" path="res://prefabs/spider_orb.tscn" id="27_xtf7k"]
+[ext_resource type="PackedScene" uid="uid://b6mkii2pikv2m" path="res://prefabs/yellow_pad.tscn" id="28_0nj7r"]
+[ext_resource type="PackedScene" uid="uid://cyh6hyrha8p5r" path="res://prefabs/yellow_orb.tscn" id="29_4mjh6"]
 
 [node name="level" type="Node2D" unique_id=40821179]
 
 [node name="big_spike2" parent="." unique_id=115139428 instance=ExtResource("2_vnv7o")]
-position = Vector2(1760, -32)
+position = Vector2(2608, -32)
 
 [node name="big_spike5" parent="." unique_id=1147703251 instance=ExtResource("2_vnv7o")]
-position = Vector2(864, -32)
+position = Vector2(1712, -32)
 
 [node name="big_spike3" parent="." unique_id=1150188068 instance=ExtResource("2_vnv7o")]
-position = Vector2(1824, -32)
+position = Vector2(2672, -32)
 
 [node name="big_spike4" parent="." unique_id=1010719093 instance=ExtResource("2_vnv7o")]
 position = Vector2(4032, -32)
@@ -281,8 +299,96 @@ texture = ExtResource("5_pdpul")
 position = Vector2(7968, -1184)
 texture = ExtResource("5_pdpul")
 
-[node name="ship_portal" parent="." unique_id=484844631 instance=ExtResource("9_omn1t")]
-position = Vector2(552, -328)
-
 [node name="red_pad" parent="." unique_id=1938215401 instance=ExtResource("10_lf3p4")]
-position = Vector2(480, -32)
+position = Vector2(224, -40)
+
+[node name="0_5x_speed" parent="." unique_id=1880260488 instance=ExtResource("11_jq2cn")]
+position = Vector2(1512, -248)
+
+[node name="1x_speed" parent="." unique_id=1321226904 instance=ExtResource("12_a5s8o")]
+position = Vector2(1552, -240)
+
+[node name="1x_speed2" parent="." unique_id=168289504 instance=ExtResource("12_a5s8o")]
+position = Vector2(1808, -208)
+
+[node name="2x_speed" parent="." unique_id=1693475377 instance=ExtResource("13_ls4ot")]
+position = Vector2(1600, -224)
+
+[node name="3x_speed" parent="." unique_id=970720910 instance=ExtResource("14_tx362")]
+position = Vector2(1664, -208)
+
+[node name="4x_speed" parent="." unique_id=2006885241 instance=ExtResource("15_l7nqg")]
+position = Vector2(1736, -208)
+
+[node name="block70" parent="." unique_id=331663490 instance=ExtResource("1_gjl0y")]
+position = Vector2(1488, -120)
+
+[node name="block71" parent="." unique_id=1974983245 instance=ExtResource("1_gjl0y")]
+position = Vector2(1560, -120)
+
+[node name="block72" parent="." unique_id=1997089312 instance=ExtResource("1_gjl0y")]
+position = Vector2(1632, -112)
+
+[node name="block73" parent="." unique_id=103407936 instance=ExtResource("1_gjl0y")]
+position = Vector2(1704, -104)
+
+[node name="block74" parent="." unique_id=752248667 instance=ExtResource("1_gjl0y")]
+position = Vector2(1768, -104)
+
+[node name="block75" parent="." unique_id=1327407545 instance=ExtResource("1_gjl0y")]
+position = Vector2(1832, -104)
+
+[node name="block76" parent="." unique_id=770467324 instance=ExtResource("1_gjl0y")]
+position = Vector2(2376, -312)
+
+[node name="block77" parent="." unique_id=1849344265 instance=ExtResource("1_gjl0y")]
+position = Vector2(2448, -312)
+
+[node name="blue_orb" parent="." unique_id=263556371 instance=ExtResource("16_ls4ot")]
+position = Vector2(1904, -224)
+
+[node name="blue_pad" parent="." unique_id=380702309 instance=ExtResource("17_tx362")]
+position = Vector2(1848, -176)
+
+[node name="flat_spike" parent="." unique_id=2114960159 instance=ExtResource("18_tx362")]
+position = Vector2(1960, -336)
+
+[node name="gravity_portal_a" parent="." unique_id=1582570665 instance=ExtResource("19_ou4v7")]
+position = Vector2(1960, -184)
+
+[node name="gravity_portal_b" parent="." unique_id=983419751 instance=ExtResource("20_53hnx")]
+position = Vector2(2016, -184)
+
+[node name="gravity_portal_c" parent="." unique_id=141305102 instance=ExtResource("21_mxqdg")]
+position = Vector2(2072, -192)
+
+[node name="gravity_portal_c2" parent="." unique_id=1401917361 instance=ExtResource("21_mxqdg")]
+position = Vector2(2096, -192)
+
+[node name="green_orb" parent="." unique_id=879087783 instance=ExtResource("22_tv7bq")]
+position = Vector2(2152, -240)
+
+[node name="pink_orb" parent="." unique_id=1138056972 instance=ExtResource("23_mxqdg")]
+position = Vector2(2224, -168)
+
+[node name="pink_pad" parent="." unique_id=908905435 instance=ExtResource("24_tv7bq")]
+position = Vector2(2240, -128)
+
+[node name="red_pad2" parent="." unique_id=168053970 instance=ExtResource("10_lf3p4")]
+position = Vector2(2240, -96)
+
+[node name="saw" parent="." unique_id=1046743166 instance=ExtResource("25_tv7bq")]
+position = Vector2(1712, -368)
+
+[node name="spider_pad" parent="." unique_id=1586961380 instance=ExtResource("26_wieee")]
+position = Vector2(2280, -136)
+rotation = 3.1415927
+
+[node name="spider_orb" parent="." unique_id=1139960028 instance=ExtResource("27_xtf7k")]
+position = Vector2(2424, -40)
+
+[node name="yellow_pad" parent="." unique_id=1336674007 instance=ExtResource("28_0nj7r")]
+position = Vector2(2472, -288)
+
+[node name="yellow_orb" parent="." unique_id=472994539 instance=ExtResource("29_4mjh6")]
+position = Vector2(2536, -192)
