@@ -54,6 +54,7 @@ scale_curve = SubResource("CurveTexture_6aqcb")
 alpha_curve = SubResource("CurveTexture_dtfsa")
 
 [node name="4x_speed" type="Area2D" unique_id=484844631]
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=745313364]
 shape = SubResource("RectangleShape2D_rnjyy")

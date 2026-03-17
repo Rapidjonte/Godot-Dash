@@ -20,3 +20,4 @@ func _process(delta: float) -> void:
 
 func flip_self():
 	$CollisionShape2D.rotation += deg_to_rad(180)
+	$"../ground2/CollisionShape2D".rotation += deg_to_rad(180)

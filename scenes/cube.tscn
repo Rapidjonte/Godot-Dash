@@ -8,22 +8,6 @@ size = Vector2(64, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kvuet"]
 
-[sub_resource type="Gradient" id="Gradient_4vge2"]
-offsets = PackedFloat32Array(0, 0.37548065, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 0.6863632, 1, 1, 1, 0.16470589, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_04qyp"]
-gradient = SubResource("Gradient_4vge2")
-width = 32
-height = 32
-fill = 2
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(-0.6, 0)
-
-[sub_resource type="Gradient" id="Gradient_04qyp"]
-offsets = PackedFloat32Array(0, 0.863547, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
-
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gee14"]
 blend_mode = 1
 
@@ -87,26 +71,6 @@ shape = SubResource("RectangleShape2D_6e84v")
 [node name="middle box" type="CollisionShape2D" parent="Area2D" unique_id=1391165727]
 position = Vector2(32, 32)
 shape = SubResource("RectangleShape2D_kvuet")
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1183571781]
-z_index = 99
-position = Vector2(32, 32)
-emitting = false
-amount = 14
-texture = SubResource("GradientTexture2D_04qyp")
-lifetime = 1.45
-one_shot = true
-explosiveness = 1.0
-direction = Vector2(0, -1)
-initial_velocity_min = 398.85
-initial_velocity_max = 607.01
-angular_velocity_min = -103.28
-angular_velocity_max = 106.42
-angle_min = -86.3
-angle_max = 74.6
-color_ramp = SubResource("Gradient_04qyp")
-hue_variation_min = -0.4
-hue_variation_max = 0.44
 
 [node name="friction" type="GPUParticles2D" parent="." unique_id=966833905]
 modulate = Color(0.99999934, 0.58628637, 0.81418395, 0.53333336)

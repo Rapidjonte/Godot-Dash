@@ -28,11 +28,19 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 
 func switch_gamemode():
 	var new = gamemode_scene.instantiate()
-
-	new.position = Global.player.position
-	new.rotation = Global.player.rotation
-	new.speed = Global.player.speed
-	Global.player.get_parent().add_child(new)
-	Global.player.visible = false
 	
+	if new.gamemode == Global.player.gamemode:
+		return
+	
+	new.position = Global.player.position+Global.player.center-new.center
+	new.speed = Global.player.speed
+	new.velocity = Global.player.velocity
+	new.excessiveForce = Global.player.excessiveForce
+	if sign(new.gravity) != sign(Global.player.gravity):
+		new.startUpsideDown = true
+	
+	var old_player = Global.player
+	Global.player.get_parent().add_child.call_deferred(new)
 	Global.player = new
+	
+	old_player.queue_free()

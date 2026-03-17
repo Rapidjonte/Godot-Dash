@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var speed : float = Global.NORMAL_SPEED
-var gamemode = "cube"
+var gamemode = "ship"
 
 @export var jumpStrength : float
 @export var gravity : float
@@ -14,21 +14,12 @@ var center = Vector2(32,32)
 
 var grounded := false
 var excessiveForce = 0
-var maxExcessive = 160
+var maxExcessive = 200
 
 var quick_jump_disable = false
 
 func _ready() -> void:
 	Global.player = self
-	$friction.emitting = false
-	
-	var _material = $friction.process_material
-	$friction.position.y = 60
-	_material.direction = Vector3(12.125,-98.5,0)
-	_material.gravity = Vector3(0,422.335,0)
-	
-	Global.border_blocks = 0
-	Global.camera_y_lock = 0
 	
 	if startUpsideDown:
 		flip(true)
@@ -42,14 +33,13 @@ func _process(delta: float) -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:	
 	if !Global.paused:
-		$Area2D2/spinbox.rotation = $sprite.rotation
+		Global.bufferable = false
+		#$Area2D2/spinbox.rotation = $sprite.rotation
 		position.x += 64 * delta * speed
 		if not is_on_floor():
-			$friction.emitting = false
 			grounded = false
 			velocity.y += gravity * delta
-			sprite.rotation += spinSpeed * delta
-			
+
 			if excessiveForce > maxExcessive:
 				excessiveForce= maxExcessive
 			if excessiveForce < -maxExcessive:
@@ -66,23 +56,20 @@ func _physics_process(delta: float) -> void:
 			excessiveForce -= velocity.y
 		else:
 			excessiveForce = 0
-			$friction.emitting = true
 			grounded = true
-			var target = deg_to_rad(round(rad_to_deg(sprite.rotation) / 90.0) * 90.0)
-			sprite.rotation = lerp_angle(sprite.rotation, target, 30.0 * delta)	
 		
-		if Input.is_action_pressed("jump") and grounded and !quick_jump_disable:
-			$friction.emitting = true
-			Global.bufferable = false
-			if velocity.y >= 0:
-				velocity.y -= jumpStrength
-		elif Input.is_action_just_released("jump"):
+		if Input.is_action_pressed("jump"):
 			Global.bufferable = true
+			velocity.y -= jumpStrength
+		
+		if !grounded:
+			var target_rot = clamp(velocity.y / max_velocity, -1.0, 1.0) * deg_to_rad(44)
+			sprite.rotation = lerp_angle(sprite.rotation, target_rot, spinSpeed * delta)
+		else:
+			sprite.rotation = lerp_angle(sprite.rotation, 0, spinSpeed * delta)
 
 		move_and_slide()
 		collision_check()
-	else:
-		$friction.emitting = false
 	
 	quick_jump_disable = false
 
@@ -118,27 +105,15 @@ func die(instant: bool = false):
 	
 	get_tree().reload_current_scene.call_deferred()
 
-func flip_ground_particle():
-	var _material = $friction.process_material
-	if $friction.position.y == 60:
-		$friction.position.y = 3
-		_material.direction = Vector3(12.125,98.5,0)
-		_material.gravity = Vector3(0,-422.335,0)
-	else:
-		$friction.position.y = 60
-		_material.direction = Vector3(12.125,-98.5,0)
-		_material.gravity = Vector3(0,422.335,0)
-
 func spidered():
-	sprite.rotation = deg_to_rad(round(rad_to_deg(sprite.rotation) / 90.0) * 90.0)
+	pass
 
 func flip(skip_flip : bool = false):
-	flip_ground_particle()
 	if !skip_flip:
 		Global.flip_blocks.emit()
 	gravity *= -1
-	spinSpeed *= -1
 	velocity.y += gravity * get_process_delta_time() * 0.1
 	up_direction.y *= -1
 	jumpStrength *= -1
 	excessiveForce = 0
+	sprite.scale.y *= -1

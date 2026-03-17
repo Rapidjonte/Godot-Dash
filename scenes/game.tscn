@@ -132,6 +132,12 @@ disable_mode = 1
 lock_rotation = true
 freeze = true
 
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ground2" unique_id=276759262]
+position = Vector2(4.98999, 109)
+shape = SubResource("RectangleShape2D_vtaks")
+one_way_collision = true
+one_way_collision_margin = 81.5
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground2" unique_id=144512235]
 position = Vector2(4.98999, 109)
 shape = SubResource("RectangleShape2D_vtaks")

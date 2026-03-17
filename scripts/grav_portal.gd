@@ -34,7 +34,7 @@ func _on_grav_portal_body_shape_entered(body_rid: RID, body: Node2D, body_shape_
 				Global.bufferable = true
 			
 			Global.player.flip()
-			Global.player.velocity.y *= 0.474
+			Global.player.velocity.y *= 0.574 # could also be 0.474
 			
 			#character_body.velocity.y += character_body.gravity * get_process_delta_time() * 0.1
 			#character_body.move_and_slide()

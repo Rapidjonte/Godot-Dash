@@ -57,4 +57,6 @@ common/physics_ticks_per_second=240
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0.30588236, 0.30980393, 0.45490196, 1)
