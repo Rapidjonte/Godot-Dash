@@ -2,12 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bwecybdd6wk6l" path="res://scripts/gamemode_portal.gd" id="1_vrap3"]
 [ext_resource type="PackedScene" uid="uid://brxago3ouvnj" path="res://scenes/gamemodes/cube.tscn" id="2_vrap3"]
+[ext_resource type="PackedScene" uid="uid://djnc56dfr2ysj" path="res://scenes/gamemodes/mini_cube.tscn" id="3_4vdgy"]
 [ext_resource type="Shader" uid="uid://dru5rwxb5rqdo" path="res://shaders/lightness.gdshader" id="3_vnaw8"]
 [ext_resource type="Texture2D" uid="uid://bqujrs6pc3x0y" path="res://images/objects/portals/portal_03_front_001.png" id="4_vrap3"]
 [ext_resource type="Texture2D" uid="uid://dq37ywlgct73q" path="res://images/objects/portals/portal_03_back_001.png" id="5_4vdgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
-size = Vector2(51, 156)
+size = Vector2(73, 180)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u05s6"]
 blend_mode = 1
@@ -59,6 +60,7 @@ shader_parameter/lightness = 0.0
 z_index = -1
 script = ExtResource("1_vrap3")
 gamemode_scene = ExtResource("2_vrap3")
+mini_scene = ExtResource("3_4vdgy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=745313364]
 z_index = 2

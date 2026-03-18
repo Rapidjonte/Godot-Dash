@@ -19,5 +19,5 @@ func update_cam(delta):
 	else:
 		position.y = lerp(position.y, Global.camera_y_lock+324.0, easing * delta)
 		
-	if position.x < Global.player.position.x:
-		position.x = Global.player.position.x
+	if position.x < Global.player.position.x+Global.player.center.x:
+		position.x = Global.player.position.x+Global.player.center.x

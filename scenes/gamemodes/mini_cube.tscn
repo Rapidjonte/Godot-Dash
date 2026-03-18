@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://brxago3ouvnj"]
+[gd_scene format=3 uid="uid://djnc56dfr2ysj"]
 
-[ext_resource type="Script" uid="uid://bomypfkgcxy1n" path="res://scripts/sprite.gd" id="1_8viuf"]
-[ext_resource type="Texture2D" uid="uid://ype4q5ffqtx0" path="res://images/gamemodes/cubes/cube_371.png" id="2_i7q2r"]
+[ext_resource type="Script" uid="uid://bomypfkgcxy1n" path="res://scripts/sprite.gd" id="1_udnhm"]
+[ext_resource type="Texture2D" uid="uid://ype4q5ffqtx0" path="res://images/gamemodes/cubes/cube_371.png" id="2_roxee"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6e84v"]
 size = Vector2(64, 64)
@@ -46,14 +46,15 @@ scale_curve = SubResource("CurveTexture_vu84t")
 alpha_curve = SubResource("CurveTexture_kd4pf")
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1621791113]
+scale = Vector2(0.562, 0.562)
 slide_on_ceiling = false
-script = ExtResource("1_8viuf")
-gamemode = "cube"
-jumpStrength = 1236.515
+script = ExtResource("1_udnhm")
+gamemode = "mini_cube"
+jumpStrength = 924.2
 gravity = 5762.985
 max_velocity = 2008.405
 spinSpeed = 7.79
-center = Vector2(32, 32)
+center = Vector2(18, 18)
 
 [node name="sprite" type="TextureRect" parent="." unique_id=478105636]
 offset_left = -2.885
@@ -61,7 +62,7 @@ offset_right = 66.95221
 offset_bottom = 63.0
 scale = Vector2(1.075, 1.075)
 pivot_offset = Vector2(34.89, 32)
-texture = ExtResource("2_i7q2r")
+texture = ExtResource("2_roxee")
 expand_mode = 1
 
 [node name="player_collision" type="CollisionShape2D" parent="." unique_id=1847450181]

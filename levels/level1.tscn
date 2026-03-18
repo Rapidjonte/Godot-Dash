@@ -27,8 +27,8 @@
 [ext_resource type="PackedScene" uid="uid://dqnmyqed6275w" path="res://prefabs/spider_pad.tscn" id="26_wieee"]
 [ext_resource type="PackedScene" uid="uid://dlsxfv60tg8px" path="res://prefabs/spider_orb.tscn" id="27_xtf7k"]
 [ext_resource type="PackedScene" uid="uid://b6mkii2pikv2m" path="res://prefabs/yellow_pad.tscn" id="28_0nj7r"]
-[ext_resource type="PackedScene" uid="uid://bwixd4kkxhlrc" path="res://prefabs/ship_portal.tscn" id="29_0nj7r"]
 [ext_resource type="PackedScene" uid="uid://cyh6hyrha8p5r" path="res://prefabs/yellow_orb.tscn" id="29_4mjh6"]
+[ext_resource type="PackedScene" uid="uid://cem4qel5ph4q6" path="res://prefabs/mini_portal.tscn" id="30_4mjh6"]
 
 [node name="level" type="Node2D" unique_id=40821179]
 
@@ -37,6 +37,38 @@ position = Vector2(2608, -32)
 
 [node name="big_spike5" parent="." unique_id=1147703251 instance=ExtResource("2_vnv7o")]
 position = Vector2(1712, -32)
+
+[node name="big_spike7" parent="." unique_id=1728871852 instance=ExtResource("2_vnv7o")]
+position = Vector2(416, -224)
+
+[node name="big_spike8" parent="." unique_id=101217842 instance=ExtResource("2_vnv7o")]
+position = Vector2(480, -288)
+rotation = 3.1415927
+
+[node name="big_spike9" parent="." unique_id=368326168 instance=ExtResource("2_vnv7o")]
+position = Vector2(544, -160)
+rotation = 3.1415927
+
+[node name="big_spike10" parent="." unique_id=379709384 instance=ExtResource("2_vnv7o")]
+position = Vector2(512, -32)
+
+[node name="big_spike11" parent="." unique_id=880176131 instance=ExtResource("2_vnv7o")]
+position = Vector2(618, -32)
+
+[node name="big_spike12" parent="." unique_id=30937300 instance=ExtResource("2_vnv7o")]
+position = Vector2(682, -32)
+
+[node name="big_spike13" parent="." unique_id=1607245415 instance=ExtResource("2_vnv7o")]
+position = Vector2(848, -32)
+
+[node name="big_spike14" parent="." unique_id=304656307 instance=ExtResource("2_vnv7o")]
+position = Vector2(912, -32)
+
+[node name="big_spike15" parent="." unique_id=246775652 instance=ExtResource("2_vnv7o")]
+position = Vector2(1104, -32)
+
+[node name="big_spike16" parent="." unique_id=1485203361 instance=ExtResource("2_vnv7o")]
+position = Vector2(1168, -32)
 
 [node name="big_spike3" parent="." unique_id=1150188068 instance=ExtResource("2_vnv7o")]
 position = Vector2(2672, -32)
@@ -303,6 +335,9 @@ texture = ExtResource("5_pdpul")
 [node name="0_5x_speed" parent="." unique_id=1880260488 instance=ExtResource("11_jq2cn")]
 position = Vector2(1512, -248)
 
+[node name="0_5x_speed2" parent="." unique_id=484844631 instance=ExtResource("11_jq2cn")]
+position = Vector2(568, 40)
+
 [node name="1x_speed" parent="." unique_id=1321226904 instance=ExtResource("12_a5s8o")]
 position = Vector2(1552, -240)
 
@@ -321,6 +356,18 @@ position = Vector2(1736, -208)
 [node name="block70" parent="." unique_id=331663490 instance=ExtResource("1_gjl0y")]
 position = Vector2(1488, -120)
 
+[node name="block79" parent="." unique_id=509605511 instance=ExtResource("1_gjl0y")]
+position = Vector2(992, -480)
+
+[node name="block81" parent="." unique_id=1426365208 instance=ExtResource("1_gjl0y")]
+position = Vector2(992, -352)
+
+[node name="block82" parent="." unique_id=1851538348 instance=ExtResource("1_gjl0y")]
+position = Vector2(992, -224)
+
+[node name="block83" parent="." unique_id=742642265 instance=ExtResource("1_gjl0y")]
+position = Vector2(806, -234)
+
 [node name="block78" parent="." unique_id=799015215 instance=ExtResource("1_gjl0y")]
 position = Vector2(32, -416)
 
@@ -332,6 +379,12 @@ position = Vector2(96, -288)
 
 [node name="block86" parent="." unique_id=31033547 instance=ExtResource("1_gjl0y")]
 position = Vector2(160, -288)
+
+[node name="block87" parent="." unique_id=1443731760 instance=ExtResource("1_gjl0y")]
+position = Vector2(224, -288)
+
+[node name="block88" parent="." unique_id=1413188566 instance=ExtResource("1_gjl0y")]
+position = Vector2(288, -288)
 
 [node name="block71" parent="." unique_id=1974983245 instance=ExtResource("1_gjl0y")]
 position = Vector2(1560, -120)
@@ -407,8 +460,8 @@ position = Vector2(2472, -288)
 [node name="yellow_orb" parent="." unique_id=472994539 instance=ExtResource("29_4mjh6")]
 position = Vector2(2536, -192)
 
-[node name="ship_portal2" parent="." unique_id=695800591 instance=ExtResource("29_0nj7r")]
-position = Vector2(288, -360)
-
 [node name="gravity_portal_b2" parent="." unique_id=1974989084 instance=ExtResource("20_53hnx")]
-position = Vector2(112, -408)
+position = Vector2(56, -408)
+
+[node name="mini_portal" parent="." unique_id=1633698194 instance=ExtResource("30_4mjh6")]
+position = Vector2(120, -352)

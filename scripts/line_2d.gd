@@ -17,4 +17,4 @@ func _physics_process(_delta):
 		add_point(point)
 
 func _get_position(): 
-	return Vector2(Global.player.position.x+64,Global.player.position.y-352)
+	return Vector2(Global.player.position.x+64,Global.player.position.y-352) - Vector2(32,32)+Global.player.center

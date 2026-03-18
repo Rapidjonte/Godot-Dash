@@ -1,14 +1,12 @@
-[gd_scene format=3 uid="uid://bwixd4kkxhlrc"]
+[gd_scene format=3 uid="uid://cem4qel5ph4q6"]
 
-[ext_resource type="Script" uid="uid://bwecybdd6wk6l" path="res://scripts/gamemode_portal.gd" id="1_k8xu3"]
-[ext_resource type="Shader" uid="uid://dru5rwxb5rqdo" path="res://shaders/lightness.gdshader" id="2_4a0iw"]
-[ext_resource type="PackedScene" uid="uid://baynh7j3gk802" path="res://scenes/gamemodes/ship.tscn" id="2_q1qtf"]
-[ext_resource type="PackedScene" uid="uid://cngafme3vb7j4" path="res://scenes/gamemodes/mini_ship.tscn" id="3_q1qtf"]
-[ext_resource type="Texture2D" uid="uid://dwx0mh62dcske" path="res://images/objects/portals/portal_04_back_001.png" id="4_k8xu3"]
-[ext_resource type="Texture2D" uid="uid://btitftfh14687" path="res://images/objects/portals/portal_04_front_001.png" id="5_4a0iw"]
+[ext_resource type="Script" uid="uid://bhcmwb1ulkmyp" path="res://scripts/mini_portal.gd" id="1_t5hnv"]
+[ext_resource type="Shader" uid="uid://dru5rwxb5rqdo" path="res://shaders/lightness.gdshader" id="3_ibb6x"]
+[ext_resource type="Texture2D" uid="uid://b1bs2gcso4nq1" path="res://images/objects/portals/portal_09_front_001.png" id="4_msxck"]
+[ext_resource type="Texture2D" uid="uid://dfb2s6ic7xlia" path="res://images/objects/portals/portal_09_back_001.png" id="5_yhf6g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
-size = Vector2(73, 180)
+size = Vector2(64, 192)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u05s6"]
 blend_mode = 1
@@ -53,20 +51,15 @@ scale_curve = SubResource("CurveTexture_3kc42")
 alpha_curve = SubResource("CurveTexture_p1dji")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4a0iw"]
-shader = ExtResource("2_4a0iw")
+shader = ExtResource("3_ibb6x")
 shader_parameter/lightness = 0.0
 
-[node name="ship_portal" type="Area2D" unique_id=484844631]
+[node name="mini_portal" type="Area2D" unique_id=484844631]
 z_index = -1
-script = ExtResource("1_k8xu3")
-gamemode_scene = ExtResource("2_q1qtf")
-mini_scene = ExtResource("3_q1qtf")
-border_blocks = 0.063
-two_faced_blocks = true
+script = ExtResource("1_t5hnv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=745313364]
 z_index = 2
-position = Vector2(3.5, 0)
 shape = SubResource("RectangleShape2D_rnjyy")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1407649258]
@@ -86,12 +79,12 @@ z_index = 2
 material = SubResource("ShaderMaterial_4a0iw")
 position = Vector2(5.0000005, 0)
 scale = Vector2(0.532, 0.532)
-texture = ExtResource("5_4a0iw")
+texture = ExtResource("4_msxck")
 
 [node name="PortalBack" type="Sprite2D" parent="." unique_id=1413325666]
 material = SubResource("ShaderMaterial_4a0iw")
 position = Vector2(5.0000005, 0)
 scale = Vector2(0.532, 0.532)
-texture = ExtResource("4_k8xu3")
+texture = ExtResource("5_yhf6g")
 
 [connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

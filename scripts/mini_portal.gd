@@ -1,14 +1,7 @@
 extends Area2D
 
-# 10 blocks = 0.0625
-# 9 blocks = (648 - 576) / 128 = 72 / 128 = 0.5625
-# 8 blocks = (648 - 512) / 128 = 136 / 128 = 1.0625
-
 var circle_scene: PackedScene = load("res://scenes/circle_effect.tscn")
-@export var gamemode_scene : PackedScene
-@export var mini_scene : PackedScene
-@export var border_blocks : float
-@export var two_faced_blocks : bool
+@export var big : bool
 
 func _ready():
 	$CollisionShape2D.disabled = false
@@ -34,26 +27,30 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 		var node = circle_scene.instantiate()
 		node.scale = Vector2(0.35,0.35)
 		$GPUParticles2D.add_child(node)
-		
-		Global.two_faced_blocks = two_faced_blocks
-		
+
 		switch_gamemode()
-		
-		if border_blocks != null:
-			Global.border_blocks = border_blocks
-		
-		if Global.border_blocks != 0:
-			Global.camera_y_lock = calculate_y_lock()
-		else:
-			Global.camera_y_lock = null
 
 func switch_gamemode():
-	var new 
-	if Global.player.gamemode.contains("mini"):
-		new = mini_scene.instantiate()
+	var new
+	if !big:
+		if Global.player.gamemode.contains("mini"):
+			return
+			
+		new = load("res://scenes/gamemodes/mini_" + Global.player.gamemode + ".tscn").instantiate()
 	else:
-		new = gamemode_scene.instantiate()
+		if !Global.player.gamemode.contains("mini"):
+			return
 		
+		new = load("res://scenes/gamemodes/" + Global.player.gamemode.substr(5) + ".tscn").instantiate()
+	
+	print("old pos: ", Global.player.position)
+	print("old center: ", Global.player.center)
+	print("new center: ", new.center)
+	print("result: ", Global.player.position + Global.player.center - new.center)
+	print("old gamemode: ", Global.player.gamemode)
+	print("new gamemode: ", new.gamemode)
+	
+	
 	new.position = Global.player.position+Global.player.center-new.center
 	new.speed = Global.player.speed
 	new.velocity = Global.player.velocity
@@ -66,11 +63,3 @@ func switch_gamemode():
 	Global.player = new
 	
 	old_player.queue_free()
-	
-func calculate_y_lock() -> float:
-	var block_size: float = 64.0
-	var lock_y = min(global_position.y, 96) - 324.0
-	var toReturn = roundf(lock_y / block_size) * block_size + 28 + 32
-	if Global.border_blocks == 0.563:
-		toReturn+=32
-	return toReturn

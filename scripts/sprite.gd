@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var speed : float = Global.NORMAL_SPEED
-var gamemode = "cube"
+@export var gamemode : String
 
 @export var jumpStrength : float
 @export var gravity : float
@@ -10,7 +10,7 @@ var gamemode = "cube"
 
 @onready var sprite = $sprite
 var startUpsideDown = false
-var center = Vector2(32,32)
+@export var center : Vector2
 
 var grounded := false
 var excessiveForce = 0
@@ -19,6 +19,7 @@ var maxExcessive = 160
 var quick_jump_disable = false
 
 func _ready() -> void:
+	Global.bufferable = true
 	Global.player = self
 	$friction.emitting = false
 	

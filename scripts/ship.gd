@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var speed : float = Global.NORMAL_SPEED
-var gamemode = "ship"
+@export var gamemode : String
 
 @export var jumpStrength : float
 @export var gravity : float
@@ -10,7 +10,7 @@ var gamemode = "ship"
 
 @onready var sprite = $sprite
 var startUpsideDown = false
-var center = Vector2(32,32)
+@export var center : Vector2
 
 var grounded := false
 var excessiveForce = 0
@@ -19,8 +19,6 @@ var maxExcessive = 0
 var quick_jump_disable = false
 
 func _ready() -> void:
-	Global.player = self
-	
 	if startUpsideDown:
 		flip(true)
 
