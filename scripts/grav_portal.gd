@@ -7,6 +7,10 @@ var circle_scene: PackedScene = load("res://scenes/circle_effect.tscn")
 
 func _ready():
 	disabled = false
+	var mat = $"../GravityPortal".material as ShaderMaterial
+	mat.set_shader_parameter("lightness", 0)
+	var mat2 = $"../GravityPortal2".material as ShaderMaterial
+	mat2.set_shader_parameter("lightness", 0)
 
 func _on_grav_portal_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	if body == Global.player:

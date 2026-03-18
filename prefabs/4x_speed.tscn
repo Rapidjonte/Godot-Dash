@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b7b03pw5fuygd" path="res://scripts/set_speed.gd" id="1_wsvku"]
 [ext_resource type="Shader" uid="uid://dru5rwxb5rqdo" path="res://shaders/lightness.gdshader" id="2_d1q0x"]
-[ext_resource type="Texture2D" uid="uid://vh7a27xfem60" path="res://images/portals/SpeedPortal++++.webp" id="3_d1q0x"]
+[ext_resource type="Texture2D" uid="uid://vh7a27xfem60" path="res://images/objects/portals/SpeedPortal++++.webp" id="3_d1q0x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(148, 120)

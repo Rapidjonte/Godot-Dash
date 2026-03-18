@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dlsxfv60tg8px"]
 
 [ext_resource type="Script" uid="uid://l5imuqvptv1c" path="res://scripts/spider_orb.gd" id="1_3nubq"]
-[ext_resource type="Texture2D" uid="uid://csanyqxhxroa0" path="res://images/orbs/TeleportationRing.webp" id="3_xvntn"]
+[ext_resource type="Texture2D" uid="uid://csanyqxhxroa0" path="res://images/objects/orbs/TeleportationRing.webp" id="3_xvntn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(76, 76)

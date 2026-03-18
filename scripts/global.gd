@@ -1,6 +1,7 @@
 extends Node
 
 signal flip_blocks
+var two_faced_blocks := false
 
 var player : CharacterBody2D
 
@@ -22,6 +23,7 @@ func reset():
 	circles = []
 	border_blocks = 0
 	camera_y_lock = null
+	two_faced_blocks = false
 
 var level : PackedScene
 func load_level(path: String):

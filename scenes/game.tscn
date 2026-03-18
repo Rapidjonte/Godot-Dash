@@ -4,14 +4,14 @@
 [ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="2_iywne"]
 [ext_resource type="Script" uid="uid://ljvsqy3rhxo7" path="res://scripts/ground_script.gd" id="3_p57ef"]
 [ext_resource type="Texture2D" uid="uid://c708lwimqm01p" path="res://images/ground/groundSquare_01_001-uhd.png" id="4_p57ef"]
-[ext_resource type="PackedScene" uid="uid://brxago3ouvnj" path="res://scenes/cube.tscn" id="5_dinhu"]
+[ext_resource type="PackedScene" uid="uid://brxago3ouvnj" path="res://scenes/gamemodes/cube.tscn" id="5_dinhu"]
 [ext_resource type="Texture2D" uid="uid://8w7is24iojs" path="res://images/bg/game_bg_01_001-uhd.png" id="5_iywne"]
 [ext_resource type="Script" uid="uid://c8ka8t08n5xf0" path="res://scripts/line_2d.gd" id="7_0tnpc"]
 [ext_resource type="Script" uid="uid://c23ly6o7rfkch" path="res://scripts/cam.gd" id="7_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://cmmvte7wddpqp" path="res://images/ground/line.png" id="7_u5sy4"]
 [ext_resource type="Script" uid="uid://iowxvugx06eo" path="res://scripts/counters.gd" id="8_vtaks"]
-[ext_resource type="Texture2D" uid="uid://dmtadlsknk8ok" path="res://images/slidergroove_02-uhd.png" id="9_dinhu"]
-[ext_resource type="Texture2D" uid="uid://bgbs07uahvnch" path="res://images/sliderBar2-uhd.png" id="10_kvuet"]
+[ext_resource type="Texture2D" uid="uid://dmtadlsknk8ok" path="res://images/other/slidergroove_02-uhd.png" id="9_dinhu"]
+[ext_resource type="Texture2D" uid="uid://bgbs07uahvnch" path="res://images/other/sliderBar2-uhd.png" id="10_kvuet"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dubn7"]
 font = ExtResource("2_iywne")

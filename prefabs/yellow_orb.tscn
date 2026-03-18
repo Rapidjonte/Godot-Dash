@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cyh6hyrha8p5r"]
 
 [ext_resource type="Script" uid="uid://o8bsjrn3d3x1" path="res://scripts/yellow_orb.gd" id="1_sguyq"]
-[ext_resource type="Texture2D" uid="uid://c5g2or4183uau" path="res://images/orbs/YellowJumpRing.webp" id="2_sguyq"]
+[ext_resource type="Texture2D" uid="uid://c5g2or4183uau" path="res://images/objects/orbs/YellowJumpRing.webp" id="2_sguyq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(76, 76)

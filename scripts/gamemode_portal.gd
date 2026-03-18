@@ -7,9 +7,14 @@ extends Area2D
 var circle_scene: PackedScene = load("res://scenes/circle_effect.tscn")
 @export var gamemode_scene : PackedScene
 @export var border_blocks : float
+@export var two_faced_blocks : bool
 
 func _ready():
 	$CollisionShape2D.disabled = false
+	var mat = $PortalFront.material as ShaderMaterial
+	mat.set_shader_parameter("lightness", 0)
+	var mat2 = $PortalBack.material as ShaderMaterial
+	mat2.set_shader_parameter("lightness", 0)
 
 func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	if body == Global.player:
@@ -28,6 +33,8 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 		var node = circle_scene.instantiate()
 		node.scale = Vector2(0.35,0.35)
 		$GPUParticles2D.add_child(node)
+		
+		Global.two_faced_blocks = two_faced_blocks
 		
 		switch_gamemode()
 		

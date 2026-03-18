@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dqnmyqed6275w"]
 
 [ext_resource type="Script" uid="uid://bgt78mfunfbsg" path="res://scripts/spider_pad.gd" id="1_hnlis"]
-[ext_resource type="Texture2D" uid="uid://mn20dre6ghb" path="res://images/pads/TeleportationPad.webp" id="2_hnlis"]
+[ext_resource type="Texture2D" uid="uid://mn20dre6ghb" path="res://images/objects/pads/TeleportationPad.webp" id="2_hnlis"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(62, 23)

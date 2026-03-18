@@ -2,12 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://c6xspwk10ky26" path="res://prefabs/2x_speed.tscn" id="1_r8unp"]
 [ext_resource type="PackedScene" uid="uid://cqirje3werngo" path="res://prefabs/block.tscn" id="2_kvvkh"]
-[ext_resource type="Texture2D" uid="uid://d1g6p7vc4xpf5" path="res://images/blocks/MetallicPlatform08.webp" id="3_aaqj5"]
+[ext_resource type="Texture2D" uid="uid://d1g6p7vc4xpf5" path="res://images/objects/blocks/MetallicPlatform08.webp" id="3_aaqj5"]
 [ext_resource type="PackedScene" uid="uid://dv4dte71fxixw" path="res://prefabs/big_spike.tscn" id="4_0fm5q"]
-[ext_resource type="Texture2D" uid="uid://dewejesv7vp8m" path="res://images/spikes/big/ColourSpike01.webp" id="5_cpie4"]
+[ext_resource type="Texture2D" uid="uid://dewejesv7vp8m" path="res://images/objects/spikes/big/ColourSpike01.webp" id="5_cpie4"]
 [ext_resource type="PackedScene" uid="uid://bbhqc0unrcg7f" path="res://prefabs/1x_speed.tscn" id="6_udvx3"]
 [ext_resource type="PackedScene" uid="uid://dhukhtt0dpp8" path="res://prefabs/0.5x_speed.tscn" id="7_1xfnq"]
-[ext_resource type="Texture2D" uid="uid://sbxkhne6xmc8" path="res://images/spikes/big/OutlineSpike01.webp" id="7_6uckl"]
+[ext_resource type="Texture2D" uid="uid://sbxkhne6xmc8" path="res://images/objects/spikes/big/OutlineSpike01.webp" id="7_6uckl"]
 
 [node name="level" type="Node2D" unique_id=40821179]
 

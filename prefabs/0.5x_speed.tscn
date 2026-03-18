@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b7b03pw5fuygd" path="res://scripts/set_speed.gd" id="1_0k3m5"]
 [ext_resource type="Shader" uid="uid://dru5rwxb5rqdo" path="res://shaders/lightness.gdshader" id="1_7a5bl"]
-[ext_resource type="Texture2D" uid="uid://dwj7h631408ks" path="res://images/portals/SpeedPortal_.webp" id="1_dpeht"]
+[ext_resource type="Texture2D" uid="uid://dwj7h631408ks" path="res://images/objects/portals/SpeedPortal_.webp" id="1_dpeht"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ynthx"]
 shader = ExtResource("1_7a5bl")

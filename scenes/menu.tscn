@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" uid="uid://dmeobsi61bvm" path="res://fonts/OXYGENE1.TTF" id="1_vjb58"]
 [ext_resource type="Script" uid="uid://dwsb43qbdtj2r" path="res://scripts/button.gd" id="1_yqeox"]
 [ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="3_con2f"]
-[ext_resource type="Texture2D" uid="uid://bnr03kfjgssvo" path="res://images/logo - Godot dash.png" id="4_mhnvy"]
+[ext_resource type="Texture2D" uid="uid://bnr03kfjgssvo" path="res://images/other/logo - Godot dash.png" id="4_mhnvy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mhnvy"]
 font = ExtResource("3_con2f")

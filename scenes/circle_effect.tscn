@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bmcinstbs7iet"]
 
 [ext_resource type="Script" uid="uid://sqvwduwmw7dd" path="res://scripts/circle_effect.gd" id="1_e1aq1"]
-[ext_resource type="Texture2D" uid="uid://vwjg1shxmyrn" path="res://images/White_Circle.svg" id="1_qv13r"]
+[ext_resource type="Texture2D" uid="uid://vwjg1shxmyrn" path="res://images/other/White_Circle.svg" id="1_qv13r"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qv13r"]
 blend_mode = 1

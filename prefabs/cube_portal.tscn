@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://co70ptauw3oki"]
 
 [ext_resource type="Script" uid="uid://bwecybdd6wk6l" path="res://scripts/gamemode_portal.gd" id="1_vrap3"]
-[ext_resource type="PackedScene" uid="uid://brxago3ouvnj" path="res://scenes/cube.tscn" id="2_vrap3"]
+[ext_resource type="PackedScene" uid="uid://brxago3ouvnj" path="res://scenes/gamemodes/cube.tscn" id="2_vrap3"]
 [ext_resource type="Shader" uid="uid://dru5rwxb5rqdo" path="res://shaders/lightness.gdshader" id="3_vnaw8"]
-[ext_resource type="Texture2D" uid="uid://bqujrs6pc3x0y" path="res://images/portals/portal_03_front_001.png" id="4_vrap3"]
-[ext_resource type="Texture2D" uid="uid://dq37ywlgct73q" path="res://images/portals/portal_03_back_001.png" id="5_4vdgy"]
+[ext_resource type="Texture2D" uid="uid://bqujrs6pc3x0y" path="res://images/objects/portals/portal_03_front_001.png" id="4_vrap3"]
+[ext_resource type="Texture2D" uid="uid://dq37ywlgct73q" path="res://images/objects/portals/portal_03_back_001.png" id="5_4vdgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(51, 156)

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://p8sechefs4ow"]
 
 [ext_resource type="Script" uid="uid://dh2dr3qo8d1tj" path="res://scripts/black_orb.gd" id="1_mfihn"]
-[ext_resource type="Texture2D" uid="uid://gxrg1vlbyg47" path="res://images/orbs/BlackGravityRing.webp" id="1_ofbtx"]
+[ext_resource type="Texture2D" uid="uid://gxrg1vlbyg47" path="res://images/objects/orbs/BlackGravityRing.webp" id="1_ofbtx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(76, 76)

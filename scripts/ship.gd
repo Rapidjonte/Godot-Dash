@@ -34,7 +34,6 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:	
 	if !Global.paused:
 		Global.bufferable = false
-		#$Area2D2/spinbox.rotation = $sprite.rotation
 		position.x += 64 * delta * speed
 		if not is_on_floor():
 			grounded = false
@@ -58,15 +57,21 @@ func _physics_process(delta: float) -> void:
 			excessiveForce = 0
 			grounded = true
 		
-		if Input.is_action_pressed("jump"):
+		if Input.is_action_just_pressed("jump"):
 			Global.bufferable = true
+			
+		if Input.is_action_pressed("jump"):
 			velocity.y -= jumpStrength
+		elif Input.is_action_just_released("jump"):
+			excessiveForce = 0
 		
 		if !grounded:
 			var target_rot = clamp(velocity.y / max_velocity, -1.0, 1.0) * deg_to_rad(44)
 			sprite.rotation = lerp_angle(sprite.rotation, target_rot, spinSpeed * delta)
 		else:
 			sprite.rotation = lerp_angle(sprite.rotation, 0, spinSpeed * delta)
+
+		$Area2D2/spinbox.rotation = $sprite.rotation
 
 		move_and_slide()
 		collision_check()

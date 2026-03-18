@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ria0vtt1yyun"]
 
 [ext_resource type="Script" uid="uid://udpcsp2xnhg5" path="res://scripts/texture_override.gd" id="1_quier"]
-[ext_resource type="Texture2D" uid="uid://da82ydj6q7gf2" path="res://images/saws/GearSawblade01.webp" id="2_quier"]
+[ext_resource type="Texture2D" uid="uid://da82ydj6q7gf2" path="res://images/objects/saws/GearSawblade01.webp" id="2_quier"]
 [ext_resource type="Script" uid="uid://cf5jdmhlo451p" path="res://scripts/saw.gd" id="3_n2r0n"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_quier"]

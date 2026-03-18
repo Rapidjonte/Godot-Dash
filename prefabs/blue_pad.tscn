@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b3m51ewy5xgs1"]
 
-[ext_resource type="Texture2D" uid="uid://bta132shiifai" path="res://images/pads/CyanGravityPad.webp" id="1_f46co"]
+[ext_resource type="Texture2D" uid="uid://bta132shiifai" path="res://images/objects/pads/CyanGravityPad.webp" id="1_f46co"]
 [ext_resource type="Script" uid="uid://b08mk7hr1uy84" path="res://scripts/blue_pad.gd" id="1_gk4b2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]

@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://b0nnip5w250gp" path="res://scripts/grav_portal.gd" id="1_v0imb"]
 [ext_resource type="Shader" uid="uid://dru5rwxb5rqdo" path="res://shaders/lightness.gdshader" id="2_ow0vj"]
-[ext_resource type="Texture2D" uid="uid://mdubocli6eqp" path="res://images/portals/portal_02_front_001.png" id="2_u05s6"]
-[ext_resource type="Texture2D" uid="uid://dgtikx3p653vt" path="res://images/portals/portal_02_back_001.png" id="3_u05s6"]
+[ext_resource type="Texture2D" uid="uid://mdubocli6eqp" path="res://images/objects/portals/portal_02_front_001.png" id="2_u05s6"]
+[ext_resource type="Texture2D" uid="uid://dgtikx3p653vt" path="res://images/objects/portals/portal_02_back_001.png" id="3_u05s6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(51, 156)

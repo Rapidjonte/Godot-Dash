@@ -1,10 +1,9 @@
 extends Line2D
-class_name Trails
 
 var queue : Array
 @export var MAX_LENGTH : int
 
-func _process(_delta):
+func _physics_process(_delta):
 	var pos = _get_position()
 	
 	queue.push_front(pos)

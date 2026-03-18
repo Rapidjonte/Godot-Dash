@@ -4,6 +4,8 @@ extends CollisionShape2D
 
 func _ready():
 	disabled = false
+	var mat = $"../SpeedPortal".material as ShaderMaterial
+	mat.set_shader_parameter("lightness", 0)
 
 func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	if body == Global.player:

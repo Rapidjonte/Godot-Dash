@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dv4dte71fxixw" path="res://prefabs/big_spike.tscn" id="5_bufqw"]
 [ext_resource type="PackedScene" uid="uid://b3m51ewy5xgs1" path="res://prefabs/blue_pad.tscn" id="6_0dsjn"]
 [ext_resource type="PackedScene" uid="uid://ria0vtt1yyun" path="res://prefabs/saw.tscn" id="7_ldkys"]
-[ext_resource type="Texture2D" uid="uid://cpr5jmkf4phho" path="res://images/saws/GearSawblade02.webp" id="8_dm5g0"]
+[ext_resource type="Texture2D" uid="uid://cpr5jmkf4phho" path="res://images/objects/saws/GearSawblade02.webp" id="8_dm5g0"]
 [ext_resource type="PackedScene" uid="uid://b8u1uuyuxggbp" path="res://prefabs/blue_orb.tscn" id="9_vp6pq"]
 [ext_resource type="PackedScene" uid="uid://cyh6hyrha8p5r" path="res://prefabs/yellow_orb.tscn" id="10_66nwl"]
 

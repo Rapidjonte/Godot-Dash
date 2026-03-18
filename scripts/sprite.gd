@@ -139,3 +139,4 @@ func flip(skip_flip : bool = false):
 	up_direction.y *= -1
 	jumpStrength *= -1
 	excessiveForce = 0
+	Global.bufferable = true

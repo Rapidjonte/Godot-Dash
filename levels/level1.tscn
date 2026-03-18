@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://b3wdfcmy7r4fl"]
 
 [ext_resource type="PackedScene" uid="uid://cqirje3werngo" path="res://prefabs/block.tscn" id="1_gjl0y"]
-[ext_resource type="Texture2D" uid="uid://tiygv8fehgit" path="res://images/blocks/GridBlock03.webp" id="2_hy0rb"]
+[ext_resource type="Texture2D" uid="uid://tiygv8fehgit" path="res://images/objects/blocks/GridBlock03.webp" id="2_hy0rb"]
 [ext_resource type="PackedScene" uid="uid://dv4dte71fxixw" path="res://prefabs/big_spike.tscn" id="2_vnv7o"]
-[ext_resource type="Texture2D" uid="uid://cqauxjrmy8o2d" path="res://images/blocks/GridBlock02.webp" id="3_mxp4k"]
-[ext_resource type="Texture2D" uid="uid://bykbhb1i5pc1d" path="res://images/blocks/GridBlock07.webp" id="4_61w3m"]
-[ext_resource type="Texture2D" uid="uid://b575utufsy4mq" path="res://images/blocks/GridBlock08.webp" id="5_pdpul"]
-[ext_resource type="Texture2D" uid="uid://ukmw325x2s5y" path="res://images/blocks/GridBlock06.webp" id="6_omn1t"]
-[ext_resource type="Texture2D" uid="uid://dcnx3thlash4t" path="res://images/blocks/GridBlock05.webp" id="7_lf3p4"]
+[ext_resource type="Texture2D" uid="uid://cqauxjrmy8o2d" path="res://images/objects/blocks/GridBlock02.webp" id="3_mxp4k"]
+[ext_resource type="Texture2D" uid="uid://bykbhb1i5pc1d" path="res://images/objects/blocks/GridBlock07.webp" id="4_61w3m"]
+[ext_resource type="Texture2D" uid="uid://b575utufsy4mq" path="res://images/objects/blocks/GridBlock08.webp" id="5_pdpul"]
+[ext_resource type="Texture2D" uid="uid://ukmw325x2s5y" path="res://images/objects/blocks/GridBlock06.webp" id="6_omn1t"]
+[ext_resource type="Texture2D" uid="uid://dcnx3thlash4t" path="res://images/objects/blocks/GridBlock05.webp" id="7_lf3p4"]
 [ext_resource type="PackedScene" uid="uid://c82ynw3eqr4bl" path="res://prefabs/red_pad.tscn" id="10_lf3p4"]
 [ext_resource type="PackedScene" uid="uid://dhukhtt0dpp8" path="res://prefabs/0.5x_speed.tscn" id="11_jq2cn"]
 [ext_resource type="PackedScene" uid="uid://bbhqc0unrcg7f" path="res://prefabs/1x_speed.tscn" id="12_a5s8o"]
@@ -386,9 +386,6 @@ position = Vector2(2240, -128)
 
 [node name="red_pad2" parent="." unique_id=168053970 instance=ExtResource("10_lf3p4")]
 position = Vector2(2240, -96)
-
-[node name="red_pad3" parent="." unique_id=484844631 instance=ExtResource("10_lf3p4")]
-position = Vector2(376, -328)
 
 [node name="saw" parent="." unique_id=1046743166 instance=ExtResource("25_tv7bq")]
 position = Vector2(1712, -368)

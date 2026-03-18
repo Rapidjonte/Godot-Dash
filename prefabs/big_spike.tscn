@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dv4dte71fxixw"]
 
 [ext_resource type="Script" uid="uid://udpcsp2xnhg5" path="res://scripts/texture_override.gd" id="1_i4d64"]
-[ext_resource type="Texture2D" uid="uid://drdq0wg2cluag" path="res://images/spikes/big/RegularSpike01.webp" id="1_r3xco"]
+[ext_resource type="Texture2D" uid="uid://drdq0wg2cluag" path="res://images/objects/spikes/big/RegularSpike01.webp" id="1_r3xco"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(12, 25)

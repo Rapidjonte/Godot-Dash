@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c6xspwk10ky26"]
 
 [ext_resource type="Script" uid="uid://b7b03pw5fuygd" path="res://scripts/set_speed.gd" id="1_ayvji"]
-[ext_resource type="Texture2D" uid="uid://b0g3exrlxb3qk" path="res://images/portals/SpeedPortal++.webp" id="2_ayvji"]
+[ext_resource type="Texture2D" uid="uid://b0g3exrlxb3qk" path="res://images/objects/portals/SpeedPortal++.webp" id="2_ayvji"]
 [ext_resource type="Shader" uid="uid://dru5rwxb5rqdo" path="res://shaders/lightness.gdshader" id="2_gfuty"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]

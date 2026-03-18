@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c82ynw3eqr4bl"]
 
 [ext_resource type="Script" uid="uid://cctb4sscvxpxd" path="res://scripts/bounce_pad.gd" id="1_k201n"]
-[ext_resource type="Texture2D" uid="uid://qa0lsbekkpg4" path="res://images/pads/RedJumpPad.webp" id="2_k201n"]
+[ext_resource type="Texture2D" uid="uid://qa0lsbekkpg4" path="res://images/objects/pads/RedJumpPad.webp" id="2_k201n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnjyy"]
 size = Vector2(62, 14)
