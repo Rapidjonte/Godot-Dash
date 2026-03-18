@@ -27,9 +27,6 @@ func _ready() -> void:
 	_material.direction = Vector3(12.125,-98.5,0)
 	_material.gravity = Vector3(0,422.335,0)
 	
-	Global.border_blocks = 0
-	Global.camera_y_lock = 0
-	
 	if startUpsideDown:
 		flip(true)
 

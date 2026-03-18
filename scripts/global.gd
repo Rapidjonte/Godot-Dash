@@ -20,6 +20,8 @@ func reset():
 	attempt += 1
 	bufferable = true
 	circles = []
+	border_blocks = 0
+	camera_y_lock = null
 
 var level : PackedScene
 func load_level(path: String):
@@ -36,7 +38,7 @@ func calculate_end(_level: Node):
 
 var circles = []
 
-var camera_y_lock : float = 0
+var camera_y_lock = null
 var border_blocks : float = 0
 
 func is_divisible_by_90(value: float, epsilon: float = 0.001) -> bool:

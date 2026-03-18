@@ -14,7 +14,7 @@ var center = Vector2(32,32)
 
 var grounded := false
 var excessiveForce = 0
-var maxExcessive = 200
+var maxExcessive = 0
 
 var quick_jump_disable = false
 

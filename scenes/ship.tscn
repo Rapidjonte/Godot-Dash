@@ -68,7 +68,7 @@ script = ExtResource("1_2gnfn")
 jumpStrength = 18.63
 gravity = 2027.685
 max_velocity = 756.8
-spinSpeed = 11.95
+spinSpeed = 9.46
 
 [node name="sprite" type="TextureRect" parent="." unique_id=1922312551]
 y_sort_enabled = true

@@ -322,16 +322,16 @@ position = Vector2(1736, -208)
 position = Vector2(1488, -120)
 
 [node name="block78" parent="." unique_id=799015215 instance=ExtResource("1_gjl0y")]
-position = Vector2(32, -544)
+position = Vector2(32, -416)
 
 [node name="block80" parent="." unique_id=455702032 instance=ExtResource("1_gjl0y")]
-position = Vector2(96, -544)
-
-[node name="block85" parent="." unique_id=955152533 instance=ExtResource("1_gjl0y")]
 position = Vector2(96, -416)
 
+[node name="block85" parent="." unique_id=955152533 instance=ExtResource("1_gjl0y")]
+position = Vector2(96, -288)
+
 [node name="block86" parent="." unique_id=31033547 instance=ExtResource("1_gjl0y")]
-position = Vector2(160, -416)
+position = Vector2(160, -288)
 
 [node name="block71" parent="." unique_id=1974983245 instance=ExtResource("1_gjl0y")]
 position = Vector2(1560, -120)
@@ -387,6 +387,9 @@ position = Vector2(2240, -128)
 [node name="red_pad2" parent="." unique_id=168053970 instance=ExtResource("10_lf3p4")]
 position = Vector2(2240, -96)
 
+[node name="red_pad3" parent="." unique_id=484844631 instance=ExtResource("10_lf3p4")]
+position = Vector2(376, -328)
+
 [node name="saw" parent="." unique_id=1046743166 instance=ExtResource("25_tv7bq")]
 position = Vector2(1712, -368)
 
@@ -394,7 +397,7 @@ position = Vector2(1712, -368)
 position = Vector2(2280, -136)
 rotation = 3.1415927
 
-[node name="spider_pad2" parent="." unique_id=484844631 instance=ExtResource("26_wieee")]
+[node name="spider_pad2" parent="." unique_id=2066456284 instance=ExtResource("26_wieee")]
 position = Vector2(72, -40)
 rotation = 6.092879
 
@@ -408,7 +411,7 @@ position = Vector2(2472, -288)
 position = Vector2(2536, -192)
 
 [node name="ship_portal2" parent="." unique_id=695800591 instance=ExtResource("29_0nj7r")]
-position = Vector2(312, -488)
+position = Vector2(288, -360)
 
 [node name="gravity_portal_b2" parent="." unique_id=1974989084 instance=ExtResource("20_53hnx")]
-position = Vector2(112, -536)
+position = Vector2(112, -408)

@@ -48,6 +48,8 @@ func teleport_until_surface(direction: Vector2):
 		ray.force_raycast_update()
 
 		if ray.is_colliding():
+			if "spike" in ray.get_collider().name:
+				Global.player.die()
 			var hit_pos = ray.get_collision_point()
 			var distance = hit_pos.distance_to(Global.player.global_position)
 			if distance < min_distance:

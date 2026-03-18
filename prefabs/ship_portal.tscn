@@ -59,6 +59,7 @@ shader_parameter/lightness = 0.0
 z_index = -1
 script = ExtResource("1_k8xu3")
 gamemode_scene = ExtResource("2_q1qtf")
+border_blocks = 0.063
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=745313364]
 z_index = 2
