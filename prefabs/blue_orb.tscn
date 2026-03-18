@@ -55,7 +55,7 @@ alpha_curve = SubResource("CurveTexture_kd4pf")
 [node name="blue_orb" type="Area2D" unique_id=484844631]
 z_index = -2
 script = ExtResource("1_yliie")
-boostStrength = 601.46
+boostStrength = 566.225
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=745313364]
 shape = SubResource("RectangleShape2D_rnjyy")

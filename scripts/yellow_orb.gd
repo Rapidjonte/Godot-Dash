@@ -20,3 +20,9 @@ func _physics_process(delta: float) -> void:
 			Global.player.velocity.y = -boostStrength*(Global.player.gravity/abs(Global.player.gravity))
 			Global.bufferable = false
 			$GPUParticles2D.add_child(circle_scene.instantiate())
+			
+			if boostStrength > Global.player.max_velocity:
+				var tween = create_tween()
+				var prevMax = Global.player.max_velocity
+				Global.player.max_velocity = (boostStrength*0.6)*sign(gravity)
+				tween.tween_property(Global.player, "max_velocity", prevMax, 0.2)

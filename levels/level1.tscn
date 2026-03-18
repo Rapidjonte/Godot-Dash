@@ -27,8 +27,10 @@
 [ext_resource type="PackedScene" uid="uid://dqnmyqed6275w" path="res://prefabs/spider_pad.tscn" id="26_wieee"]
 [ext_resource type="PackedScene" uid="uid://dlsxfv60tg8px" path="res://prefabs/spider_orb.tscn" id="27_xtf7k"]
 [ext_resource type="PackedScene" uid="uid://b6mkii2pikv2m" path="res://prefabs/yellow_pad.tscn" id="28_0nj7r"]
+[ext_resource type="PackedScene" uid="uid://ceqms0qrkhvpo" path="res://prefabs/ufo_portal.tscn" id="29_0nj7r"]
 [ext_resource type="PackedScene" uid="uid://cyh6hyrha8p5r" path="res://prefabs/yellow_orb.tscn" id="29_4mjh6"]
-[ext_resource type="PackedScene" uid="uid://cem4qel5ph4q6" path="res://prefabs/mini_portal.tscn" id="30_4mjh6"]
+[ext_resource type="PackedScene" uid="uid://p8sechefs4ow" path="res://prefabs/black_orb.tscn" id="30_4mjh6"]
+[ext_resource type="PackedScene" uid="uid://co70ptauw3oki" path="res://prefabs/cube_portal.tscn" id="31_7fu2r"]
 
 [node name="level" type="Node2D" unique_id=40821179]
 
@@ -38,37 +40,40 @@ position = Vector2(2608, -32)
 [node name="big_spike5" parent="." unique_id=1147703251 instance=ExtResource("2_vnv7o")]
 position = Vector2(1712, -32)
 
-[node name="big_spike7" parent="." unique_id=1728871852 instance=ExtResource("2_vnv7o")]
-position = Vector2(416, -224)
+[node name="big_spike6" parent="." unique_id=497089630 instance=ExtResource("2_vnv7o")]
+position = Vector2(416, -352)
 
-[node name="big_spike8" parent="." unique_id=101217842 instance=ExtResource("2_vnv7o")]
+[node name="big_spike12" parent="." unique_id=445658544 instance=ExtResource("2_vnv7o")]
+position = Vector2(352, -512)
+rotation = 3.1415927
+
+[node name="big_spike13" parent="." unique_id=541365418 instance=ExtResource("2_vnv7o")]
+position = Vector2(416, -512)
+rotation = 3.1415927
+
+[node name="big_spike14" parent="." unique_id=1796211600 instance=ExtResource("2_vnv7o")]
+position = Vector2(480, -512)
+rotation = 3.1415927
+
+[node name="big_spike15" parent="." unique_id=1454439534 instance=ExtResource("2_vnv7o")]
+position = Vector2(288, -512)
+rotation = 3.1415927
+
+[node name="big_spike8" parent="." unique_id=1091801520 instance=ExtResource("2_vnv7o")]
 position = Vector2(480, -288)
+
+[node name="big_spike9" parent="." unique_id=1920797622 instance=ExtResource("2_vnv7o")]
+position = Vector2(544, -224)
+
+[node name="big_spike10" parent="." unique_id=1977048808 instance=ExtResource("2_vnv7o")]
+position = Vector2(608, -160)
+
+[node name="big_spike11" parent="." unique_id=1872353265 instance=ExtResource("2_vnv7o")]
+position = Vector2(672, -96)
+
+[node name="big_spike7" parent="." unique_id=832907582 instance=ExtResource("2_vnv7o")]
+position = Vector2(304, -128)
 rotation = 3.1415927
-
-[node name="big_spike9" parent="." unique_id=368326168 instance=ExtResource("2_vnv7o")]
-position = Vector2(544, -160)
-rotation = 3.1415927
-
-[node name="big_spike10" parent="." unique_id=379709384 instance=ExtResource("2_vnv7o")]
-position = Vector2(512, -32)
-
-[node name="big_spike11" parent="." unique_id=880176131 instance=ExtResource("2_vnv7o")]
-position = Vector2(618, -32)
-
-[node name="big_spike12" parent="." unique_id=30937300 instance=ExtResource("2_vnv7o")]
-position = Vector2(682, -32)
-
-[node name="big_spike13" parent="." unique_id=1607245415 instance=ExtResource("2_vnv7o")]
-position = Vector2(848, -32)
-
-[node name="big_spike14" parent="." unique_id=304656307 instance=ExtResource("2_vnv7o")]
-position = Vector2(912, -32)
-
-[node name="big_spike15" parent="." unique_id=246775652 instance=ExtResource("2_vnv7o")]
-position = Vector2(1104, -32)
-
-[node name="big_spike16" parent="." unique_id=1485203361 instance=ExtResource("2_vnv7o")]
-position = Vector2(1168, -32)
 
 [node name="big_spike3" parent="." unique_id=1150188068 instance=ExtResource("2_vnv7o")]
 position = Vector2(2672, -32)
@@ -335,9 +340,6 @@ texture = ExtResource("5_pdpul")
 [node name="0_5x_speed" parent="." unique_id=1880260488 instance=ExtResource("11_jq2cn")]
 position = Vector2(1512, -248)
 
-[node name="0_5x_speed2" parent="." unique_id=484844631 instance=ExtResource("11_jq2cn")]
-position = Vector2(568, 40)
-
 [node name="1x_speed" parent="." unique_id=1321226904 instance=ExtResource("12_a5s8o")]
 position = Vector2(1552, -240)
 
@@ -356,18 +358,6 @@ position = Vector2(1736, -208)
 [node name="block70" parent="." unique_id=331663490 instance=ExtResource("1_gjl0y")]
 position = Vector2(1488, -120)
 
-[node name="block79" parent="." unique_id=509605511 instance=ExtResource("1_gjl0y")]
-position = Vector2(992, -480)
-
-[node name="block81" parent="." unique_id=1426365208 instance=ExtResource("1_gjl0y")]
-position = Vector2(992, -352)
-
-[node name="block82" parent="." unique_id=1851538348 instance=ExtResource("1_gjl0y")]
-position = Vector2(992, -224)
-
-[node name="block83" parent="." unique_id=742642265 instance=ExtResource("1_gjl0y")]
-position = Vector2(806, -234)
-
 [node name="block78" parent="." unique_id=799015215 instance=ExtResource("1_gjl0y")]
 position = Vector2(32, -416)
 
@@ -385,6 +375,24 @@ position = Vector2(224, -288)
 
 [node name="block88" parent="." unique_id=1413188566 instance=ExtResource("1_gjl0y")]
 position = Vector2(288, -288)
+
+[node name="block89" parent="." unique_id=1329197536 instance=ExtResource("1_gjl0y")]
+position = Vector2(816, -296)
+
+[node name="block90" parent="." unique_id=624467033 instance=ExtResource("1_gjl0y")]
+position = Vector2(888, -296)
+
+[node name="block91" parent="." unique_id=387527417 instance=ExtResource("1_gjl0y")]
+position = Vector2(992, -296)
+
+[node name="block92" parent="." unique_id=2032158128 instance=ExtResource("1_gjl0y")]
+position = Vector2(1072, -296)
+
+[node name="block93" parent="." unique_id=1449797530 instance=ExtResource("1_gjl0y")]
+position = Vector2(1176, -296)
+
+[node name="block94" parent="." unique_id=1003943571 instance=ExtResource("1_gjl0y")]
+position = Vector2(1256, -296)
 
 [node name="block71" parent="." unique_id=1974983245 instance=ExtResource("1_gjl0y")]
 position = Vector2(1560, -120)
@@ -463,5 +471,23 @@ position = Vector2(2536, -192)
 [node name="gravity_portal_b2" parent="." unique_id=1974989084 instance=ExtResource("20_53hnx")]
 position = Vector2(56, -408)
 
-[node name="mini_portal" parent="." unique_id=1633698194 instance=ExtResource("30_4mjh6")]
-position = Vector2(120, -352)
+[node name="ufo_portal" parent="." unique_id=200358360 instance=ExtResource("29_0nj7r")]
+position = Vector2(160, -352)
+
+[node name="black_orb" parent="." unique_id=484844631 instance=ExtResource("30_4mjh6")]
+position = Vector2(632, -432)
+
+[node name="black_orb2" parent="." unique_id=911276293 instance=ExtResource("30_4mjh6")]
+position = Vector2(1008.00006, -455.99997)
+rotation = -0.23076613
+
+[node name="black_orb3" parent="." unique_id=1274423625 instance=ExtResource("30_4mjh6")]
+position = Vector2(1128, -455.99994)
+rotation = -0.23076613
+
+[node name="black_orb4" parent="." unique_id=840897550 instance=ExtResource("30_4mjh6")]
+position = Vector2(1240, -455.99994)
+rotation = -0.23076613
+
+[node name="cube_portal" parent="." unique_id=174211235 instance=ExtResource("31_7fu2r")]
+position = Vector2(840, -432)

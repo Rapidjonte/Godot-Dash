@@ -1,8 +1,7 @@
-[gd_scene format=3 uid="uid://baynh7j3gk802"]
+[gd_scene format=3 uid="uid://d2ylcwolsqov2"]
 
-[ext_resource type="Script" uid="uid://cscsv6firf5ow" path="res://scripts/ship.gd" id="1_ig0ja"]
-[ext_resource type="Texture2D" uid="uid://babgf5sqp3b66" path="res://images/gamemodes/ships/ship_17.png" id="2_auv2a"]
-[ext_resource type="Texture2D" uid="uid://ype4q5ffqtx0" path="res://images/gamemodes/cubes/cube_371.png" id="3_mrkg0"]
+[ext_resource type="Script" uid="uid://brtkgjbl3n8hg" path="res://scripts/ufo.gd" id="1_ibhua"]
+[ext_resource type="Texture2D" uid="uid://ciolyss5gdsc8" path="res://images/gamemodes/ufos/ufo_24.png" id="2_ibhua"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gee14"]
 blend_mode = 1
@@ -48,43 +47,33 @@ size = Vector2(64, 64)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1621791113]
 slide_on_ceiling = false
-script = ExtResource("1_ig0ja")
-gamemode = "ship"
-jumpStrength = 18.63
-gravity = 2027.685
-max_velocity = 756.8
-spinSpeed = 9.46
+script = ExtResource("1_ibhua")
+gamemode = "ufo"
+jumpStrength = 622.165
+gravity = 2235.89
+max_velocity = 773.55
+spinSpeed = 5.0
 center = Vector2(32, 32)
 
 [node name="sprite" type="TextureRect" parent="." unique_id=1922312551]
 y_sort_enabled = true
-offset_left = -62.79
-offset_top = 10.6
-offset_right = 7.0472107
-offset_bottom = 73.59997
+offset_left = -2.91
+offset_top = -2.15
+offset_right = 66.92721
+offset_bottom = 60.849968
 scale = Vector2(0.55, 0.55)
-pivot_offset = Vector2(94.78, 21.41)
-texture = ExtResource("2_auv2a")
+pivot_offset = Vector2(34.919, 34.15)
+texture = ExtResource("2_ibhua")
 expand_mode = 1
-stretch_mode = 2
+stretch_mode = 3
 
-[node name="sprite" type="TextureRect" parent="sprite" unique_id=478105636]
-layout_mode = 0
-offset_left = 58.89319
-offset_top = -33.454544
-offset_right = 128.73041
-offset_bottom = 29.545456
-scale = Vector2(1.075, 1.075)
-pivot_offset = Vector2(34.89, 32)
-texture = ExtResource("3_mrkg0")
-expand_mode = 1
-
-[node name="friction" type="GPUParticles2D" parent="sprite/sprite" unique_id=966833905]
-modulate = Color(0.83047456, 0.43858892, 0, 0.53333336)
+[node name="friction" type="GPUParticles2D" parent="sprite" unique_id=966833905]
+modulate = Color(1, 0.6868438, 0.80193555, 0.53333336)
 show_behind_parent = true
+z_index = -1
 material = SubResource("CanvasItemMaterial_gee14")
-position = Vector2(-18.288431, 93.84439)
-scale = Vector2(1.6913317, 1.6913317)
+position = Vector2(36.616364, 65.028175)
+scale = Vector2(1.8181818, 1.8181818)
 amount = 20
 texture = SubResource("GradientTexture2D_0tnpc")
 lifetime = 0.2
