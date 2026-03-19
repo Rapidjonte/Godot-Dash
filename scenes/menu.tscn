@@ -1,160 +1,136 @@
 [gd_scene format=3 uid="uid://d2pneeifygawe"]
 
-[ext_resource type="FontFile" uid="uid://dmeobsi61bvm" path="res://fonts/OXYGENE1.TTF" id="1_vjb58"]
-[ext_resource type="Script" uid="uid://dwsb43qbdtj2r" path="res://scripts/button.gd" id="1_yqeox"]
-[ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="3_con2f"]
-[ext_resource type="Texture2D" uid="uid://bnr03kfjgssvo" path="res://images/other/logo - Godot dash.png" id="4_mhnvy"]
+[ext_resource type="PackedScene" uid="uid://cavhfsgln3wt5" path="res://scenes/level_button.tscn" id="1_yqeox"]
+[ext_resource type="Texture2D" uid="uid://bsmn8idn3rgnw" path="res://images/ui/GJ_table_bottom_001.png" id="2_vjb58"]
+[ext_resource type="Texture2D" uid="uid://c6qu78nuubhly" path="res://images/ui/GJ_table_side_001.png" id="3_mhnvy"]
+[ext_resource type="Texture2D" uid="uid://crbp5qe8bjvp2" path="res://images/ui/GJ_table_top_001.png" id="5_4ytvr"]
+[ext_resource type="Texture2D" uid="uid://dx487fjfpdixp" path="res://images/ui/groundSquareShadow_001.png" id="5_g3eks"]
+[ext_resource type="Texture2D" uid="uid://djy8ak0cw5l3r" path="res://images/ui/GJ_updateBtn_001.png" id="6_g3eks"]
+[ext_resource type="Script" uid="uid://bntyjdaihualp" path="res://scripts/hover.gd" id="7_v86rl"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_mhnvy"]
-font = ExtResource("3_con2f")
-font_size = 30
-outline_size = 8
-outline_color = Color(0, 0, 0, 1)
+[sub_resource type="Gradient" id="Gradient_4ytvr"]
+offsets = PackedFloat32Array(0.560241)
+colors = PackedColorArray(0.7607843, 0.44705883, 0.24313726, 1)
 
-[node name="Menu" type="Node2D" unique_id=453109969]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g3eks"]
+gradient = SubResource("Gradient_4ytvr")
 
-[node name="Button" type="Button" parent="." unique_id=1987997764]
-offset_left = 24.0
-offset_top = 512.0
-offset_right = 200.0
-offset_bottom = 624.0
-theme_override_fonts/font = ExtResource("1_vjb58")
-autowrap_mode = 2
-script = ExtResource("1_yqeox")
-levelPath = "res://levels/level1.tscn"
-metadata/_edit_use_anchors_ = true
+[sub_resource type="Animation" id="Animation_yqeox"]
+length = 0.1935
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06779661, 0.13559322, 0.18644068),
+"transitions": PackedFloat32Array(1, 0.23325819, 2.6390157, 5.278025),
+"update": 0,
+"values": [Vector2(0.565, 0.565), Vector2(0.837, 0.837), Vector2(0.772, 0.772), Vector2(0.837, 0.837)]
+}
 
-[node name="Label" type="Label" parent="Button" unique_id=1629955594]
+[sub_resource type="Animation" id="Animation_4h3mk"]
+resource_name = "hover"
+length = 0.193
+step = 0.0166
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06779661, 0.13559322, 0.18644068),
+"transitions": PackedFloat32Array(1, 0.23325819, 2.6390157, 5.278025),
+"update": 0,
+"values": [Vector2(0.565, 0.565), Vector2(0.837, 0.837), Vector2(0.772, 0.772), Vector2(0.837, 0.837)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yqeox"]
+_data = {
+&"RESET": SubResource("Animation_yqeox"),
+&"hover": SubResource("Animation_4h3mk")
+}
+
+[node name="Menu" type="Control" unique_id=1444555808]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=351132249]
+z_index = -11
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.77272725
-anchor_bottom = 0.79464287
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Level 1:
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -359.0
+offset_top = -237.0
+offset_right = 359.0
+offset_bottom = 245.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-Madness"
-label_settings = SubResource("LabelSettings_mhnvy")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-metadata/_edit_use_anchors_ = true
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=233528514]
+layout_mode = 2
+theme_override_constants/separation = 40
 
-[node name="Button2" type="Button" parent="." unique_id=924412146]
-offset_left = 224.0
-offset_top = 512.0
-offset_right = 400.0
-offset_bottom = 624.0
-theme_override_fonts/font = ExtResource("1_vjb58")
-autowrap_mode = 2
-script = ExtResource("1_yqeox")
-levelPath = "res://levels/level2.tscn"
-metadata/_edit_use_anchors_ = true
+[node name="Control" parent="ScrollContainer/VBoxContainer" unique_id=1721409516 instance=ExtResource("1_yqeox")]
+layout_mode = 2
 
-[node name="Label" type="Label" parent="Button2" unique_id=634322354]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.77272725
-anchor_bottom = 0.79464287
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Level 2:
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1501260160]
 
-New orbs"
-label_settings = SubResource("LabelSettings_mhnvy")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-metadata/_edit_use_anchors_ = true
+[node name="GjTableBottom001" type="Sprite2D" parent="." unique_id=637115914]
+position = Vector2(0, 274.855)
+scale = Vector2(0.512, 0.512)
+texture = ExtResource("2_vjb58")
 
-[node name="Button3" type="Button" parent="." unique_id=879783672]
-offset_left = 424.0
-offset_top = 512.0
-offset_right = 600.0
-offset_bottom = 624.0
-theme_override_fonts/font = ExtResource("1_vjb58")
-autowrap_mode = 2
-script = ExtResource("1_yqeox")
-levelPath = "res://levels/level3.tscn"
-metadata/_edit_use_anchors_ = true
+[node name="GjTableTop001" type="Sprite2D" parent="." unique_id=1861214341]
+position = Vector2(0, -268.96)
+scale = Vector2(0.512, 0.512)
+texture = ExtResource("5_4ytvr")
 
-[node name="Label" type="Label" parent="Button3" unique_id=1238634184]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.77272725
-anchor_bottom = 0.79464287
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Level 3:
+[node name="GjTableSide001" type="Sprite2D" parent="." unique_id=207314679]
+position = Vector2(-375.36, 2.855011)
+scale = Vector2(0.512, 1.8707814)
+texture = ExtResource("3_mhnvy")
 
-DEMON!"
-label_settings = SubResource("LabelSettings_mhnvy")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-metadata/_edit_use_anchors_ = true
+[node name="GjTableSide002" type="Sprite2D" parent="." unique_id=1248265539]
+position = Vector2(376.17, 2.855011)
+scale = Vector2(-0.512, 1.871)
+texture = ExtResource("3_mhnvy")
 
-[node name="Button4" type="Button" parent="." unique_id=1603743762]
-offset_left = 624.0
-offset_top = 512.0
-offset_right = 800.0
-offset_bottom = 624.0
-theme_override_fonts/font = ExtResource("1_vjb58")
-autowrap_mode = 2
-script = ExtResource("1_yqeox")
-levelPath = "res://levels/level4.tscn"
-metadata/_edit_use_anchors_ = true
+[node name="innerbg" type="Sprite2D" parent="." unique_id=1589845457]
+z_index = -65
+position = Vector2(3, 2.6900406)
+scale = Vector2(-11.742315, 7.860502)
+texture = SubResource("GradientTexture2D_g3eks")
 
-[node name="Label" type="Label" parent="Button4" unique_id=1719376331]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.77272725
-anchor_bottom = 0.79464287
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Level 4:
+[node name="GroundSquareShadow001" type="Sprite2D" parent="." unique_id=1424137500]
+modulate = Color(1, 1, 1, 0.34509805)
+z_index = -987
+position = Vector2(3.9999971, 7.118988)
+rotation = -1.5707964
+scale = Vector2(1.2651602, 2.2738745)
+texture = ExtResource("5_g3eks")
 
-Easier?"
-label_settings = SubResource("LabelSettings_mhnvy")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-metadata/_edit_use_anchors_ = true
+[node name="TextureButton" type="TextureButton" parent="." unique_id=1525136685]
+layout_mode = 0
+offset_left = 400.00003
+offset_top = 158.00003
+offset_right = 584.0
+offset_bottom = 348.00003
+scale = Vector2(0.565, 0.565)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("6_g3eks")
+script = ExtResource("7_v86rl")
 
-[node name="Button5" type="Button" parent="." unique_id=149039987]
-offset_left = 824.0
-offset_top = 512.0
-offset_right = 1000.0
-offset_bottom = 624.0
-theme_override_fonts/font = ExtResource("1_vjb58")
-autowrap_mode = 2
-script = ExtResource("1_yqeox")
-levelPath = "res://levels/level5.tscn"
-metadata/_edit_use_anchors_ = true
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TextureButton" unique_id=857305272]
+libraries/ = SubResource("AnimationLibrary_yqeox")
 
-[node name="Label" type="Label" parent="Button5" unique_id=678617525]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.77272725
-anchor_bottom = 0.79464287
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Level 5:
-
-SHIP!"
-label_settings = SubResource("LabelSettings_mhnvy")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="LogoGodotDash" type="Sprite2D" parent="." unique_id=1098272580]
-position = Vector2(576, 136)
-scale = Vector2(0.93224925, 0.94692737)
-texture = ExtResource("4_mhnvy")
-
-[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
-[connection signal="pressed" from="Button2" to="Button2" method="_on_pressed"]
-[connection signal="pressed" from="Button3" to="Button3" method="_on_pressed"]
-[connection signal="pressed" from="Button4" to="Button4" method="_on_pressed"]
-[connection signal="pressed" from="Button5" to="Button5" method="_on_pressed"]
+[connection signal="mouse_entered" from="TextureButton" to="TextureButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="TextureButton" to="TextureButton" method="_on_mouse_exited"]

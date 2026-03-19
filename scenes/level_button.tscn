@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://cavhfsgln3wt5"]
+
+[ext_resource type="Texture2D" uid="uid://2v8v5874ofkf" path="res://images/ui/GJ_playBtn2_001.png" id="1_i0sit"]
+
+[sub_resource type="Gradient" id="Gradient_4h3mk"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yqeox"]
+gradient = SubResource("Gradient_4h3mk")
+
+[sub_resource type="Animation" id="Animation_yqeox"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.565, 0.565)]
+}
+
+[sub_resource type="Animation" id="Animation_4h3mk"]
+resource_name = "hover"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.26666668, 0.43333334),
+"transitions": PackedFloat32Array(1, 0.23325819, 2.6390157, 5.278025),
+"update": 0,
+"values": [Vector2(0.565, 0.565), Vector2(0.837, 0.837), Vector2(0.772, 0.772), Vector2(0.837, 0.837)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yqeox"]
+_data = {
+&"RESET": SubResource("Animation_yqeox"),
+&"hover": SubResource("Animation_4h3mk")
+}
+
+[node name="Control" type="Control" unique_id=1721409516]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=948729463]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("GradientTexture1D_yqeox")
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=2078489466]
+layout_mode = 0
+offset_left = 80.0
+offset_top = -136.0
+offset_right = 394.0
+offset_bottom = 190.0
+scale = Vector2(0.565, 0.565)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("1_i0sit")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TextureButton" unique_id=1674930087]
+libraries/ = SubResource("AnimationLibrary_yqeox")
+autoplay = &"hover"
