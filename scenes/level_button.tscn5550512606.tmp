@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://qdvj6e5vogq5" path="res://images/ui/GJ_longBtn01_001.png" id="1_o8246"]
 [ext_resource type="Script" uid="uid://bho6n02gwam8s" path="res://scripts/download_button.gd" id="2_hrusj"]
 [ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="3_hrusj"]
-[ext_resource type="Texture2D" uid="uid://bg13khx27ciko" path="res://images/ui/extreme_demon.png" id="5_ium1h"]
 
 [sub_resource type="Gradient" id="Gradient_4h3mk"]
 offsets = PackedFloat32Array(0.4939759)
@@ -119,7 +118,7 @@ offset_left = 9.093042
 offset_top = 46.84071
 offset_right = 348.91605
 offset_bottom = 94.84071
-text = "Play"
+text = "Download"
 label_settings = SubResource("LabelSettings_6g3el")
 horizontal_alignment = 1
 
@@ -145,16 +144,6 @@ text = "WWWWWWWWWW"
 label_settings = SubResource("LabelSettings_nfgsp")
 autowrap_mode = 1
 text_overrun_behavior = 1
-
-[node name="diff" type="TextureRect" parent="." unique_id=1130963732]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 0.99999976
-offset_right = 200.57083
-offset_bottom = 247.0
-scale = Vector2(0.466, 0.466)
-texture = ExtResource("5_ium1h")
-stretch_mode = 3
 
 [connection signal="button_down" from="TextureButton" to="TextureButton" method="_on_button_down"]
 [connection signal="button_up" from="TextureButton" to="TextureButton" method="_on_button_up"]

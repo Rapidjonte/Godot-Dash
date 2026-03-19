@@ -39,8 +39,6 @@ func load_level():
 
 func complete():
 	Global.paused = true
-	#$CharacterBody2D/CPUParticles2D.emitting = true
-	#$CharacterBody2D/sprite.visible = false
 
 func _draw():
 	for circle in Global.circles:

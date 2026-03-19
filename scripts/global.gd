@@ -26,8 +26,8 @@ func reset():
 	two_faced_blocks = false
 
 var level : PackedScene
-func load_level(path: String):
-	level = load(path)
+func load_level(_level: PackedScene):
+	level = _level
 	calculate_end(level.instantiate())
 
 var endX := 128

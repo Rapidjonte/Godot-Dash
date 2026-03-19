@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3r5kg21bryk8"
-path="res://.godot/imported/difficulty_01_btn_001.png-bb3c089adbc1382649f1d92f89e4aeb0.ctex"
+uid="uid://dneuhhtk33oo2"
+path="res://.godot/imported/loadingCircle-uhd.png-44cdecc3cecc89d9d578e6abf58f1e48.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/ui/difficulty_01_btn_001.png"
-dest_files=["res://.godot/imported/difficulty_01_btn_001.png-bb3c089adbc1382649f1d92f89e4aeb0.ctex"]
+source_file="res://images/other/loadingCircle-uhd.png"
+dest_files=["res://.godot/imported/loadingCircle-uhd.png-44cdecc3cecc89d9d578e6abf58f1e48.ctex"]
 
 [params]
 

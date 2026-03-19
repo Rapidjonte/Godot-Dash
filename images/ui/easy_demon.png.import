@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bje1khcffaxef"
-path="res://.godot/imported/difficulty_08_btn2_001.png-db20cbe99fe030b054c18897b2be4de2.ctex"
+uid="uid://cgn3ajxmwm1eu"
+path="res://.godot/imported/easy_demon.png-3c566b80fe8a64e9d8d48ede3ac8e165.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/ui/difficulty_08_btn2_001.png"
-dest_files=["res://.godot/imported/difficulty_08_btn2_001.png-db20cbe99fe030b054c18897b2be4de2.ctex"]
+source_file="res://images/ui/easy_demon.png"
+dest_files=["res://.godot/imported/easy_demon.png-3c566b80fe8a64e9d8d48ede3ac8e165.ctex"]
 
 [params]
 

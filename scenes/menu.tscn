@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://d2pneeifygawe"]
 
-[ext_resource type="PackedScene" uid="uid://cavhfsgln3wt5" path="res://scenes/level_button.tscn" id="1_yqeox"]
+[ext_resource type="Script" uid="uid://spbqvbfjktbe" path="res://scripts/menu.gd" id="1_13sgg"]
 [ext_resource type="Texture2D" uid="uid://bsmn8idn3rgnw" path="res://images/ui/GJ_table_bottom_001.png" id="2_vjb58"]
 [ext_resource type="Texture2D" uid="uid://c6qu78nuubhly" path="res://images/ui/GJ_table_side_001.png" id="3_mhnvy"]
 [ext_resource type="Texture2D" uid="uid://crbp5qe8bjvp2" path="res://images/ui/GJ_table_top_001.png" id="5_4ytvr"]
 [ext_resource type="Texture2D" uid="uid://dx487fjfpdixp" path="res://images/ui/groundSquareShadow_001.png" id="5_g3eks"]
 [ext_resource type="Texture2D" uid="uid://djy8ak0cw5l3r" path="res://images/ui/GJ_updateBtn_001.png" id="6_g3eks"]
-[ext_resource type="Script" uid="uid://bntyjdaihualp" path="res://scripts/hover.gd" id="7_v86rl"]
+[ext_resource type="Script" uid="uid://c3vkwjmw7b7ek" path="res://scripts/refresh_button.gd" id="8_13sgg"]
+[ext_resource type="Texture2D" uid="uid://dneuhhtk33oo2" path="res://images/other/loadingCircle-uhd.png" id="9_i6lef"]
 
 [sub_resource type="Gradient" id="Gradient_4ytvr"]
 offsets = PackedFloat32Array(0.560241)
@@ -59,9 +60,13 @@ _data = {
 &"unhover": SubResource("Animation_v86rl")
 }
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i6lef"]
+blend_mode = 1
+
 [node name="Menu" type="Control" unique_id=1444555808]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_13sgg")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=351132249]
 z_index = -11
@@ -83,10 +88,7 @@ size_flags_vertical = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=233528514]
 layout_mode = 2
-theme_override_constants/separation = 40
-
-[node name="Control" parent="ScrollContainer/VBoxContainer" unique_id=1721409516 instance=ExtResource("1_yqeox")]
-layout_mode = 2
+theme_override_constants/separation = 128
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1501260160]
 
@@ -126,17 +128,25 @@ texture = ExtResource("5_g3eks")
 
 [node name="TextureButton" type="TextureButton" parent="." unique_id=1525136685]
 layout_mode = 0
-offset_left = 299.99994
-offset_top = 152.0
-offset_right = 483.99994
-offset_bottom = 342.0
+offset_left = 386.0
+offset_top = 156.0
+offset_right = 570.0
+offset_bottom = 346.0
 scale = Vector2(0.565, 0.565)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture_normal = ExtResource("6_g3eks")
-script = ExtResource("7_v86rl")
+script = ExtResource("8_13sgg")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TextureButton" unique_id=857305272]
 libraries/ = SubResource("AnimationLibrary_yqeox")
 
+[node name="LoadingCircleUhd" type="Sprite2D" parent="." unique_id=1644711058]
+visible = false
+material = SubResource("CanvasItemMaterial_i6lef")
+scale = Vector2(0.565, 0.565)
+texture = ExtResource("9_i6lef")
+
+[connection signal="button_down" from="TextureButton" to="TextureButton" method="_on_button_down"]
+[connection signal="button_up" from="TextureButton" to="TextureButton" method="_on_button_up"]
 [connection signal="mouse_entered" from="TextureButton" to="TextureButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="TextureButton" to="TextureButton" method="_on_mouse_exited"]
