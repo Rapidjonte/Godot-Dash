@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://d2wii8h0pe3bt"]
+
+[ext_resource type="Script" uid="uid://brtkgjbl3n8hg" path="res://scripts/ufo.gd" id="1_swyon"]
+[ext_resource type="Texture2D" uid="uid://ciolyss5gdsc8" path="res://images/gamemodes/ufos/ufo_24.png" id="2_yw8wg"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gee14"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_ofbtx"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0tnpc"]
+gradient = SubResource("Gradient_ofbtx")
+width = 8
+height = 8
+
+[sub_resource type="Curve" id="Curve_vtaks"]
+_data = [Vector2(0.19563672, 1), 0.0, 0.0, 0, 0, Vector2(0.6838366, 1), 0.0, 0.0, 0, 0, Vector2(0.9918791, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_kd4pf"]
+curve = SubResource("Curve_vtaks")
+
+[sub_resource type="Curve" id="Curve_kvpfn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.3322872, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vu84t"]
+curve = SubResource("Curve_kvpfn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dinhu"]
+particle_flag_disable_z = true
+direction = Vector3(-33.77, -97.01, 0)
+spread = 76.765
+initial_velocity_min = 107.689995
+initial_velocity_max = 107.689995
+gravity = Vector3(0, 422.335, 0)
+scale_max = 1.4
+scale_curve = SubResource("CurveTexture_vu84t")
+alpha_curve = SubResource("CurveTexture_kd4pf")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6e84v"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvuet"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1621791113]
+scale = Vector2(0.562, 0.562)
+slide_on_ceiling = false
+script = ExtResource("1_swyon")
+gamemode = "mini_ufo"
+jumpStrength = 616.62
+gravity = 2740.76
+max_velocity = 773.55
+spinSpeed = 5.0
+center = Vector2(18, 18)
+
+[node name="sprite" type="TextureRect" parent="." unique_id=1922312551]
+y_sort_enabled = true
+offset_left = -2.91
+offset_top = -2.15
+offset_right = 66.92721
+offset_bottom = 60.849968
+scale = Vector2(0.55, 0.55)
+pivot_offset = Vector2(34.919, 34.15)
+texture = ExtResource("2_yw8wg")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="friction" type="GPUParticles2D" parent="sprite" unique_id=966833905]
+modulate = Color(1, 0.6868438, 0.80193555, 0.53333336)
+show_behind_parent = true
+z_index = -1
+material = SubResource("CanvasItemMaterial_gee14")
+position = Vector2(36.616364, 65.028175)
+scale = Vector2(1.8181818, 1.8181818)
+amount = 20
+texture = SubResource("GradientTexture2D_0tnpc")
+lifetime = 0.2
+preprocess = 1.3
+speed_scale = 1.1
+randomness = 0.11
+process_material = SubResource("ParticleProcessMaterial_dinhu")
+
+[node name="player_collision" type="CollisionShape2D" parent="." unique_id=1847450181]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_6e84v")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1919142782]
+
+[node name="middle box" type="CollisionShape2D" parent="Area2D" unique_id=1391165727]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_kvuet")
+
+[node name="Area2D2" type="Area2D" parent="." unique_id=1269910535]
+
+[node name="spinbox" type="CollisionShape2D" parent="Area2D2" unique_id=1363203289]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_6e84v")
+
+[node name="SpiderRay" type="RayCast2D" parent="." unique_id=988738009]
+position = Vector2(32, 32)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
