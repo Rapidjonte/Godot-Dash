@@ -17,18 +17,6 @@ gradient = SubResource("Gradient_4ytvr")
 
 [sub_resource type="Animation" id="Animation_yqeox"]
 length = 0.1935
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.06779661, 0.13559322, 0.18644068),
-"transitions": PackedFloat32Array(1, 0.23325819, 2.6390157, 5.278025),
-"update": 0,
-"values": [Vector2(0.565, 0.565), Vector2(0.837, 0.837), Vector2(0.772, 0.772), Vector2(0.837, 0.837)]
-}
 
 [sub_resource type="Animation" id="Animation_4h3mk"]
 resource_name = "hover"
@@ -44,13 +32,31 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.06779661, 0.13559322, 0.18644068),
 "transitions": PackedFloat32Array(1, 0.23325819, 2.6390157, 5.278025),
 "update": 0,
-"values": [Vector2(0.565, 0.565), Vector2(0.837, 0.837), Vector2(0.772, 0.772), Vector2(0.837, 0.837)]
+"values": [Vector2(0.565, 0.565), Vector2(0.722, 0.722), Vector2(0.657, 0.657), Vector2(0.722, 0.722)]
+}
+
+[sub_resource type="Animation" id="Animation_v86rl"]
+resource_name = "unhover"
+length = 0.193
+step = 0.0166
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06779661, 0.13559322, 0.18644068),
+"transitions": PackedFloat32Array(1, 0.23325819, 2.6390157, 5.278025),
+"update": 0,
+"values": [Vector2(0.722, 0.722), Vector2(0.512, 0.512), Vector2(0.637, 0.637), Vector2(0.565, 0.565)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yqeox"]
 _data = {
 &"RESET": SubResource("Animation_yqeox"),
-&"hover": SubResource("Animation_4h3mk")
+&"hover": SubResource("Animation_4h3mk"),
+&"unhover": SubResource("Animation_v86rl")
 }
 
 [node name="Menu" type="Control" unique_id=1444555808]
@@ -120,10 +126,10 @@ texture = ExtResource("5_g3eks")
 
 [node name="TextureButton" type="TextureButton" parent="." unique_id=1525136685]
 layout_mode = 0
-offset_left = 400.00003
-offset_top = 158.00003
-offset_right = 584.0
-offset_bottom = 348.00003
+offset_left = 299.99994
+offset_top = 152.0
+offset_right = 483.99994
+offset_bottom = 342.0
 scale = Vector2(0.565, 0.565)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture_normal = ExtResource("6_g3eks")

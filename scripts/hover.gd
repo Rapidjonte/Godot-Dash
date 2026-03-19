@@ -1,8 +1,10 @@
 extends TextureButton
 
-func _on_mouse_entered() -> void:
-	$AnimationPlayer.play("hover")
+@onready var player := $AnimationPlayer
 
+func _on_mouse_entered() -> void:
+	player.play("hover")
 
 func _on_mouse_exited() -> void:
-	$AnimationPlayer.play("RESET")
+	player.play("unhover")
+	

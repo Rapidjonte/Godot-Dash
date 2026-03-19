@@ -8,7 +8,7 @@
 gradient = SubResource("Gradient_4h3mk")
 
 [sub_resource type="Animation" id="Animation_yqeox"]
-length = 0.001
+length = 0.1935
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -16,14 +16,16 @@ tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.06779661, 0.13559322, 0.18644068),
+"transitions": PackedFloat32Array(1, 0.23325819, 2.6390157, 5.278025),
 "update": 0,
-"values": [Vector2(0.565, 0.565)]
+"values": [Vector2(0.837, 0.837), Vector2(0.837, 0.837), Vector2(0.772, 0.772), Vector2(0.837, 0.837)]
 }
 
 [sub_resource type="Animation" id="Animation_4h3mk"]
 resource_name = "hover"
+length = 0.193
+step = 0.0166
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -31,7 +33,7 @@ tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.26666668, 0.43333334),
+"times": PackedFloat32Array(0, 0.06779661, 0.13559322, 0.18644068),
 "transitions": PackedFloat32Array(1, 0.23325819, 2.6390157, 5.278025),
 "update": 0,
 "values": [Vector2(0.565, 0.565), Vector2(0.837, 0.837), Vector2(0.772, 0.772), Vector2(0.837, 0.837)]
@@ -59,7 +61,7 @@ offset_left = 80.0
 offset_top = -136.0
 offset_right = 394.0
 offset_bottom = 190.0
-scale = Vector2(0.565, 0.565)
+scale = Vector2(0.837, 0.837)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture_normal = ExtResource("1_i0sit")
 
