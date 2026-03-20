@@ -21,7 +21,7 @@ func refresh():
 
 func _process(delta: float) -> void:
 	if $LoadingCircleUhd.visible:
-		$LoadingCircleUhd.rotation += delta
+		$LoadingCircleUhd.rotation += delta * 15
 
 func fetch_csv(url: String):
 	var error = http_request.request(url)

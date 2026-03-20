@@ -2,6 +2,9 @@ extends Area2D
 
 var circle_scene: PackedScene = load("res://scenes/circle_effect.tscn")
 var boostStrength = 2008.405
+@onready var prevMax = Global.player.max_velocity
+@onready var newMax = Global.player.max_velocity
+var boosted = false
 
 func _ready():
 	$CollisionShape2D.disabled = false
@@ -18,14 +21,17 @@ func _physics_process(delta: float) -> void:
 			$CollisionShape2D.set_deferred("disabled", true)
 			
 			if boostStrength > Global.player.max_velocity:
-				var tween = create_tween()
-				var prevMax = Global.player.max_velocity
-				Global.player.max_velocity = (boostStrength*0.6)*sign(gravity)
-				tween.tween_property(Global.player, "max_velocity", prevMax, 0.2)
-
+				boosted = true
+				prevMax = Global.player.max_velocity
+				Global.player.max_velocity = (boostStrength*0.6)
+				newMax = Global.player.max_velocity
+				
 			Global.player.velocity.y = Global.player.max_velocity*(Global.player.gravity/abs(Global.player.gravity))
 			Global.bufferable = false
 			$GPUParticles2D.add_child(circle_scene.instantiate())
-
+	
+	if abs(Global.player.velocity.y)<prevMax and boosted and newMax == Global.player.max_velocity:
+		Global.player.max_velocity = prevMax
+ 
 func _process(delta: float) -> void:
 	$TextureRect.rotation += delta*3.7

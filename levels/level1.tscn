@@ -31,6 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://bwixd4kkxhlrc" path="res://prefabs/ship_portal.tscn" id="30_4mjh6"]
 [ext_resource type="PackedScene" uid="uid://cem4qel5ph4q6" path="res://prefabs/mini_portal.tscn" id="31_7fu2r"]
 [ext_resource type="PackedScene" uid="uid://ceqms0qrkhvpo" path="res://prefabs/ufo_portal.tscn" id="32_5xpsa"]
+[ext_resource type="PackedScene" uid="uid://p8sechefs4ow" path="res://prefabs/black_orb.tscn" id="32_yn1es"]
 
 [node name="level" type="Node2D" unique_id=40821179]
 
@@ -419,16 +420,16 @@ position = Vector2(2472, -288)
 position = Vector2(2536, -192)
 
 [node name="gravity_portal_b2" parent="." unique_id=1974989084 instance=ExtResource("20_53hnx")]
-position = Vector2(56, -408)
+position = Vector2(-152, -352)
 
 [node name="ship_portal" parent="." unique_id=1274613791 instance=ExtResource("30_4mjh6")]
-position = Vector2(278, -353)
+position = Vector2(320, -152)
 
 [node name="mini_portal" parent="." unique_id=1918006167 instance=ExtResource("31_7fu2r")]
-position = Vector2(517, -377)
+position = Vector2(816, -656)
 
 [node name="ufo_portal" parent="." unique_id=1309944628 instance=ExtResource("32_5xpsa")]
-position = Vector2(312, -360)
+position = Vector2(232, -424)
 
 [node name="flat_spike2" parent="." unique_id=1053696962 instance=ExtResource("18_tx362")]
 position = Vector2(672, -288)
@@ -506,3 +507,6 @@ rotation = 3.1415927
 [node name="flat_spike23" parent="." unique_id=1461919436 instance=ExtResource("18_tx362")]
 position = Vector2(1312, -384)
 rotation = 3.1415927
+
+[node name="black_orb" parent="." unique_id=484844631 instance=ExtResource("32_yn1es")]
+position = Vector2(504, -400)
