@@ -7,7 +7,6 @@ func _ready() -> void:
 	refresh()
 	
 func refresh():
-	print("refreshing")
 	$LoadingCircleUhd.visible = true
 	
 	for child in $ScrollContainer/VBoxContainer.get_children():

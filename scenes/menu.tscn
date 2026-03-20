@@ -7,7 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://dx487fjfpdixp" path="res://images/ui/groundSquareShadow_001.png" id="5_g3eks"]
 [ext_resource type="Texture2D" uid="uid://djy8ak0cw5l3r" path="res://images/ui/GJ_updateBtn_001.png" id="6_g3eks"]
 [ext_resource type="Script" uid="uid://c3vkwjmw7b7ek" path="res://scripts/refresh_button.gd" id="8_13sgg"]
+[ext_resource type="Texture2D" uid="uid://clpctmb1t0bxy" path="res://images/ui/GJ_sideArt_001.png" id="9_70i5f"]
 [ext_resource type="Texture2D" uid="uid://dneuhhtk33oo2" path="res://images/other/loadingCircle-uhd.png" id="9_i6lef"]
+[ext_resource type="Texture2D" uid="uid://dtpl8yayh52ct" path="res://images/ui/GJ_editBtn_001.png" id="9_mj5lg"]
+[ext_resource type="Script" uid="uid://bwwik1qy22bmj" path="res://scripts/editor_button.gd" id="10_mj5lg"]
 
 [sub_resource type="Gradient" id="Gradient_4ytvr"]
 offsets = PackedFloat32Array(0.560241)
@@ -92,6 +95,17 @@ theme_override_constants/separation = 128
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1501260160]
 
+[node name="GjSideArt001" type="Sprite2D" parent="." unique_id=1614166012]
+position = Vector2(-495.99997, 244.99998)
+scale = Vector2(0.565, 0.565)
+texture = ExtResource("9_70i5f")
+
+[node name="GjSideArt002" type="Sprite2D" parent="." unique_id=2079950337]
+position = Vector2(495.99997, 244.99998)
+rotation = 3.1415927
+scale = Vector2(0.565, -0.565)
+texture = ExtResource("9_70i5f")
+
 [node name="GjTableBottom001" type="Sprite2D" parent="." unique_id=637115914]
 position = Vector2(0, 274.855)
 scale = Vector2(0.512, 0.512)
@@ -128,16 +142,30 @@ texture = ExtResource("5_g3eks")
 
 [node name="TextureButton" type="TextureButton" parent="." unique_id=1525136685]
 layout_mode = 0
-offset_left = 386.0
-offset_top = 156.0
-offset_right = 570.0
-offset_bottom = 346.0
+offset_left = 399.99997
+offset_top = 143.0
+offset_right = 584.0
+offset_bottom = 333.0
 scale = Vector2(0.565, 0.565)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture_normal = ExtResource("6_g3eks")
 script = ExtResource("8_13sgg")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TextureButton" unique_id=857305272]
+libraries/ = SubResource("AnimationLibrary_yqeox")
+
+[node name="TextureButton2" type="TextureButton" parent="." unique_id=176343091]
+layout_mode = 0
+offset_left = -636.0
+offset_top = 68.00001
+offset_right = -324.0
+offset_bottom = 394.0
+scale = Vector2(0.565, 0.565)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("9_mj5lg")
+script = ExtResource("10_mj5lg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TextureButton2" unique_id=2121173285]
 libraries/ = SubResource("AnimationLibrary_yqeox")
 
 [node name="LoadingCircleUhd" type="Sprite2D" parent="." unique_id=1644711058]
