@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://bho6n02gwam8s" path="res://scripts/download_button.gd" id="2_hrusj"]
 [ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="3_hrusj"]
 [ext_resource type="Texture2D" uid="uid://bg13khx27ciko" path="res://images/ui/extreme_demon.png" id="5_ium1h"]
+[ext_resource type="Texture2D" uid="uid://bffea88fqc8f0" path="res://images/ui/GJ_commentSide_001.png" id="6_nfgsp"]
+[ext_resource type="Texture2D" uid="uid://byegagobqld5n" path="res://images/ui/GJ_commentTop_001.png" id="7_b0rp6"]
 
 [sub_resource type="Gradient" id="Gradient_4h3mk"]
 offsets = PackedFloat32Array(0.4939759)
@@ -78,11 +80,11 @@ shadow_offset = Vector2(4.915, 5.69)
 [sub_resource type="LabelSettings" id="LabelSettings_nfgsp"]
 font = ExtResource("3_hrusj")
 font_size = 33
-outline_size = 11
+outline_size = 6
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
 shadow_color = Color(0, 0, 0, 0.36078432)
-shadow_offset = Vector2(4.915, 5.69)
+shadow_offset = Vector2(3, 3.505)
 
 [node name="Control" type="Control" unique_id=1721409516]
 layout_mode = 3
@@ -94,6 +96,44 @@ layout_mode = 0
 offset_right = 718.0
 offset_bottom = 128.0
 texture = SubResource("GradientTexture1D_yqeox")
+
+[node name="GjCommentSide001" type="Sprite2D" parent="." unique_id=97024100]
+position = Vector2(7, 57)
+scale = Vector2(0.565, 0.565)
+texture = ExtResource("6_nfgsp")
+
+[node name="GjCommentTop001" type="Sprite2D" parent="." unique_id=1918851241]
+position = Vector2(277.99994, 24)
+scale = Vector2(0.565, 0.565)
+texture = ExtResource("7_b0rp6")
+region_enabled = true
+region_rect = Rect2(0, 0, 988.4061, 88)
+
+[node name="GjCommentTop002" type="Sprite2D" parent="." unique_id=1018299326]
+position = Vector2(278, 103.99999)
+scale = Vector2(0.565, -0.565)
+texture = ExtResource("7_b0rp6")
+region_enabled = true
+region_rect = Rect2(0, 0, 988.4061, 88)
+
+[node name="GjCommentSide002" type="Sprite2D" parent="." unique_id=97882263]
+position = Vector2(710, 62.999996)
+scale = Vector2(-0.565, 0.565)
+texture = ExtResource("6_nfgsp")
+
+[node name="GjCommentTop003" type="Sprite2D" parent="." unique_id=955163231]
+position = Vector2(439.1924, 23.86)
+scale = Vector2(-0.565, 0.565)
+texture = ExtResource("7_b0rp6")
+region_enabled = true
+region_rect = Rect2(0, 0, 988.4061, 88)
+
+[node name="GjCommentTop004" type="Sprite2D" parent="." unique_id=162458455]
+position = Vector2(439.19247, 103.85999)
+scale = Vector2(-0.565, -0.565)
+texture = ExtResource("7_b0rp6")
+region_enabled = true
+region_rect = Rect2(0, 0, 988.4061, 88)
 
 [node name="TextureButton" type="TextureButton" parent="." unique_id=1248108290]
 z_index = 1
