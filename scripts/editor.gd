@@ -335,6 +335,7 @@ func _input(event: InputEvent) -> void:
 							elif n is Control: free_move_offsets[n] = n.position - wm
 						is_free_dragging = true
 				elif mode == Mode.PLACE and pending_scene_path != "":
+					_push_undo()  # capture state once before the whole paint stroke
 					_place_object(get_global_mouse_position())
 					if swipe_enabled:
 						_last_paint_cell = _snap_to_cell_center(get_global_mouse_position())
@@ -867,6 +868,21 @@ func _on_import() -> void:
 	add_child(dialog)
 	dialog.popup_centered(Vector2i(700, 450))
 	dialog.file_selected.connect(func(path: String):
+		# Check for missing dependencies first
+		var missing: Array[String] = []
+		for dep in ResourceLoader.get_dependencies(path):
+			var dep_path := dep
+			if "::" in dep: dep_path = dep.split("::")[0]
+			if dep_path.begins_with("res://") and not ResourceLoader.exists(dep_path):
+				missing.append(dep_path.get_file())
+		if not missing.is_empty():
+			var err_popup := AcceptDialog.new()
+			err_popup.title = "Missing Assets"
+			err_popup.dialog_text = "Cannot import — %d asset(s) missing from this project:\n\n%s\n\nAdd these files to your project first." % [missing.size(), "\n".join(missing)]
+			add_child(err_popup); err_popup.popup_centered()
+			err_popup.confirmed.connect(func(): err_popup.queue_free())
+			dialog.queue_free()
+			return
 		var ps = load(path) as PackedScene
 		if ps == null: dialog.queue_free(); return
 		_push_undo()
@@ -982,12 +998,14 @@ func _on_add_texture() -> void:
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 		btn.mouse_entered.connect(func():
+			if not ResourceLoader.exists(img_path): return
 			var t = load(img_path) as Texture2D
 			if t:
 				prev_img.texture = t
 				prev_lbl.text = "%s\n%dx%d" % [img_path.get_file(), t.get_width(), t.get_height()]
 		)
 		btn.pressed.connect(func():
+			if not ResourceLoader.exists(img_path): return
 			var t = load(img_path) as Texture2D
 			if t == null: return
 			popup_layer.queue_free()
@@ -1377,7 +1395,6 @@ func _fix_auto_names(node: Node) -> void:
 		_fix_auto_names(child)
 
 func _place_object(world_pos: Vector2) -> void:
-	_push_undo()  # capture state BEFORE placing
 	var packed := load(pending_scene_path) as PackedScene
 	if packed == null: _cancel_placement(); return
 	var instance := packed.instantiate()
