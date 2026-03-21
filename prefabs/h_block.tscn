@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dgtxmawgxxsbr"]
+
+[ext_resource type="Script" uid="uid://3cynw6gqdj1s" path="res://scripts/h_block.gd" id="1_5jdhy"]
+[ext_resource type="Texture2D" uid="uid://c35oknhtoqlfr" path="res://images/triggers/H-Block.webp" id="2_5jdhy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wntyn"]
+size = Vector2(70, 70)
+
+[node name="h_block" type="Area2D" unique_id=360967600]
+script = ExtResource("1_5jdhy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=611420456]
+shape = SubResource("RectangleShape2D_wntyn")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1625099729]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_5jdhy")
+expand_mode = 2
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

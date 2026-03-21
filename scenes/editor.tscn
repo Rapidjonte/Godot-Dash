@@ -1,3 +1,12 @@
 [gd_scene format=3 uid="uid://c8gwmg0sjsrgl"]
 
+[ext_resource type="Script" uid="uid://jb1g2u8cfhik" path="res://scripts/editor.gd" id="1_pxqd5"]
+
 [node name="Editor" type="Node2D" unique_id=1476502957]
+script = ExtResource("1_pxqd5")
+
+[node name="level" type="Node2D" parent="." unique_id=1001325634]
+process_mode = 4
+
+[node name="cam" type="Camera2D" parent="." unique_id=1934412161]
+position = Vector2(472, -112)

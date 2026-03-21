@@ -15,12 +15,11 @@ script = ExtResource("1_kon7o")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=764227781]
 offset_left = -40.435
-offset_top = -27.16
+offset_top = -27.585
 offset_right = 40.458828
-offset_bottom = 53.733814
+offset_bottom = 53.308815
 scale = Vector2(0.323, 0.323)
-pivot_offset = Vector2(0, 27.135)
-pivot_offset_ratio = Vector2(0.5, 0)
+pivot_offset = Vector2(40.435, 27.135)
 texture = ExtResource("2_kon7o")
 expand_mode = 1
 

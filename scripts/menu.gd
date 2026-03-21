@@ -1,9 +1,11 @@
 extends Control
-
 var http_request: HTTPRequest
 var level_button = preload("res://scenes/level_button.tscn")
+var _pending_download: HTTPRequest = null
 
 func _ready() -> void:
+	Global.entered_from_editor = false
+	Global.attempt = 0
 	refresh()
 	
 func refresh():

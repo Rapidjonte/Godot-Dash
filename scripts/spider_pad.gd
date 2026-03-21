@@ -25,11 +25,11 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 			Global.player.spidered()
 
 func teleport_until_surface(direction: Vector2):
-	var inner = Global.player.get_node("Area2D/middle box").shape.size.x
-	var whole = Global.player.get_node("player_collision").shape.size.x
+	var inner = Global.player.get_node("Area2D/middle box").shape.size.x*Global.player.scale.x
+	var whole = Global.player.get_node("player_collision").shape.size.x*Global.player.scale.x
 
-	var start = Vector2((whole/2)-(inner/2), 32)
-	var end = Vector2(whole, 32)
+	var start = Vector2((whole/2)-(inner/2), Global.player.center.y)
+	var end = Vector2(whole, Global.player.center.y)
 
 	var offsets := []
 	for i in range(6):
@@ -44,7 +44,7 @@ func teleport_until_surface(direction: Vector2):
 	for offset in offsets:
 		var ray = Global.player.get_node("SpiderRay")
 		ray.position = offset
-		ray.target_position = direction * 2000
+		ray.target_position = direction * 52000
 		ray.force_raycast_update()
 
 		if ray.is_colliding():
@@ -54,13 +54,15 @@ func teleport_until_surface(direction: Vector2):
 			var distance = hit_pos.distance_to(Global.player.global_position)
 			if distance < min_distance:
 				min_distance = distance
-				closest_hit = hit_pos + ray.get_collision_normal() * 4
+				closest_hit = hit_pos + ray.get_collision_normal() * 1
 
 	if closest_hit != null:
-		Global.player.global_position.y = closest_hit.y+direction.y*2
+		Global.player.global_position.y = closest_hit.y
+	else:
+		Global.player.die()
 	
 	if direction.y >= 1:
-		Global.player.global_position.y -= whole+direction.y*2
+		Global.player.global_position.y -= whole
 
 func get_gravity_multiplier(rotation_rad: float) -> int:
 	var deg = fmod(roundi(rad_to_deg(rotation_rad)), 360)

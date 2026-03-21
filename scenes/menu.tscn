@@ -173,8 +173,3 @@ visible = false
 material = SubResource("CanvasItemMaterial_i6lef")
 scale = Vector2(0.565, 0.565)
 texture = ExtResource("9_i6lef")
-
-[connection signal="button_down" from="TextureButton" to="TextureButton" method="_on_button_down"]
-[connection signal="button_up" from="TextureButton" to="TextureButton" method="_on_button_up"]
-[connection signal="mouse_entered" from="TextureButton" to="TextureButton" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="TextureButton" to="TextureButton" method="_on_mouse_exited"]

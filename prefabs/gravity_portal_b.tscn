@@ -92,6 +92,7 @@ texture = SubResource("GradientTexture2D_d6yv8")
 preprocess = 1.3
 speed_scale = 1.3
 fixed_fps = 60
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_f2uyg")
 
 [connection signal="body_shape_entered" from="." to="CollisionShape2D" method="_on_grav_portal_body_shape_entered"]

@@ -80,4 +80,5 @@ texture = SubResource("GradientTexture2D_ml2k8")
 preprocess = 1.3
 speed_scale = 1.3
 fixed_fps = 60
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_kbml0")

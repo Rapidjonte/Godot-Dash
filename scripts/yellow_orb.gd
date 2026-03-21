@@ -15,7 +15,8 @@ func _physics_process(delta: float) -> void:
 			Global.circles.push_back([Vector2(position.x,position.y+Global.levelOffset),0])
 			get_viewport().set_input_as_handled()
 			circle_emitted=true
-		if Input.is_action_pressed("jump") and (Global.bufferable or (Global.player.grounded and Input.is_action_just_pressed("jump"))):
+		if !Global.player.quick_jump_disable and Input.is_action_pressed("jump") and (Global.bufferable or (Global.player.grounded and Input.is_action_just_pressed("jump"))):
+			Global.player.quick_jump_disable = true
 			$CollisionShape2D.set_deferred("disabled", true)
 			Global.player.velocity.y = -boostStrength*(Global.player.gravity/abs(Global.player.gravity))
 			Global.bufferable = false

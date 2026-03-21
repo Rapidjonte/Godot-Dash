@@ -24,10 +24,6 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 		var tween2 = create_tween()
 		tween2.tween_property(mat2, "shader_parameter/lightness", 0, 0.4).set_ease(Tween.EASE_IN)
 
-		var node = circle_scene.instantiate()
-		node.scale = Vector2(0.35,0.35)
-		$GPUParticles2D.add_child(node)
-
 		switch_gamemode()
 
 func switch_gamemode():
@@ -43,13 +39,12 @@ func switch_gamemode():
 		
 		new = load("res://scenes/gamemodes/" + Global.player.gamemode.substr(5) + ".tscn").instantiate()
 	
-	print("old pos: ", Global.player.position)
-	print("old center: ", Global.player.center)
-	print("new center: ", new.center)
-	print("result: ", Global.player.position + Global.player.center - new.center)
-	print("old gamemode: ", Global.player.gamemode)
-	print("new gamemode: ", new.gamemode)
-	
+	if new.gamemode == Global.player.gamemode:
+		return	
+		
+	var node = circle_scene.instantiate()
+	node.scale = Vector2(0.35,0.35)
+	$GPUParticles2D.add_child(node)
 	
 	new.position = Global.player.position+Global.player.center-new.center
 	new.speed = Global.player.speed

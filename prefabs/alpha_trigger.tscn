@@ -23,7 +23,6 @@ expand_mode = 2
 stretch_mode = 5
 script = ExtResource("2_dmxt1")
 targetID = "1"
-duration = 0.5
 
 [node name="Label" type="Label" parent="." unique_id=478935577]
 layout_mode = 0
@@ -33,3 +32,4 @@ text = "1"
 label_settings = SubResource("LabelSettings_aosji")
 horizontal_alignment = 1
 vertical_alignment = 2
+text_overrun_behavior = 1

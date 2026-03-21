@@ -1,4 +1,4 @@
-@abstract extends TextureButton
+extends TextureButton
 
 @onready var player := $AnimationPlayer
 var mouse_on = false
@@ -24,4 +24,5 @@ func _on_button_up() -> void:
 	if mouse_on:
 		activate()
 
-@abstract func activate()
+func activate():
+	pass

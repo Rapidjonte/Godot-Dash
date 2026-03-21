@@ -15,7 +15,9 @@ func _process(delta: float) -> void:
 		$CollisionShape2D.position.y = cam.position.y-(Global.border_blocks*64)-15
 		$ground.position.y = cam.position.y-1054+(Global.border_blocks*64)
 		$ground/CollisionShape2D.disabled = false
+		$CollisionShape2D.disabled = false
 	else:
+		$CollisionShape2D.disabled = true
 		$ground/CollisionShape2D.disabled = true
 
 func flip_self():

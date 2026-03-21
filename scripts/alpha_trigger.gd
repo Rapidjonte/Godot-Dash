@@ -1,37 +1,42 @@
 extends TextureRect
-
 @export var targetID : String
 @export var duration : float
 @export var targetAlpha : float
 @export var only_spawned : bool
-
-@onready var character_body = get_node("../../CharacterBody2D")
+@export_enum("Linear", "Ease In", "Ease Out", "Ease In Out") var easing : int = 0
 var triggered = false
 
 func _ready() -> void:
-	visible = false
-	#unless in editor
-	
 	$Label.text = targetID
-	if position.x <= -32 and !only_spawned:
-		var tween = create_tween()
-		if int(targetID) > 0:
-			activate(tween)
- 
+	property_list_changed.connect(func(): $Label.text = targetID)
+
+	if !Global.paused:
+		visible = false
+		if position.x <= -32 and !only_spawned:
+			if int(targetID) > 0:
+				activate()
+
 func _process(delta: float) -> void:
 	if triggered:
 		return
-	
-	if character_body.position.x >= position.x-32 and !only_spawned:
-		var tween = create_tween()
+	if Global.player.position.x >= position.x - 32 and !only_spawned:
 		if int(targetID) > 0:
-			activate(tween)
+			activate()
 
-func activate(tween):
+func _get_trans() -> int:
+	return Tween.TRANS_LINEAR if easing == 0 else Tween.TRANS_SINE
+
+func _get_ease() -> int:
+	match easing:
+		1: return Tween.EASE_IN
+		2: return Tween.EASE_OUT
+		3: return Tween.EASE_IN_OUT
+		_: return Tween.EASE_IN_OUT
+
+func activate():
 	triggered = true
-	
 	for node in get_tree().get_nodes_in_group(targetID):
-		tween.parallel().tween_property(node, "modulate:a", targetAlpha, duration)	
-	
-	await tween.finished
-	queue_free()
+		var t := create_tween()
+		t.set_trans(_get_trans())
+		t.set_ease(_get_ease())
+		t.tween_property(node, "modulate:a", targetAlpha, duration)

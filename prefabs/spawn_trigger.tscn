@@ -22,6 +22,7 @@ texture = ExtResource("1_tyc7n")
 expand_mode = 2
 stretch_mode = 5
 script = ExtResource("2_tyc7n")
+targetID = "1"
 
 [node name="Label" type="Label" parent="." unique_id=478935577]
 layout_mode = 0
@@ -31,3 +32,4 @@ text = "1"
 label_settings = SubResource("LabelSettings_aosji")
 horizontal_alignment = 1
 vertical_alignment = 2
+text_overrun_behavior = 1

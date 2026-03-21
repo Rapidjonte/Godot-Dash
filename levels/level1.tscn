@@ -1,13 +1,7 @@
 [gd_scene format=3 uid="uid://b3wdfcmy7r4fl"]
 
 [ext_resource type="PackedScene" uid="uid://cqirje3werngo" path="res://prefabs/block.tscn" id="1_gjl0y"]
-[ext_resource type="Texture2D" uid="uid://tiygv8fehgit" path="res://images/objects/blocks/GridBlock03.webp" id="2_hy0rb"]
 [ext_resource type="PackedScene" uid="uid://dv4dte71fxixw" path="res://prefabs/big_spike.tscn" id="2_vnv7o"]
-[ext_resource type="Texture2D" uid="uid://cqauxjrmy8o2d" path="res://images/objects/blocks/GridBlock02.webp" id="3_mxp4k"]
-[ext_resource type="Texture2D" uid="uid://bykbhb1i5pc1d" path="res://images/objects/blocks/GridBlock07.webp" id="4_61w3m"]
-[ext_resource type="Texture2D" uid="uid://b575utufsy4mq" path="res://images/objects/blocks/GridBlock08.webp" id="5_pdpul"]
-[ext_resource type="Texture2D" uid="uid://ukmw325x2s5y" path="res://images/objects/blocks/GridBlock06.webp" id="6_omn1t"]
-[ext_resource type="Texture2D" uid="uid://dcnx3thlash4t" path="res://images/objects/blocks/GridBlock05.webp" id="7_lf3p4"]
 [ext_resource type="PackedScene" uid="uid://c82ynw3eqr4bl" path="res://prefabs/red_pad.tscn" id="10_lf3p4"]
 [ext_resource type="PackedScene" uid="uid://dhukhtt0dpp8" path="res://prefabs/0.5x_speed.tscn" id="11_jq2cn"]
 [ext_resource type="PackedScene" uid="uid://bbhqc0unrcg7f" path="res://prefabs/1x_speed.tscn" id="12_a5s8o"]
@@ -32,6 +26,150 @@
 [ext_resource type="PackedScene" uid="uid://cem4qel5ph4q6" path="res://prefabs/mini_portal.tscn" id="31_7fu2r"]
 [ext_resource type="PackedScene" uid="uid://ceqms0qrkhvpo" path="res://prefabs/ufo_portal.tscn" id="32_5xpsa"]
 [ext_resource type="PackedScene" uid="uid://p8sechefs4ow" path="res://prefabs/black_orb.tscn" id="32_yn1es"]
+
+[sub_resource type="Resource" id="Resource_wieee"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock03.webp"
+
+[sub_resource type="Resource" id="Resource_xtf7k"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock03.webp"
+
+[sub_resource type="Resource" id="Resource_7yq2r"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_0nj7r"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_4mjh6"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_7fu2r"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_5xpsa"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_yn1es"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_3612o"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock03.webp"
+
+[sub_resource type="Resource" id="Resource_cnn1a"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_sqx3p"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_c124c"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_poyfc"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_r8rrl"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_1o3wi"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_3bikl"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_m1ihp"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock06.webp"
+
+[sub_resource type="Resource" id="Resource_g36py"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock03.webp"
+
+[sub_resource type="Resource" id="Resource_7cai6"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_ef3fr"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_www5i"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_1tw8r"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_c6dxu"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_v0nts"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock02.webp"
+
+[sub_resource type="Resource" id="Resource_7vben"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock05.webp"
+
+[sub_resource type="Resource" id="Resource_iwss6"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock05.webp"
+
+[sub_resource type="Resource" id="Resource_ow214"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock05.webp"
+
+[sub_resource type="Resource" id="Resource_ox30j"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock05.webp"
+
+[sub_resource type="Resource" id="Resource_sgfng"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock05.webp"
+
+[sub_resource type="Resource" id="Resource_p6dnf"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock05.webp"
+
+[sub_resource type="Resource" id="Resource_unj4i"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock07.webp"
+
+[sub_resource type="Resource" id="Resource_sadvb"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_tk73g"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_q7fj0"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock07.webp"
+
+[sub_resource type="Resource" id="Resource_yx6rh"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_kklod"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_bi44y"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_60joo"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock07.webp"
+
+[sub_resource type="Resource" id="Resource_k62iv"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_m4w37"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_fia2g"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_ps4y6"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock07.webp"
+
+[sub_resource type="Resource" id="Resource_ip6jy"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_g2rt8"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_oqhqt"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_2ep2t"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock07.webp"
+
+[sub_resource type="Resource" id="Resource_aimmd"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
+
+[sub_resource type="Resource" id="Resource_yx3bc"]
+metadata/__load_path__ = "res://images/objects/blocks/GridBlock08.webp"
 
 [node name="level" type="Node2D" unique_id=40821179]
 
@@ -58,124 +196,124 @@ position = Vector2(2848, -32)
 
 [node name="block7" parent="." unique_id=1657758724 instance=ExtResource("1_gjl0y")]
 position = Vector2(4512, -32)
-texture = ExtResource("2_hy0rb")
+texture = SubResource("Resource_wieee")
 
 [node name="block12" parent="." unique_id=1708299597 instance=ExtResource("1_gjl0y")]
 position = Vector2(4960, -32)
 rotation = 1.5707964
-texture = ExtResource("2_hy0rb")
+texture = SubResource("Resource_xtf7k")
 
 [node name="block8" parent="." unique_id=1754244513 instance=ExtResource("1_gjl0y")]
 position = Vector2(4576, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_7yq2r")
 
 [node name="block9" parent="." unique_id=1717312054 instance=ExtResource("1_gjl0y")]
 position = Vector2(4640, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_0nj7r")
 
 [node name="block10" parent="." unique_id=1596448132 instance=ExtResource("1_gjl0y")]
 position = Vector2(4832, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_4mjh6")
 
 [node name="block11" parent="." unique_id=458904135 instance=ExtResource("1_gjl0y")]
 position = Vector2(4896, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_7fu2r")
 
 [node name="block19" parent="." unique_id=1068501630 instance=ExtResource("1_gjl0y")]
 position = Vector2(4704, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_5xpsa")
 
 [node name="block20" parent="." unique_id=1583552548 instance=ExtResource("1_gjl0y")]
 position = Vector2(4768, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_yn1es")
 
 [node name="block13" parent="." unique_id=1153401937 instance=ExtResource("1_gjl0y")]
 position = Vector2(5216, -32)
-texture = ExtResource("2_hy0rb")
+texture = SubResource("Resource_3612o")
 
 [node name="block15" parent="." unique_id=2139215660 instance=ExtResource("1_gjl0y")]
 position = Vector2(5280, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_cnn1a")
 
 [node name="block16" parent="." unique_id=1709507238 instance=ExtResource("1_gjl0y")]
 position = Vector2(5344, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_sqx3p")
 
 [node name="block17" parent="." unique_id=975414151 instance=ExtResource("1_gjl0y")]
 position = Vector2(5408, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_c124c")
 
 [node name="block18" parent="." unique_id=684995264 instance=ExtResource("1_gjl0y")]
 position = Vector2(5472, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_poyfc")
 
 [node name="block21" parent="." unique_id=812227802 instance=ExtResource("1_gjl0y")]
 position = Vector2(5536, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_r8rrl")
 
 [node name="block22" parent="." unique_id=1805827290 instance=ExtResource("1_gjl0y")]
 position = Vector2(5600, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_1o3wi")
 
 [node name="block23" parent="." unique_id=2095761046 instance=ExtResource("1_gjl0y")]
 position = Vector2(5664, -32)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_3bikl")
 
 [node name="block30" parent="." unique_id=802496253 instance=ExtResource("1_gjl0y")]
 position = Vector2(5728, -32)
-texture = ExtResource("6_omn1t")
+texture = SubResource("Resource_m1ihp")
 
 [node name="block14" parent="." unique_id=145481042 instance=ExtResource("1_gjl0y")]
 position = Vector2(5728, -96)
-texture = ExtResource("2_hy0rb")
+texture = SubResource("Resource_g36py")
 
 [node name="block24" parent="." unique_id=563383798 instance=ExtResource("1_gjl0y")]
 position = Vector2(5792, -96)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_7cai6")
 
 [node name="block25" parent="." unique_id=1434230703 instance=ExtResource("1_gjl0y")]
 position = Vector2(5856, -96)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_ef3fr")
 
 [node name="block26" parent="." unique_id=1910863758 instance=ExtResource("1_gjl0y")]
 position = Vector2(5920, -96)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_www5i")
 
 [node name="block27" parent="." unique_id=1150995239 instance=ExtResource("1_gjl0y")]
 position = Vector2(5984, -96)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_1tw8r")
 
 [node name="block28" parent="." unique_id=241713018 instance=ExtResource("1_gjl0y")]
 position = Vector2(6048, -96)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_c6dxu")
 
 [node name="block29" parent="." unique_id=2145457084 instance=ExtResource("1_gjl0y")]
 position = Vector2(6112, -96)
-texture = ExtResource("3_mxp4k")
+texture = SubResource("Resource_v0nts")
 
 [node name="block31" parent="." unique_id=1564991085 instance=ExtResource("1_gjl0y")]
 position = Vector2(5792, -32)
-texture = ExtResource("7_lf3p4")
+texture = SubResource("Resource_7vben")
 
 [node name="block32" parent="." unique_id=1417858166 instance=ExtResource("1_gjl0y")]
 position = Vector2(5856, -32)
-texture = ExtResource("7_lf3p4")
+texture = SubResource("Resource_iwss6")
 
 [node name="block33" parent="." unique_id=994900549 instance=ExtResource("1_gjl0y")]
 position = Vector2(5920, -32)
-texture = ExtResource("7_lf3p4")
+texture = SubResource("Resource_ow214")
 
 [node name="block34" parent="." unique_id=1418007794 instance=ExtResource("1_gjl0y")]
 position = Vector2(5984, -32)
-texture = ExtResource("7_lf3p4")
+texture = SubResource("Resource_ox30j")
 
 [node name="block35" parent="." unique_id=2129767278 instance=ExtResource("1_gjl0y")]
 position = Vector2(6048, -32)
-texture = ExtResource("7_lf3p4")
+texture = SubResource("Resource_sgfng")
 
 [node name="block36" parent="." unique_id=1538574511 instance=ExtResource("1_gjl0y")]
 position = Vector2(6112, -32)
-texture = ExtResource("7_lf3p4")
+texture = SubResource("Resource_p6dnf")
 
 [node name="block2" parent="." unique_id=453296017 instance=ExtResource("1_gjl0y")]
 position = Vector2(3104, -96)
@@ -185,15 +323,15 @@ position = Vector2(3360, -160)
 
 [node name="block4" parent="." unique_id=1634943878 instance=ExtResource("1_gjl0y")]
 position = Vector2(3104, -32)
-texture = ExtResource("4_61w3m")
+texture = SubResource("Resource_unj4i")
 
 [node name="block5" parent="." unique_id=332473105 instance=ExtResource("1_gjl0y")]
 position = Vector2(3360, -96)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_sadvb")
 
 [node name="block6" parent="." unique_id=401759538 instance=ExtResource("1_gjl0y")]
 position = Vector2(3360, -32)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_tk73g")
 
 [node name="block37" parent="." unique_id=1521539077 instance=ExtResource("1_gjl0y")]
 position = Vector2(3616, -224)
@@ -206,15 +344,15 @@ position = Vector2(4128, -352)
 
 [node name="block40" parent="." unique_id=1527887354 instance=ExtResource("1_gjl0y")]
 position = Vector2(3872, -224)
-texture = ExtResource("4_61w3m")
+texture = SubResource("Resource_q7fj0")
 
 [node name="block41" parent="." unique_id=1189782883 instance=ExtResource("1_gjl0y")]
 position = Vector2(4128, -288)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_yx6rh")
 
 [node name="block42" parent="." unique_id=1939313876 instance=ExtResource("1_gjl0y")]
 position = Vector2(4128, -224)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_kklod")
 
 [node name="block43" parent="." unique_id=1029451401 instance=ExtResource("1_gjl0y")]
 position = Vector2(4384, -416)
@@ -224,7 +362,7 @@ position = Vector2(4640, -480)
 
 [node name="block45" parent="." unique_id=812343663 instance=ExtResource("1_gjl0y")]
 position = Vector2(4640, -416)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_bi44y")
 
 [node name="block46" parent="." unique_id=257219337 instance=ExtResource("1_gjl0y")]
 position = Vector2(4896, -544)
@@ -237,15 +375,15 @@ position = Vector2(5408, -672)
 
 [node name="block49" parent="." unique_id=1201724135 instance=ExtResource("1_gjl0y")]
 position = Vector2(5152, -544)
-texture = ExtResource("4_61w3m")
+texture = SubResource("Resource_60joo")
 
 [node name="block50" parent="." unique_id=920354809 instance=ExtResource("1_gjl0y")]
 position = Vector2(5408, -608)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_k62iv")
 
 [node name="block51" parent="." unique_id=1725294750 instance=ExtResource("1_gjl0y")]
 position = Vector2(5408, -544)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_m4w37")
 
 [node name="block52" parent="." unique_id=1476874768 instance=ExtResource("1_gjl0y")]
 position = Vector2(5664, -736)
@@ -255,7 +393,7 @@ position = Vector2(5920, -800)
 
 [node name="block54" parent="." unique_id=1250315620 instance=ExtResource("1_gjl0y")]
 position = Vector2(5920, -736)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_fia2g")
 
 [node name="block55" parent="." unique_id=823828224 instance=ExtResource("1_gjl0y")]
 position = Vector2(6176, -864)
@@ -268,15 +406,15 @@ position = Vector2(6688, -992)
 
 [node name="block58" parent="." unique_id=1893746759 instance=ExtResource("1_gjl0y")]
 position = Vector2(6432, -864)
-texture = ExtResource("4_61w3m")
+texture = SubResource("Resource_ps4y6")
 
 [node name="block59" parent="." unique_id=1525140981 instance=ExtResource("1_gjl0y")]
 position = Vector2(6688, -928)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_ip6jy")
 
 [node name="block60" parent="." unique_id=2079466263 instance=ExtResource("1_gjl0y")]
 position = Vector2(6688, -864)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_g2rt8")
 
 [node name="block61" parent="." unique_id=1352839144 instance=ExtResource("1_gjl0y")]
 position = Vector2(6944, -1056)
@@ -286,7 +424,7 @@ position = Vector2(7200, -1120)
 
 [node name="block63" parent="." unique_id=1295991536 instance=ExtResource("1_gjl0y")]
 position = Vector2(7200, -1056)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_oqhqt")
 
 [node name="block64" parent="." unique_id=655494151 instance=ExtResource("1_gjl0y")]
 position = Vector2(7456, -1184)
@@ -299,15 +437,15 @@ position = Vector2(7968, -1312)
 
 [node name="block67" parent="." unique_id=144631528 instance=ExtResource("1_gjl0y")]
 position = Vector2(7712, -1184)
-texture = ExtResource("4_61w3m")
+texture = SubResource("Resource_2ep2t")
 
 [node name="block68" parent="." unique_id=1742076859 instance=ExtResource("1_gjl0y")]
 position = Vector2(7968, -1248)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_aimmd")
 
 [node name="block69" parent="." unique_id=125002130 instance=ExtResource("1_gjl0y")]
 position = Vector2(7968, -1184)
-texture = ExtResource("5_pdpul")
+texture = SubResource("Resource_yx3bc")
 
 [node name="0_5x_speed" parent="." unique_id=1880260488 instance=ExtResource("11_jq2cn")]
 position = Vector2(1512, -248)

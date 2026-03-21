@@ -1,13 +1,23 @@
 extends Node2D
 
 func _ready() -> void:
+	Global.paused = true
 	Global.reset()
 	$attempts.text = "Attempt " + str(Global.attempt)
 	load_level()
 
+func _physics_process(delta: float) -> void:
+	if !Global.paused and Global.player and Global.player.position.y <= -12161.0:
+		Global.player.die()
+
 func _process(delta: float) -> void:
-	queue_redraw()
+	if Input.is_action_just_pressed("exit"):
+		if Global.entered_from_editor:
+			get_tree().change_scene_to_file("res://scenes/editor.tscn")
+		else:
+			get_tree().change_scene_to_file("res://scenes/menu.tscn")
 	if not Global.paused:
+		queue_redraw()
 		var progress = Global.player.position.x / Global.endX
 		progress = min(max(progress, 0),1)
 		$cam/Control/Panel/ProgressBar.value = progress*100
@@ -15,7 +25,7 @@ func _process(delta: float) -> void:
 		if progress >= 1:
 			complete()
 
-	if Global.border_blocks != 0:
+	if Global.border_blocks != 0 or true:
 		#bottom
 		var target = 324.0 - 64 * Global.border_blocks
 		var easing = 15

@@ -3,12 +3,14 @@ extends CollisionShape2D
 @onready var otherside = $"../block/CollisionShape2D"
 
 func _ready():
-	Global.player = get_node("../../../CharacterBody2D")
-	rotation = -$"..".rotation
-	otherside.rotation = rotation + deg_to_rad(180)
-	if !Global.two_faced_blocks:
-		otherside.disabled = true
-	Global.flip_blocks.connect(flip_self)
+	if !Global.paused:
+		rotation = -$"..".rotation
+		otherside.rotation = rotation + deg_to_rad(180)
+		if !Global.two_faced_blocks:
+			otherside.disabled = true
+		Global.flip_blocks.connect(flip_self)
+		#$"..".body_entered.connect(Global.player._on_area_2d_body_entered)
+		#$"../block".body_entered.connect(Global.player._on_area_2d_body_entered)
 	
 func _physics_process(delta: float) -> void:
 	if Global.two_faced_blocks:

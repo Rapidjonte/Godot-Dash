@@ -32,3 +32,4 @@ text = "1"
 label_settings = SubResource("LabelSettings_aosji")
 horizontal_alignment = 1
 vertical_alignment = 2
+text_overrun_behavior = 1

@@ -4,36 +4,34 @@ extends TextureRect
 @export var delay : float
 @export var only_spawned : bool
 
-@onready var character_body = get_node("../../CharacterBody2D")
 var triggered = false
 
 func _ready() -> void:
-	visible = false
-	#unless in editor
-	
 	$Label.text = targetID
-	if position.x <= -32 and !only_spawned:
-		var tween = create_tween()
-		if int(targetID) > 0:
-			activate(tween)
+	
+	if !Global.paused:
+		visible = false
+	
+		$Label.text = targetID
+		if position.x <= -32 and !only_spawned:
+			if int(targetID) > 0:
+				activate()
  
 func _process(delta: float) -> void:
 	if triggered:
 		return
-	
-	if character_body.position.x >= position.x-32 and !only_spawned:
-		var tween = create_tween()
-		if int(targetID) > 0:
-			activate(tween)
 
-func activate(tween):
+	if Global.player.position.x >= position.x-32 and !only_spawned:
+		if int(targetID) > 0:
+			activate()
+
+func activate():
 	triggered = true
 	
 	await get_tree().create_timer(delay).timeout
 	
 	for node in get_tree().get_nodes_in_group(targetID):
 		if node.activate:
-			node.activate(tween)
+			node.activate()
 	
-	await tween.finished
-	queue_free()
+	#queue_free()

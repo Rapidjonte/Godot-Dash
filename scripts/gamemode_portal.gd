@@ -30,10 +30,6 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 		mat2.set_shader_parameter("lightness", 0.99)
 		var tween2 = create_tween()
 		tween2.tween_property(mat2, "shader_parameter/lightness", 0, 0.4).set_ease(Tween.EASE_IN)
-
-		var node = circle_scene.instantiate()
-		node.scale = Vector2(0.35,0.35)
-		$GPUParticles2D.add_child(node)
 		
 		Global.two_faced_blocks = two_faced_blocks
 		
@@ -53,7 +49,13 @@ func switch_gamemode():
 		new = mini_scene.instantiate()
 	else:
 		new = gamemode_scene.instantiate()
+	if new.gamemode == Global.player.gamemode:
+		return
 		
+	var node = circle_scene.instantiate()
+	node.scale = Vector2(0.35,0.35)
+	$GPUParticles2D.add_child(node)
+	
 	new.position = Global.player.position+Global.player.center-new.center
 	new.speed = Global.player.speed
 	new.velocity = Global.player.velocity

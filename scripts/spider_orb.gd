@@ -12,7 +12,8 @@ func _physics_process(delta: float) -> void:
 			Global.circles.push_back([Vector2(position.x,position.y+Global.levelOffset),0])
 			get_viewport().set_input_as_handled()
 			circle_emitted=true
-		if Input.is_action_pressed("jump") and (Global.bufferable or (Global.player.grounded and Input.is_action_just_pressed("jump"))):
+		if !Global.player.quick_jump_disable and Input.is_action_pressed("jump") and (Global.bufferable or (Global.player.grounded and Input.is_action_just_pressed("jump"))):
+			Global.player.quick_jump_disable = true
 			$CollisionShape2D.set_deferred("disabled", true)
 			Global.bufferable = false
 			$GPUParticles2D.add_child(circle_scene.instantiate())
@@ -30,8 +31,8 @@ func _physics_process(delta: float) -> void:
 			Global.player.spidered()
 
 func teleport_until_surface(direction: Vector2):
-	var inner = Global.player.get_node("Area2D/middle box").shape.size.x
-	var whole = Global.player.get_node("player_collision").shape.size.x
+	var inner = Global.player.get_node("Area2D/middle box").shape.size.x*Global.player.scale.x
+	var whole = Global.player.get_node("player_collision").shape.size.x*Global.player.scale.x
 
 	var start = Vector2((whole/2)-(inner/2), 32)
 	var end = Vector2(whole, 32)
@@ -45,11 +46,12 @@ func teleport_until_surface(direction: Vector2):
 
 	var closest_hit = null
 	var min_distance = INF
-
+	
 	for offset in offsets:
 		var ray = Global.player.get_node("SpiderRay")
 		ray.position = offset
-		ray.target_position = direction * 2000
+		ray.target_position = direction * 52000
+		print(ray.position )
 		ray.force_raycast_update()
 
 		if ray.is_colliding():
@@ -57,14 +59,16 @@ func teleport_until_surface(direction: Vector2):
 			var distance = hit_pos.distance_to(Global.player.global_position)
 			if distance < min_distance:
 				min_distance = distance
-				closest_hit = hit_pos + ray.get_collision_normal() * 4
+				closest_hit = hit_pos + ray.get_collision_normal() * 1
 
 	if closest_hit != null:
 		Global.player.global_position.y = closest_hit.y+direction.y*2
+	else:
+		Global.player.die()
 	
 	if direction.y >= 1:
-		Global.player.global_position.y -= whole+direction.y*2
-
+		Global.player.global_position.y -= whole
+	
 func get_gravity_multiplier(rotation_rad: float) -> int:
 	var deg = fmod(roundi(rad_to_deg(rotation_rad)), 360)
 	if deg < 0:

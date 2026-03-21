@@ -34,11 +34,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("reset"):
 		die(true)
-	if Input.is_action_just_pressed("exit"):
-		get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:	
+	quick_jump_disable = false
+	
 	if !Global.paused:
 		$Area2D2/spinbox.rotation = $sprite.rotation
 		position.x += 64 * delta * speed
@@ -81,8 +81,6 @@ func _physics_process(delta: float) -> void:
 		collision_check()
 	else:
 		$friction.emitting = false
-	
-	quick_jump_disable = false
 
 func collision_check():
 	if Global.paused:
@@ -140,4 +138,3 @@ func flip(skip_flip : bool = false):
 	up_direction.y *= -1
 	jumpStrength *= -1
 	excessiveForce = 0
-	Global.bufferable = true

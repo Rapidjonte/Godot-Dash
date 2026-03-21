@@ -2,12 +2,15 @@ extends Area2D
 
 var circle_scene: PackedScene = load("res://scenes/circle_effect.tscn")
 var boostStrength = 2008.405
-@onready var prevMax = Global.player.max_velocity
-@onready var newMax = Global.player.max_velocity
+var prevMax
+var newMax
 var boosted = false
 
 func _ready():
-	$CollisionShape2D.disabled = false
+	if !Global.paused:
+		prevMax = Global.player.max_velocity
+		newMax = Global.player.max_velocity
+		$CollisionShape2D.disabled = false
 
 var circle_emitted = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -17,7 +20,8 @@ func _physics_process(delta: float) -> void:
 			Global.circles.push_back([Vector2(position.x,position.y+Global.levelOffset),0])
 			get_viewport().set_input_as_handled()
 			circle_emitted=true
-		if Input.is_action_pressed("jump") and (Global.bufferable or (Global.player.grounded and Input.is_action_just_pressed("jump"))):
+		if !Global.player.quick_jump_disable and Input.is_action_pressed("jump") and (Global.bufferable or (Global.player.grounded and Input.is_action_just_pressed("jump"))):
+			Global.player.quick_jump_disable = true
 			$CollisionShape2D.set_deferred("disabled", true)
 			
 			if boostStrength > Global.player.max_velocity:

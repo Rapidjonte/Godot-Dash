@@ -15,7 +15,7 @@ var levelOffset := 448
 
 var bufferable := false
 var attempt := 0
-var paused := false
+var paused := true
 
 func reset():
 	attempt += 1
@@ -24,6 +24,13 @@ func reset():
 	border_blocks = 0
 	camera_y_lock = null
 	two_faced_blocks = false
+	paused = false
+
+var last_editor_scene: PackedScene = null
+var entered_from_editor = false
+
+var last_editor_cam_pos: Vector2 = Vector2.ZERO
+var last_editor_zoom: float = 1.0
 
 var level : PackedScene
 func load_level(_level: PackedScene):
