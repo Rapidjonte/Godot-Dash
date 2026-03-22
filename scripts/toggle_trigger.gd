@@ -35,5 +35,13 @@ func activate():
 			node.process_mode = Node.PROCESS_MODE_INHERIT
 			node.visible = true
 		else:
-			node.process_mode = Node.PROCESS_MODE_PAUSABLE
+			node.process_mode = Node.PROCESS_MODE_DISABLED
 			node.visible = false
+		_set_collisions_recursive(node, toggle)
+ 
+func _set_collisions_recursive(node: Node, enabled: bool) -> void:
+	if node is CollisionShape2D or node is CollisionPolygon2D:
+		node.set_deferred("disabled", not enabled)
+	for child in node.get_children():
+		_set_collisions_recursive(child, enabled)
+ 

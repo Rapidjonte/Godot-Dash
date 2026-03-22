@@ -1159,7 +1159,15 @@ func _on_add_texture() -> void:
 
 func _scan_images(path: String, out: Array[String]) -> void:
 	var dir := DirAccess.open(path)
-	if dir == null: return
+	if dir == null:
+		# Exported build — read from index file
+		var f := FileAccess.open(IMAGES_FOLDER + "/index.txt", FileAccess.READ)
+		if f:
+			while not f.eof_reached():
+				var line := f.get_line().strip_edges()
+				if line.length() > 0: out.append(line)
+			f.close()
+		return
 	dir.list_dir_begin()
 	var fname := dir.get_next()
 	while fname != "":
@@ -1416,28 +1424,38 @@ func _build_object_panel() -> void:
 	var vbox := VBoxContainer.new(); panel.add_child(vbox)
 	var label := Label.new(); label.text = "Objects"; vbox.add_child(label)
 	var scroll := ScrollContainer.new(); scroll.custom_minimum_size = Vector2(180, 460); vbox.add_child(scroll)
-	# Block panning and swiping when scrollbar is dragged
 	scroll.gui_input.connect(func(event: InputEvent):
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 			is_panning = false; pan_with_lmb = false; is_swiping = false
 	)
 	var grid := GridContainer.new(); grid.columns = 2; scroll.add_child(grid)
 
-	var dir := DirAccess.open(SCENES_FOLDER)
-	if dir == null:
-		var err := Label.new(); err.text = "(folder not found)"; grid.add_child(err); return
 	var files: Array[String] = []
-	dir.list_dir_begin()
-	var fname := dir.get_next()
-	while fname != "":
-		if fname.ends_with(".tscn"): files.append(fname)
-		fname = dir.get_next()
-	dir.list_dir_end()
+
+	# Try index file first (works in both editor and exported builds)
+	var index_file := FileAccess.open(SCENES_FOLDER + "index.txt", FileAccess.READ)
+	if index_file:
+		while not index_file.eof_reached():
+			var line := index_file.get_line().strip_edges()
+			if line.ends_with(".tscn"): files.append(line)
+		index_file.close()
+	else:
+		# Fall back to DirAccess (editor only)
+		var dir := DirAccess.open(SCENES_FOLDER)
+		if dir != null:
+			dir.list_dir_begin()
+			var fname := dir.get_next()
+			while fname != "":
+				if fname.ends_with(".tscn"): files.append(fname)
+				fname = dir.get_next()
+			dir.list_dir_end()
+
+	if files.is_empty():
+		var err := Label.new(); err.text = "(no objects found)"; grid.add_child(err); return
+
 	files.sort_custom(func(a: String, b: String) -> bool:
-		var ka := a.get_basename()
-		var kb := b.get_basename()
-		var ia := ka.find("_")
-		var ib := kb.find("_")
+		var ka := a.get_basename(); var kb := b.get_basename()
+		var ia := ka.find("_"); var ib := kb.find("_")
 		if ia >= 0: ka = ka.substr(ia + 1)
 		if ib >= 0: kb = kb.substr(ib + 1)
 		return ka.to_lower() < kb.to_lower()
