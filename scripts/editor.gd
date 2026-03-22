@@ -217,32 +217,18 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("ui_right") and not Input.is_key_pressed(KEY_CTRL): dir.x += 1
 
 	if dir != Vector2.ZERO and not selected_nodes.is_empty():
-		var first_press := Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right")
-		if first_press:
-			_move_hold_time = 0.0
-			_push_undo()
-			_was_moving = true
-			for node in selected_nodes:
-				if shift:
-					var step := int(max(1, GRID / 10))
-					if node is Node2D:    node.position += dir * step
-					elif node is Control: node.position += dir * step
-				else:
-					if node is Node2D:    node.position += dir * GRID
-					elif node is Control: node.position += dir * GRID
-		else:
-			_move_hold_time += _delta
-			if _move_hold_time >= MOVE_HOLD_DELAY:
-				if fmod(_move_hold_time - MOVE_HOLD_DELAY, MOVE_REPEAT_RATE) < _delta:
-					_was_moving = true
-					for node in selected_nodes:
-						if shift:
-							var step := int(max(1, GRID / 10))
-							if node is Node2D:    node.position += dir * step
-							elif node is Control: node.position += dir * step
-						else:
-							if node is Node2D:    node.position += dir * GRID
-							elif node is Control: node.position += dir * GRID
+		_move_hold_time += _delta
+		if _move_hold_time >= MOVE_HOLD_DELAY:
+			if fmod(_move_hold_time - MOVE_HOLD_DELAY, MOVE_REPEAT_RATE) < _delta:
+				_was_moving = true
+				for node in selected_nodes:
+					if shift:
+						var step = max(1, float(GRID) / 10)
+						if node is Node2D:    node.position += dir * step
+						elif node is Control: node.position += dir * step
+					else:
+						if node is Node2D:    node.position += dir * GRID
+						elif node is Control: node.position += dir * GRID
 	else:
 		if _was_moving: _was_moving = false
 		_move_hold_time = 0.0
@@ -275,6 +261,24 @@ func _input(event: InputEvent) -> void:
 					else: _undo()
 			KEY_Y:
 				if ctrl: _redo()
+		# Arrow key / WASD single press — move immediately, reset hold timer
+		var move_dir := Vector2.ZERO
+		if event.keycode == KEY_UP or event.keycode == KEY_W:    move_dir.y -= 1
+		if event.keycode == KEY_DOWN or event.keycode == KEY_S:  move_dir.y += 1
+		if event.keycode == KEY_LEFT or event.keycode == KEY_A:  move_dir.x -= 1
+		if (event.keycode == KEY_RIGHT or event.keycode == KEY_D) and not ctrl: move_dir.x += 1
+		if move_dir != Vector2.ZERO and not selected_nodes.is_empty():
+			_move_hold_time = 0.0
+			_push_undo()
+			var shift2 := Input.is_key_pressed(KEY_SHIFT)
+			for node in selected_nodes:
+				if shift2:
+					var step = max(1, float(GRID) / 10)
+					if node is Node2D:    node.position += move_dir * step
+					elif node is Control: node.position += move_dir * step
+				else:
+					if node is Node2D:    node.position += move_dir * GRID
+					elif node is Control: node.position += move_dir * GRID
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -554,7 +558,7 @@ func _build_transform_panel() -> void:
 	_transform_panel.anchor_top    = 0.5; _transform_panel.anchor_bottom  = 0.5
 	_transform_panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	_transform_panel.offset_left   = -215; _transform_panel.offset_right  = -70
-	_transform_panel.offset_top    = -250; _transform_panel.offset_bottom  = 250
+	_transform_panel.offset_top    = -220; _transform_panel.offset_bottom  = 220
 	_transform_panel.visible = false
 	ui_layer.add_child(_transform_panel)
 
@@ -565,8 +569,8 @@ func _build_transform_panel() -> void:
 	var slbl := Label.new(); slbl.text = "Scale"
 	vbox.add_child(slbl)
 	_scale_slider = HSlider.new()
-	_scale_slider.min_value = 0.25; _scale_slider.max_value = 4.0
-	_scale_slider.step = 0.05; _scale_slider.value = 1.0
+	_scale_slider.min_value = 0.01; _scale_slider.max_value = 10.0
+	_scale_slider.step = 0.01; _scale_slider.value = 1.0
 	_scale_slider.custom_minimum_size = Vector2(180, 20)
 	vbox.add_child(_scale_slider)
 	var scale_val_label := Label.new(); scale_val_label.text = "1.0"
@@ -588,7 +592,7 @@ func _build_transform_panel() -> void:
 	vbox.add_child(sklbl)
 	_skew_slider = HSlider.new()
 	_skew_slider.min_value = -90.0; _skew_slider.max_value = 90.0
-	_skew_slider.step = 0.5; _skew_slider.value = 0.0
+	_skew_slider.step = 0.1; _skew_slider.value = 0.0
 	_skew_slider.custom_minimum_size = Vector2(180, 20)
 	vbox.add_child(_skew_slider)
 	var skew_val_label := Label.new(); skew_val_label.text = "0.0"
@@ -1040,28 +1044,25 @@ func _scan_images(path: String, out: Array[String]) -> void:
 	dir.list_dir_end()
 
 func _spawn_texture_rect(tex: Texture2D, img_path: String) -> void:
-	var tr := TextureRect.new()
-	tr.texture      = tex
-	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	tr.size         = tex.get_size()
-	tr.scale        = Vector2(TEXTURE_SCALE, TEXTURE_SCALE)
-	tr.pivot_offset = tr.size / 2.0
-	_ensure_blend_mode(tr)
-	_ignore_mouse_recursive(tr)
+	var sp := Sprite2D.new()
+	sp.texture  = tex
+	sp.scale    = Vector2(TEXTURE_SCALE, TEXTURE_SCALE)
+	sp.centered = true
+	_ignore_mouse_recursive(sp)
 
 	var snapped := _snap_to_cell_center(get_global_mouse_position()
 		if get_viewport().get_visible_rect().has_point(get_viewport().get_mouse_position())
 		else get_canvas_transform().affine_inverse() * (get_viewport().get_visible_rect().size / 2.0))
 
-	tr.position = snapped - tr.pivot_offset
-	tr.name     = img_path.get_file().get_basename()
+	sp.position = snapped
+	sp.name     = img_path.get_file().get_basename()
 
-	level.add_child(tr)
-	_fix_auto_names(tr)
-	_set_owner_recursive(tr, level)
+	level.add_child(sp)
+	_fix_auto_names(sp)
+	_set_owner_recursive(sp, level)
 
 	_deselect_all()
-	selected_nodes = [tr]
+	selected_nodes = [sp]
 
 func _build_sidebar_buttons() -> void:
 	var ui_layer := CanvasLayer.new(); ui_layer.layer = 65; add_child(ui_layer)

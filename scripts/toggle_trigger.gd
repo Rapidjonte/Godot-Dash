@@ -8,6 +8,7 @@ var triggered = false
 
 func _ready() -> void:
 	$Label.text = targetID
+	property_list_changed.connect(func(): $Label.text = targetID)
 	
 	if !Global.paused:
 		visible = false
@@ -26,19 +27,13 @@ func _process(delta: float) -> void:
 	if Global.player.position.x >= position.x-32 and !only_spawned:
 		if int(targetID) > 0:
 			activate()
-
+ 
 func activate():
 	triggered = true
-	
 	for node in get_tree().get_nodes_in_group(targetID):
-		var collide = node.find_child("CollisionShape2D", true)
 		if toggle:
-			if collide:
-				collide.disabled = false
+			node.process_mode = Node.PROCESS_MODE_INHERIT
 			node.visible = true
 		else:
-			if collide:
-				collide.disabled = true
+			node.process_mode = Node.PROCESS_MODE_PAUSABLE
 			node.visible = false
-			
-	#queue_free()

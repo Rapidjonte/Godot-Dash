@@ -26,6 +26,7 @@ targetID = "bg"
 targetColor = Color(0.37260303, 0.37260288, 0.3726029, 1)
 
 [node name="Label" type="Label" parent="." unique_id=478935577]
+z_index = 1
 layout_mode = 0
 offset_right = 64.0
 offset_bottom = 53.0
@@ -33,4 +34,5 @@ text = "bg"
 label_settings = SubResource("LabelSettings_aosji")
 horizontal_alignment = 1
 vertical_alignment = 2
+clip_text = true
 text_overrun_behavior = 1

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://be63m2q78fjmj"]
+
+[ext_resource type="Texture2D" uid="uid://40npvojln22m" path="res://images/triggers/StopTrigger.webp" id="1_dardg"]
+[ext_resource type="Script" uid="uid://bqeuo2py1ao0" path="res://scripts/stop_trigger.gd" id="2_dardg"]
+[ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="3_3of7o"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_aosji"]
+font = ExtResource("3_3of7o")
+font_size = 27
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 7
+shadow_color = Color(0, 0, 0, 0.54901963)
+
+[node name="stop_trigger" type="TextureRect" unique_id=1889468697]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("1_dardg")
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("2_dardg")
+targetID = "1"
+
+[node name="Label" type="Label" parent="." unique_id=478935577]
+z_index = 1
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 53.0
+text = "1"
+label_settings = SubResource("LabelSettings_aosji")
+horizontal_alignment = 1
+vertical_alignment = 2
+clip_text = true
+text_overrun_behavior = 1

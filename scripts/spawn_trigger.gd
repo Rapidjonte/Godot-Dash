@@ -8,6 +8,7 @@ var triggered = false
 
 func _ready() -> void:
 	$Label.text = targetID
+	property_list_changed.connect(func(): $Label.text = targetID)
 	
 	if !Global.paused:
 		visible = false

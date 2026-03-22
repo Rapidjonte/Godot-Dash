@@ -33,7 +33,9 @@ func _tween_color(node: Node, prop: String) -> void:
 	var t := create_tween()
 	t.set_trans(_get_trans())
 	t.set_ease(_get_ease())
-	t.tween_property(node, prop, targetColor, duration)
+	t.tween_property(node, prop + ":r", targetColor.r, duration)
+	t.parallel().tween_property(node, prop + ":g", targetColor.g, duration)
+	t.parallel().tween_property(node, prop + ":b", targetColor.b, duration)
 
 func activate():
 	triggered = true

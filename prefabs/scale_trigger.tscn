@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://177f2iyumjyp"]
+
+[ext_resource type="Texture2D" uid="uid://bixj01q4dkt44" path="res://images/triggers/ScaleTrigger.webp" id="1_jdt0w"]
+[ext_resource type="Script" uid="uid://c2472c1dhxxvi" path="res://scripts/scale_trigger.gd" id="2_jdt0w"]
+[ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="3_kllty"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_aosji"]
+font = ExtResource("3_kllty")
+font_size = 27
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 7
+shadow_color = Color(0, 0, 0, 0.54901963)
+
+[node name="scale_trigger" type="TextureRect" unique_id=1889468697]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("1_jdt0w")
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("2_jdt0w")
+targetID = "1"
+
+[node name="Label" type="Label" parent="." unique_id=478935577]
+z_index = 1
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 53.0
+text = "1"
+label_settings = SubResource("LabelSettings_aosji")
+horizontal_alignment = 1
+vertical_alignment = 2
+clip_text = true
+text_overrun_behavior = 1

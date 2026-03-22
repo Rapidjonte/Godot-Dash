@@ -25,6 +25,7 @@ script = ExtResource("2_tyc7n")
 targetID = "1"
 
 [node name="Label" type="Label" parent="." unique_id=478935577]
+z_index = 1
 layout_mode = 0
 offset_right = 64.0
 offset_bottom = 53.0
@@ -32,4 +33,5 @@ text = "1"
 label_settings = SubResource("LabelSettings_aosji")
 horizontal_alignment = 1
 vertical_alignment = 2
+clip_text = true
 text_overrun_behavior = 1
