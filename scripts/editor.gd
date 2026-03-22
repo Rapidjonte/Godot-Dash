@@ -253,6 +253,10 @@ func _input(event: InputEvent) -> void:
 				_push_undo(Array(selected_nodes))
 				for n in selected_nodes: n.queue_free()
 				_deselect_all()
+			KEY_BACKSPACE:
+				_push_undo(Array(selected_nodes))
+				for n in selected_nodes: n.queue_free()
+				_deselect_all()
 			KEY_D:
 				if ctrl: _duplicate_selected()
 			KEY_Z:
@@ -846,23 +850,23 @@ func _build_top_toolbar() -> void:
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	hbox.add_child(spacer)
 
-	var play_btn := _make_toolbar_button("Play", Color(0.1, 0.6, 0.2))
+	var play_btn := _make_toolbar_button("Play", Color(0.18, 0.18, 0.20))
 	play_btn.pressed.connect(_on_play)
 	hbox.add_child(play_btn)
 
-	var export_btn := _make_toolbar_button("Export", Color(0.2, 0.4, 0.7))
+	var export_btn := _make_toolbar_button("Export", Color(0.18, 0.18, 0.20))
 	export_btn.pressed.connect(_on_export)
 	hbox.add_child(export_btn)
 
-	var import_btn := _make_toolbar_button("Import", Color(0.5, 0.3, 0.1))
+	var import_btn := _make_toolbar_button("Import", Color(0.18, 0.18, 0.20))
 	import_btn.pressed.connect(_on_import)
 	hbox.add_child(import_btn)
 
-	var share_btn := _make_toolbar_button("Share", Color(0.5, 0.1, 0.5))
+	var share_btn := _make_toolbar_button("Share", Color(0.18, 0.18, 0.20))
 	share_btn.pressed.connect(_on_share)
 	hbox.add_child(share_btn)
 
-	var tex_btn := _make_toolbar_button("Texture", Color(0.15, 0.4, 0.5))
+	var tex_btn := _make_toolbar_button("Texture", Color(0.18, 0.18, 0.20))
 	tex_btn.pressed.connect(func():
 		if is_instance_valid(_texture_popup_layer):
 			_texture_popup_layer.queue_free()
@@ -872,16 +876,16 @@ func _build_top_toolbar() -> void:
 	)
 	hbox.add_child(tex_btn)
 
-func _make_toolbar_button(text: String, color: Color) -> Button:
+func _make_toolbar_button(text: String, _color: Color) -> Button:
 	var btn := Button.new()
 	btn.text = text
 	btn.custom_minimum_size = Vector2(90, 30)
 	btn.focus_mode = Control.FOCUS_NONE
 	var s := StyleBoxFlat.new()
-	s.bg_color = color.darkened(0.2)
+	s.bg_color = Color(0.18, 0.18, 0.20)
 	s.corner_radius_top_left    = 5; s.corner_radius_top_right    = 5
 	s.corner_radius_bottom_left = 5; s.corner_radius_bottom_right = 5
-	var h := StyleBoxFlat.new(); h.bg_color = color
+	var h := StyleBoxFlat.new(); h.bg_color = Color(0.28, 0.28, 0.30)
 	h.corner_radius_top_left    = 5; h.corner_radius_top_right    = 5
 	h.corner_radius_bottom_left = 5; h.corner_radius_bottom_right = 5
 	btn.add_theme_stylebox_override("normal",  s)
@@ -939,6 +943,27 @@ func _on_export() -> void:
 	ps.pack(level)
 	_restore_signals(saved_signals)
 	_restore_level_after_save()
+	if OS.get_name() == "Web":
+		var tmp := "user://exported_level.scn"
+		ResourceSaver.save(ps, tmp, ResourceSaver.FLAG_COMPRESS)
+		var f := FileAccess.open(tmp, FileAccess.READ)
+		var raw := f.get_buffer(f.get_length())
+		f.close()
+		var b64 := Marshalls.raw_to_base64(raw)
+		JavaScriptBridge.eval("""
+			(function() {
+				var b64 = '%s';
+				var bin = atob(b64);
+				var arr = new Uint8Array(bin.length);
+				for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+				var blob = new Blob([arr], {type: 'application/octet-stream'});
+				var a = document.createElement('a');
+				a.href = URL.createObjectURL(blob);
+				a.download = 'level.scn';
+				a.click();
+			})();
+		""" % b64)
+		return
 	var dialog := FileDialog.new()
 	dialog.file_mode  = FileDialog.FILE_MODE_SAVE_FILE
 	dialog.access     = FileDialog.ACCESS_FILESYSTEM
@@ -993,6 +1018,50 @@ func _fix_texturerect_pivots(node: Node) -> void:
 		_fix_texturerect_pivots(child)
 
 func _on_import() -> void:
+	if OS.get_name() == "Web":
+		# Use browser file picker on web
+		JavaScriptBridge.eval("""
+			(function() {
+				var input = document.createElement('input');
+				input.type = 'file';
+				input.accept = '.scn,.tscn';
+				input.onchange = function(e) {
+					var file = e.target.files[0];
+					if (!file) return;
+					var reader = new FileReader();
+					reader.onload = function(ev) {
+						var arr = new Uint8Array(ev.target.result);
+						var b64 = '';
+						for (var i = 0; i < arr.length; i++) b64 += String.fromCharCode(arr[i]);
+						window._godot_import_b64 = btoa(b64);
+						window._godot_import_name = file.name;
+					};
+					reader.readAsArrayBuffer(file);
+				};
+				input.click();
+			})();
+		""")
+		# Poll for the result
+		var timer := get_tree().create_timer(0.2)
+		await timer.timeout
+		var attempts := 0
+		while attempts < 50:
+			var b64 = JavaScriptBridge.eval("window._godot_import_b64 || ''")
+			if b64 != null and str(b64).length() > 0:
+				JavaScriptBridge.eval("window._godot_import_b64 = ''; window._godot_import_name = '';")
+				var raw := Marshalls.base64_to_raw(str(b64))
+				var tmp := "user://web_import.scn"
+				var f := FileAccess.open(tmp, FileAccess.WRITE)
+				f.store_buffer(raw); f.close()
+				var ps = load(tmp) as PackedScene
+				if ps == null: return
+				_push_undo(Array(level.get_children()))
+				await _load_packed_scene_into_level(ps)
+				return
+			await get_tree().create_timer(0.1).timeout
+			attempts += 1
+		return
+ 
 	var dialog := FileDialog.new()
 	dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 	dialog.access    = FileDialog.ACCESS_FILESYSTEM
@@ -1158,16 +1227,14 @@ func _on_add_texture() -> void:
 	)
 
 func _scan_images(path: String, out: Array[String]) -> void:
-	var dir := DirAccess.open(path)
-	if dir == null:
-		# Exported build — read from index file
-		var f := FileAccess.open(IMAGES_FOLDER + "/index.txt", FileAccess.READ)
-		if f:
-			while not f.eof_reached():
-				var line := f.get_line().strip_edges()
-				if line.length() > 0: out.append(line)
-			f.close()
+	# Load from generated script (works in editor and all export targets)
+	var list_script = load(IMAGES_FOLDER + "/image_list.gd")
+	if list_script:
+		for p in list_script.FILES: out.append(p)
 		return
+	# Fallback: DirAccess (editor only, when script not generated yet)
+	var dir := DirAccess.open(path)
+	if dir == null: return
 	dir.list_dir_begin()
 	var fname := dir.get_next()
 	while fname != "":
@@ -1214,23 +1281,24 @@ func _build_sidebar_buttons() -> void:
 	vbox.add_theme_constant_override("separation", 8)
 	ui_layer.add_child(vbox)
 
-	var desel_btn := _make_sidebar_button("✕", Color(0.8, 0.2, 0.2))
+	var desel_btn := _make_sidebar_button("Desel", Color(0.18, 0.18, 0.20))
 	desel_btn.pressed.connect(func(): _deselect_all(); _cancel_placement(); _set_mode(Mode.SELECT))
 	vbox.add_child(desel_btn)
 
-	_swipe_btn = _make_sidebar_button("⬚", Color(0.2, 0.5, 0.8))
+	_swipe_btn = _make_sidebar_button("Swipe", Color(0.18, 0.18, 0.20))
 	_swipe_btn.pressed.connect(func(): swipe_enabled = !swipe_enabled; _update_swipe_button())
 	vbox.add_child(_swipe_btn); _update_swipe_button()
 
-	_free_move_btn = _make_sidebar_button("✥", Color(0.6, 0.4, 0.1))
+	_free_move_btn = _make_sidebar_button("Move", Color(0.18, 0.18, 0.20))
 	_free_move_btn.pressed.connect(func(): _set_mode(Mode.FREE_MOVE if mode != Mode.FREE_MOVE else Mode.SELECT))
 	vbox.add_child(_free_move_btn)
+	_set_mode(mode)
 
-	_snap_toggle_btn = _make_sidebar_button("⊹", Color(0.2, 0.6, 0.4))
+	_snap_toggle_btn = _make_sidebar_button("Snap", Color(0.18, 0.18, 0.20))
 	_snap_toggle_btn.pressed.connect(func(): free_move_snap = !free_move_snap; _update_snap_toggle_button())
 	vbox.add_child(_snap_toggle_btn); _update_snap_toggle_button()
 
-	var snap_now := _make_sidebar_button("⊞", Color(0.3, 0.3, 0.6))
+	var snap_now := _make_sidebar_button("Align", Color(0.18, 0.18, 0.20))
 	snap_now.pressed.connect(func():
 		_push_undo()
 		for n in selected_nodes:
@@ -1238,38 +1306,128 @@ func _build_sidebar_buttons() -> void:
 	)
 	vbox.add_child(snap_now)
 
-	_pivot_btn = _make_sidebar_button("◎", Color(0.5, 0.1, 0.7))
+	_pivot_btn = _make_sidebar_button("Pivot", Color(0.18, 0.18, 0.20))
 	_pivot_btn.pressed.connect(func(): use_group_pivot = !use_group_pivot; _update_pivot_button())
 	vbox.add_child(_pivot_btn); _update_pivot_button()
+
+	# Select All — bottom right toolbar-style button
+	var sel_all_layer := CanvasLayer.new(); sel_all_layer.layer = 65; add_child(sel_all_layer)
+	var sel_all_btn := _make_toolbar_button("Select All", Color(0.18, 0.18, 0.20))
+	sel_all_btn.anchor_right  = 1.0; sel_all_btn.anchor_bottom = 1.0
+	sel_all_btn.anchor_left   = 1.0; sel_all_btn.anchor_top    = 1.0
+	sel_all_btn.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	sel_all_btn.grow_vertical   = Control.GROW_DIRECTION_BEGIN
+	sel_all_btn.offset_left   = -110; sel_all_btn.offset_right  = -10
+	sel_all_btn.offset_top    = -42; sel_all_btn.offset_bottom  = -10
+	sel_all_btn.pressed.connect(func():
+		selected_nodes.clear()
+		for child in level.get_children():
+			selected_nodes.append(child)
+	)
+	sel_all_layer.add_child(sel_all_btn)
+
+	# Help button — bottom left, shows info popup
+	var help_layer := CanvasLayer.new(); help_layer.layer = 65; add_child(help_layer)
+	var help_btn := Button.new()
+	help_btn.text = "?"
+	help_btn.custom_minimum_size = Vector2(36, 36)
+	help_btn.focus_mode = Control.FOCUS_NONE
+	help_btn.anchor_bottom = 1.0; help_btn.anchor_top    = 1.0
+	help_btn.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	help_btn.offset_left = 10; help_btn.offset_right  = 46
+	help_btn.offset_top  = -46; help_btn.offset_bottom = -10
+	var hs := StyleBoxFlat.new(); hs.bg_color = Color(0.18, 0.18, 0.20)
+	hs.corner_radius_top_left = 5; hs.corner_radius_top_right = 5
+	hs.corner_radius_bottom_left = 5; hs.corner_radius_bottom_right = 5
+	var hh := StyleBoxFlat.new(); hh.bg_color = Color(0.28, 0.28, 0.30)
+	hh.corner_radius_top_left = 5; hh.corner_radius_top_right = 5
+	hh.corner_radius_bottom_left = 5; hh.corner_radius_bottom_right = 5
+	help_btn.add_theme_stylebox_override("normal",  hs)
+	help_btn.add_theme_stylebox_override("hover",   hh)
+	help_btn.add_theme_stylebox_override("pressed", hs)
+	help_btn.add_theme_stylebox_override("focus",   StyleBoxEmpty.new())
+	help_btn.add_theme_font_size_override("font_size", 18)
+	help_layer.add_child(help_btn)
+
+	help_btn.pressed.connect(func():
+		var popup_layer := CanvasLayer.new(); popup_layer.layer = 400; add_child(popup_layer)
+		var panel := PanelContainer.new()
+		panel.set_anchors_preset(Control.PRESET_CENTER)
+		panel.custom_minimum_size = Vector2(480, 500)
+		panel.offset_left = -240; panel.offset_right  =  240
+		panel.offset_top  = -250; panel.offset_bottom =  250
+		popup_layer.add_child(panel)
+		var vb := VBoxContainer.new(); vb.add_theme_constant_override("separation", 8); panel.add_child(vb)
+		var hdr := HBoxContainer.new(); vb.add_child(hdr)
+		var ttl := Label.new(); ttl.text = "Help"; ttl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		ttl.add_theme_font_size_override("font_size", 16); hdr.add_child(ttl)
+		var x_btn := Button.new(); x_btn.text = "✕"; x_btn.focus_mode = Control.FOCUS_NONE
+		x_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+		x_btn.pressed.connect(func(): popup_layer.queue_free()); hdr.add_child(x_btn)
+		_make_draggable(panel, hdr)
+		var scroll := ScrollContainer.new(); scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL; vb.add_child(scroll)
+		var lbl := Label.new()
+		lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		# ── Edit this text to your liking ──
+		lbl.text = """Controls:
+- Arrow keys / WASD: Move selected
+- Shift + move: 1/10th movement
+- Q / E: Rotate 90 degrees (Shift = 45 degrees)
+- Ctrl+D: Duplicate
+- Ctrl+Z: Undo 
+- Ctrl+Y: Redo
+- Delete: Delete selected
+- F: Toggle free move
+- T: Toggle swipe
+- G: Toggle snap to grid
+
+Toolbar:
+- Play: Test level
+- Export: Save .scn file
+- Import: Load .scn file
+- Share: Copy level as Base64
+- Texture: Import texture from Geometry Dash
+
+Right panel:
+- Desel: Deselect all objects
+- Swipe: Enable rectangle selection
+- Move: Free move mode
+- Snap: Snap to grid on release
+- Align: Snap all selected to grid
+- Pivot: Rotate/scale around group center"""
+		scroll.add_child(lbl)
+		popup_layer.add_child(panel) if false else null  # already added above
+	)
 
 func _set_mode(new_mode: Mode) -> void:
 	mode = new_mode; is_free_dragging = false; free_move_node = null
 	is_swiping = false; _is_painting = false
 	if mode != Mode.PLACE: _cancel_placement()
 	var s := StyleBoxFlat.new()
-	s.bg_color = Color(0.8, 0.6, 0.0) if mode == Mode.FREE_MOVE else Color(0.4, 0.27, 0.07)
+	s.bg_color = Color(0.55, 0.42, 0.10) if mode == Mode.FREE_MOVE else Color(0.38, 0.28, 0.07)
 	s.corner_radius_top_left    = 6; s.corner_radius_top_right    = 6
 	s.corner_radius_bottom_left = 6; s.corner_radius_bottom_right = 6
 	if _free_move_btn: _free_move_btn.add_theme_stylebox_override("normal", s)
 
-func _make_sidebar_button(text: String, color: Color) -> Button:
+func _make_sidebar_button(text: String, _color: Color) -> Button:
 	var btn := Button.new(); btn.text = text
 	btn.custom_minimum_size = Vector2(48, 48); btn.focus_mode = Control.FOCUS_NONE
-	var normal := StyleBoxFlat.new(); normal.bg_color = color.darkened(0.3)
+	var normal := StyleBoxFlat.new(); normal.bg_color = Color(0.18, 0.18, 0.20)
 	normal.corner_radius_top_left    = 6; normal.corner_radius_top_right    = 6
 	normal.corner_radius_bottom_left = 6; normal.corner_radius_bottom_right = 6
-	var hover := StyleBoxFlat.new(); hover.bg_color = color
+	var hover := StyleBoxFlat.new(); hover.bg_color = Color(0.28, 0.28, 0.30)
 	hover.corner_radius_top_left    = 6; hover.corner_radius_top_right    = 6
 	hover.corner_radius_bottom_left = 6; hover.corner_radius_bottom_right = 6
 	btn.add_theme_stylebox_override("normal",  normal); btn.add_theme_stylebox_override("hover", hover)
 	btn.add_theme_stylebox_override("pressed", normal); btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-	btn.add_theme_font_size_override("font_size", 20)
+	btn.add_theme_font_size_override("font_size", 11)
 	return btn
 
 func _update_swipe_button() -> void:
 	if not _swipe_btn: return
 	var s := StyleBoxFlat.new()
-	s.bg_color = Color(0.2, 0.7, 0.2) if swipe_enabled else Color(0.1, 0.3, 0.5)
+	s.bg_color = Color(0.15, 0.45, 0.70) if swipe_enabled else Color(0.14, 0.30, 0.48)
 	s.corner_radius_top_left    = 6; s.corner_radius_top_right    = 6
 	s.corner_radius_bottom_left = 6; s.corner_radius_bottom_right = 6
 	_swipe_btn.add_theme_stylebox_override("normal", s)
@@ -1277,7 +1435,7 @@ func _update_swipe_button() -> void:
 func _update_snap_toggle_button() -> void:
 	if not _snap_toggle_btn: return
 	var s := StyleBoxFlat.new()
-	s.bg_color = Color(0.2, 0.7, 0.4) if free_move_snap else Color(0.15, 0.3, 0.25)
+	s.bg_color = Color(0.15, 0.55, 0.30) if free_move_snap else Color(0.11, 0.34, 0.20)
 	s.corner_radius_top_left    = 6; s.corner_radius_top_right    = 6
 	s.corner_radius_bottom_left = 6; s.corner_radius_bottom_right = 6
 	_snap_toggle_btn.add_theme_stylebox_override("normal", s)
@@ -1285,7 +1443,7 @@ func _update_snap_toggle_button() -> void:
 func _update_pivot_button() -> void:
 	if not _pivot_btn: return
 	var s := StyleBoxFlat.new()
-	s.bg_color = Color(0.7, 0.1, 1.0) if use_group_pivot else Color(0.25, 0.05, 0.35)
+	s.bg_color = Color(0.45, 0.10, 0.60) if use_group_pivot else Color(0.30, 0.09, 0.42)
 	s.corner_radius_top_left    = 6; s.corner_radius_top_right    = 6
 	s.corner_radius_bottom_left = 6; s.corner_radius_bottom_right = 6
 	_pivot_btn.add_theme_stylebox_override("normal", s)
@@ -1432,15 +1590,12 @@ func _build_object_panel() -> void:
 
 	var files: Array[String] = []
 
-	# Try index file first (works in both editor and exported builds)
-	var index_file := FileAccess.open(SCENES_FOLDER + "index.txt", FileAccess.READ)
-	if index_file:
-		while not index_file.eof_reached():
-			var line := index_file.get_line().strip_edges()
-			if line.ends_with(".tscn"): files.append(line)
-		index_file.close()
+	# Load from generated script (works in editor and all export targets including web)
+	var list_script = load(SCENES_FOLDER + "prefab_list.gd")
+	if list_script:
+		files = Array(list_script.FILES)
 	else:
-		# Fall back to DirAccess (editor only)
+		# Fallback: DirAccess (editor only when script not generated yet)
 		var dir := DirAccess.open(SCENES_FOLDER)
 		if dir != null:
 			dir.list_dir_begin()
@@ -1451,7 +1606,11 @@ func _build_object_panel() -> void:
 			dir.list_dir_end()
 
 	if files.is_empty():
-		var err := Label.new(); err.text = "(no objects found)"; grid.add_child(err); return
+		var err := Label.new()
+		err.text = "No objects.\nRun generate_index.py\nthen reimport."
+		err.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		grid.add_child(err)
+		return
 
 	files.sort_custom(func(a: String, b: String) -> bool:
 		var ka := a.get_basename(); var kb := b.get_basename()
