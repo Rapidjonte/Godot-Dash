@@ -31,7 +31,15 @@ func _ready() -> void:
 	if startUpsideDown:
 		flip(true)
 
+var dying = false
+var respawnTimer = 0
+var respawnTime = Global.respawn_time
 func _process(delta: float) -> void:
+	if dying:
+		if respawnTimer <= respawnTime:
+			respawnTimer += delta
+		else:
+			die(true)
 	if Input.is_action_just_pressed("reset"):
 		die(true)
 
@@ -108,11 +116,10 @@ func die(instant: bool = false):
 	Global.paused = true
 	
 	if not instant:
-		# enable hitboxess
-		await get_tree().create_timer(1).timeout
-		# disable hitboxes
-	
-	get_tree().reload_current_scene.call_deferred()
+		dying = true
+		return
+
+	get_tree().reload_current_scene()
 
 func flip_ground_particle():
 	var _material = $friction.process_material

@@ -11,13 +11,13 @@ func _physics_process(delta: float) -> void:
 		Global.player.die()
 
 func _process(delta: float) -> void:
+	queue_redraw()
 	if Input.is_action_just_pressed("exit"):
 		if Global.entered_from_editor:
 			get_tree().change_scene_to_file("res://scenes/editor.tscn")
 		else:
 			get_tree().change_scene_to_file("res://scenes/menu.tscn")
 	if not Global.paused:
-		queue_redraw()
 		var progress = Global.player.position.x / Global.endX
 		progress = min(max(progress, 0),1)
 		$cam/Control/Panel/ProgressBar.value = progress*100

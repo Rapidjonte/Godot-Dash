@@ -13,7 +13,6 @@ func _ready():
 		#$"../block".body_entered.connect(Global.player._on_area_2d_body_entered)
 	
 func _physics_process(delta: float) -> void:
-	print(get_parent().process_mode )
 	if get_parent().process_mode == Node.PROCESS_MODE_PAUSABLE:
 		disabled = true
 		otherside.disabled = true

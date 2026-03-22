@@ -17,6 +17,7 @@ var bufferable := false
 var attempt := 0
 var paused := true
 
+var respawn_time = 1
 func reset():
 	attempt += 1
 	bufferable = true

@@ -47,6 +47,7 @@ func switch_gamemode():
 	$GPUParticles2D.add_child(node)
 	
 	new.position = Global.player.position+Global.player.center-new.center
+	new.find_child("sprite").rotation = Global.player.sprite.rotation
 	new.speed = Global.player.speed
 	new.velocity = Global.player.velocity
 	new.excessiveForce = Global.player.excessiveForce

@@ -235,7 +235,8 @@ texture = ExtResource("5_iywne")
 
 [node name="ground_tiles" type="ParallaxBackground" parent="." unique_id=1469012404]
 layer = 100
-scroll_base_offset = Vector2(-40, 0)
+offset = Vector2(-40, 0)
+transform = Transform2D(1, 0, 0, 1, -40, 0)
 
 [node name="g" type="ParallaxLayer" parent="ground_tiles" unique_id=468833837]
 modulate = Color(0, 0.4, 1, 1)
@@ -271,7 +272,8 @@ texture = ExtResource("7_u5sy4")
 
 [node name="borders" type="ParallaxBackground" parent="." unique_id=1658534440]
 layer = 101
-scroll_base_offset = Vector2(-40, 0)
+offset = Vector2(-40, 0)
+transform = Transform2D(1, 0, 0, 1, -40, 0)
 
 [node name="g" type="ParallaxLayer" parent="borders" unique_id=936947431]
 modulate = Color(0, 0.4, 1, 1)

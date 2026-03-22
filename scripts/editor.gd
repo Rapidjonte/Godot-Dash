@@ -250,7 +250,7 @@ func _input(event: InputEvent) -> void:
 				_rotate_selection_around_pivot(angle)
 			KEY_ESCAPE: _hide_context_menu(); _cancel_placement()
 			KEY_DELETE:
-				_push_undo()
+				_push_undo(Array(selected_nodes))
 				for n in selected_nodes: n.queue_free()
 				_deselect_all()
 			KEY_D:
@@ -409,45 +409,169 @@ func _input(event: InputEvent) -> void:
 						if _node_contains_point(child, get_global_mouse_position()): hit.append(child)
 					if hit.is_empty(): _start_pan(true)
 
-# ─── Undo / Redo ──────────────────────────────────────────────────────────────
+# ─── Undo / Redo (command-based — no full level packing) ─────────────────────
 
-func _capture_state() -> Dictionary:
-	_prepare_level_for_save()
-	var saved_sigs: Array = []
-	for child in level.get_children():
-		saved_sigs.append_array(_strip_signals_recursive(child))
-	var ps := PackedScene.new()
-	ps.pack(level)
-	_restore_signals(saved_sigs)
-	_restore_level_after_save()
-	var sel_names: Array[String] = []
+func _sel_names() -> Array:
+	var r := []
 	for n in selected_nodes:
-		if is_instance_valid(n): sel_names.append(n.name)
-	return {"scene": ps, "selection": sel_names}
+		if is_instance_valid(n): r.append(n.name)
+	return r
 
-func _push_undo() -> void:
-	_undo_stack.append(_capture_state())
+func _lc_names() -> Array:
+	var r := []
+	for n in last_candidates:
+		if is_instance_valid(n): r.append(n.name)
+	return r
+
+func _snap_transforms() -> Dictionary:
+	var r := {}
+	for child in level.get_children():
+		if not is_instance_valid(child): continue
+		var s := {"pos": child.position}
+		if child is Node2D:
+			s["rot"]   = child.rotation_degrees
+			s["scale"] = child.scale
+			s["skew"]  = child.skew if child.get("skew") != null else 0.0
+		elif child is Control:
+			s["rot"]   = child.rotation_degrees
+			s["scale"] = child.scale
+		r[child.name] = s
+	return r
+
+func _pack_subset(nodes: Array) -> PackedScene:
+	var temp := Node2D.new()
+	temp.process_mode = Node.PROCESS_MODE_DISABLED
+	for n in nodes:
+		if not is_instance_valid(n): continue
+		var c = n.duplicate()
+		c.owner = null
+		c.process_mode = Node.PROCESS_MODE_DISABLED
+		temp.add_child(c)
+		c.owner = temp
+	var ps := PackedScene.new()
+	ps.pack(temp)
+	temp.free()
+	return ps
+
+# nodes_to_pack: pass selected_nodes before a deletion so they can be restored
+func _push_undo(nodes_to_pack: Array = []) -> void:
+	var packed = null
+	if not nodes_to_pack.is_empty():
+		packed = _pack_subset(nodes_to_pack)
+	_undo_stack.append({
+		"snap":  _snap_transforms(),
+		"names": level.get_children().map(func(c): return c.name),
+		"packed": packed,
+		"sel":   _sel_names(),
+		"lc":    _lc_names()
+	})
 	if _undo_stack.size() > MAX_UNDO: _undo_stack.pop_front()
 	_redo_stack.clear()
 
-func _apply_state(entry: Dictionary) -> void:
-	var ps: PackedScene = entry["scene"]
-	var sel_names: Array = entry["selection"]
-	_load_packed_scene_into_level(ps)
-	selected_nodes.clear()
+func _apply_undo_entry(entry: Dictionary) -> void:
+	var target_names: Array = entry["names"]
+
+	# Delete nodes not in target
+	for child in level.get_children().duplicate():
+		if child.name not in target_names:
+			child.free()
+
+	# Re-add missing nodes from packed data
+	if entry["packed"] != null:
+		var current := level.get_children().map(func(c): return c.name)
+		var missing := target_names.filter(func(n): return n not in current)
+		if not missing.is_empty():
+			var inst = entry["packed"].instantiate()
+			for child in inst.get_children().duplicate():
+				if child.name in missing:
+					inst.remove_child(child)
+					child.owner = null
+					_safe_disconnect_recursive(child)
+					_hide_particles(child)
+					_ignore_mouse_recursive(child)
+					level.add_child(child)
+					child.process_mode = Node.PROCESS_MODE_INHERIT  # will inherit DISABLED from level
+					_set_owner_recursive(child, level)
+					_restore_node_for_editor(child)
+			inst.free()
+
+	# Restore transforms
+	var snap: Dictionary = entry["snap"]
 	for child in level.get_children():
-		if child.name in sel_names:
+		if not snap.has(child.name): continue
+		var s = snap[child.name]
+		child.position = s["pos"]
+		if child is Node2D:
+			child.rotation_degrees = s["rot"]
+			child.scale = s["scale"]
+			if child.get("skew") != null: child.skew = s["skew"]
+		elif child is Control:
+			child.rotation_degrees = s["rot"]
+			child.scale = s["scale"]
+
+	# Restore selection
+	selected_nodes.clear()
+	last_candidates.clear()
+	for child in level.get_children():
+		if child.name in entry["sel"]:
 			selected_nodes.append(child)
+		if child.name in entry.get("lc", []):
+			last_candidates.append(child)
+
+	# Advance cycle_index past the restored selection so next click cycles forward
+	if not last_candidates.is_empty() and not selected_nodes.is_empty():
+		var last_sel_idx := -1
+		for i in last_candidates.size():
+			if last_candidates[i] in selected_nodes:
+				last_sel_idx = i
+		if last_sel_idx >= 0:
+			cycle_index = (last_sel_idx + 1) % last_candidates.size()
 
 func _undo() -> void:
 	if _undo_stack.is_empty(): return
-	_redo_stack.append(_capture_state())
-	_apply_state(_undo_stack.pop_back())
+	var entry = _undo_stack.pop_back()
+
+	# Pack any nodes that will be deleted by this undo (needed for redo)
+	var will_delete := []
+	for child in level.get_children():
+		if child.name not in entry["names"]:
+			will_delete.append(child)
+	var redo_packed = null
+	if not will_delete.is_empty():
+		redo_packed = _pack_subset(will_delete)
+
+	_redo_stack.append({
+		"snap":  _snap_transforms(),
+		"names": level.get_children().map(func(c): return c.name),
+		"packed": redo_packed,
+		"sel":   _sel_names(),
+		"lc":    _lc_names()
+	})
+
+	_apply_undo_entry(entry)
 
 func _redo() -> void:
 	if _redo_stack.is_empty(): return
-	_undo_stack.append(_capture_state())
-	_apply_state(_redo_stack.pop_back())
+	var entry = _redo_stack.pop_back()
+
+	var will_delete := []
+	for child in level.get_children():
+		if child.name not in entry["names"]:
+			will_delete.append(child)
+	var undo_packed = null
+	if not will_delete.is_empty():
+		undo_packed = _pack_subset(will_delete)
+
+	_undo_stack.append({
+		"snap":  _snap_transforms(),
+		"names": level.get_children().map(func(c): return c.name),
+		"packed": undo_packed,
+		"sel":   _sel_names(),
+		"lc":    _lc_names()
+	})
+
+	_apply_undo_entry(entry)
+
 
 # Hold Ctrl+Z to keep undoing
 var _undo_hold_time   := 0.0
@@ -581,7 +705,10 @@ func _build_transform_panel() -> void:
 		scale_val_label.text = "%.2f" % v
 		_apply_scale(v)
 	)
-	_scale_slider.drag_started.connect(func(): _scale_is_dragging = true)
+	_scale_slider.drag_started.connect(func():
+		_scale_is_dragging = true
+		_push_undo()  # capture once at drag start
+	)
 	_scale_slider.drag_ended.connect(func(_changed: bool):
 		_scale_is_dragging = false
 		_scale_slider.release_focus()
@@ -601,13 +728,15 @@ func _build_transform_panel() -> void:
 	_skew_slider.value_changed.connect(func(v: float):
 		if _updating_xform_ui: return
 		skew_val_label.text = "%.1f" % v
-		_push_undo()
 		for n in selected_nodes:
 			if "trigger" in n.name.to_lower(): continue
 			if n.get("skew") != null:
 				n.set("skew", deg_to_rad(v))
 	)
-	_skew_slider.drag_started.connect(func(): _skew_is_dragging = true)
+	_skew_slider.drag_started.connect(func():
+		_skew_is_dragging = true
+		_push_undo()  # capture once at drag start
+	)
 	_skew_slider.drag_ended.connect(func(_changed: bool):
 		_skew_is_dragging = false
 		_skew_slider.release_focus()
@@ -845,6 +974,7 @@ func _load_packed_scene_into_level(ps: PackedScene) -> void:
 		children_to_move.append(child)
 	for child in children_to_move:
 		inst.remove_child(child)
+		child.owner = null  # clear owner before add_child to avoid inconsistency warning
 		_safe_disconnect_recursive(child)
 		_hide_particles(child)
 		_ignore_mouse_recursive(child)
@@ -889,7 +1019,7 @@ func _on_import() -> void:
 			return
 		var ps = load(path) as PackedScene
 		if ps == null: dialog.queue_free(); return
-		_push_undo()
+		_push_undo(Array(level.get_children()))
 		await _load_packed_scene_into_level(ps)
 		dialog.queue_free()
 	)
@@ -1044,6 +1174,7 @@ func _scan_images(path: String, out: Array[String]) -> void:
 	dir.list_dir_end()
 
 func _spawn_texture_rect(tex: Texture2D, img_path: String) -> void:
+	_push_undo()
 	var sp := Sprite2D.new()
 	sp.texture  = tex
 	sp.scale    = Vector2(TEXTURE_SCALE, TEXTURE_SCALE)
@@ -1250,7 +1381,6 @@ func _rotate_selection_around_pivot(angle_deg: float) -> void:
 			elif n is Control: n.rotation_degrees += angle_deg
 
 func _scale_selection_around_pivot(v: float) -> void:
-	_push_undo()
 	if not use_group_pivot:
 		for n in selected_nodes:
 			if n is Node2D:    n.scale = Vector2(v, v)
@@ -1463,6 +1593,9 @@ func _restore_node_for_save(node: Node) -> void:
 		node.visible = true
 	if node is Control:
 		node.mouse_filter = Control.MOUSE_FILTER_STOP
+		# Save triggers as visible so they reload correctly in the editor
+		if node is TextureRect and "trigger" in node.name.to_lower():
+			node.visible = true
 	node.process_mode = Node.PROCESS_MODE_INHERIT
 	for child in node.get_children():
 		_restore_node_for_save(child)
@@ -1477,6 +1610,9 @@ func _restore_node_for_editor(node: Node) -> void:
 		node.visible = false
 	if node is Control:
 		node.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		# Triggers hide themselves in-game — make them visible again in editor
+		if node is TextureRect and "trigger" in node.name.to_lower():
+			node.visible = true
 	for child in node.get_children():
 		_restore_node_for_editor(child)
 
@@ -1799,18 +1935,15 @@ func _handle_click(pos: Vector2) -> void:
 	last_candidates = candidates
 	var picked := candidates[cycle_index]
 	if picked not in selected_nodes:
-		_push_undo()
 		selected_nodes.append(picked)
 
 func _finish_swipe(_pos: Vector2) -> void:
 	var ct := get_canvas_transform()
 	var world_rect := Rect2(ct.affine_inverse() * swipe_rect.position, swipe_rect.size / ct.get_scale())
-	var added := false
 	for child in level.get_children():
 		var bounds := _get_node_bounds(child)
 		if bounds != Rect2() and world_rect.intersects(bounds):
 			if child not in selected_nodes:
-				if not added: _push_undo(); added = true
 				selected_nodes.append(child)
 
 # ─── Hit Detection ────────────────────────────────────────────────────────────
