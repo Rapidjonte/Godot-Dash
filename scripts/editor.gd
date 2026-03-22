@@ -1227,10 +1227,12 @@ func _on_add_texture() -> void:
 	)
 
 func _scan_images(path: String, out: Array[String]) -> void:
-	# Load from generated script (works in editor and all export targets)
-	var list_script = load(IMAGES_FOLDER + "/index.txt")
-	if list_script:
-		for p in list_script.FILES: out.append(p)
+	var index_file := FileAccess.open(IMAGES_FOLDER + "/index.txt", FileAccess.READ)
+	if index_file:
+		while not index_file.eof_reached():
+			var line := index_file.get_line().strip_edges()
+			if line.length() > 0: out.append(line)
+		index_file.close()
 		return
 	# Fallback: DirAccess (editor only, when script not generated yet)
 	var dir := DirAccess.open(path)
@@ -1590,12 +1592,13 @@ func _build_object_panel() -> void:
 
 	var files: Array[String] = []
 
-	# Load from generated script (works in editor and all export targets including web)
-	var list_script = load(SCENES_FOLDER + "index.txt")
-	if list_script:
-		files = Array(list_script.FILES)
+	var index_file := FileAccess.open(SCENES_FOLDER + "index.txt", FileAccess.READ)
+	if index_file:
+		while not index_file.eof_reached():
+			var line := index_file.get_line().strip_edges()
+			if line.ends_with(".tscn"): files.append(line)
+		index_file.close()
 	else:
-		# Fallback: DirAccess (editor only when script not generated yet)
 		var dir := DirAccess.open(SCENES_FOLDER)
 		if dir != null:
 			dir.list_dir_begin()
