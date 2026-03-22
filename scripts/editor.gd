@@ -1228,7 +1228,7 @@ func _on_add_texture() -> void:
 
 func _scan_images(path: String, out: Array[String]) -> void:
 	# Load from generated script (works in editor and all export targets)
-	var list_script = load(IMAGES_FOLDER + "/image_list.gd")
+	var list_script = load(IMAGES_FOLDER + "/index.txt")
 	if list_script:
 		for p in list_script.FILES: out.append(p)
 		return
@@ -1591,7 +1591,7 @@ func _build_object_panel() -> void:
 	var files: Array[String] = []
 
 	# Load from generated script (works in editor and all export targets including web)
-	var list_script = load(SCENES_FOLDER + "prefab_list.gd")
+	var list_script = load(SCENES_FOLDER + "index.txt")
 	if list_script:
 		files = Array(list_script.FILES)
 	else:
