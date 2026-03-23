@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://d2a67v6a7m287"]
 
+[ext_resource type="Script" uid="uid://bffiesqdarsqw" path="res://scripts/d_block.gd" id="1_jf11x"]
 [ext_resource type="Texture2D" uid="uid://rkg4fmg5ut7r" path="res://images/triggers/D-Block.webp" id="2_jf11x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wntyn"]
@@ -7,6 +8,7 @@ size = Vector2(70, 70)
 
 [node name="d_block" type="Area2D" unique_id=360967600]
 collision_layer = 3
+script = ExtResource("1_jf11x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=611420456]
 shape = SubResource("RectangleShape2D_wntyn")
