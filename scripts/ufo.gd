@@ -56,6 +56,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				velocity.y = max(0,velocity.y*0.2)
 			velocity.y -= jumpStrength
+			Input.action_release("jump")
 			
 		if not is_on_floor():
 			grounded = false
@@ -120,7 +121,10 @@ func die(instant: bool = false):
 	if not instant:
 		dying = true
 		return
-	
+		
+	if not is_inside_tree():
+		return
+
 	get_tree().reload_current_scene()
 
 func spidered():

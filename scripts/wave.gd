@@ -87,25 +87,20 @@ func _physics_process(delta: float) -> void:
 	block = false
 
 var block = false
+var d_block = false
 func collision_check():
 	if Global.paused:
 		return
 	
-	var d_block = false
+	check_for_d()
 	
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var colliderName = collision.get_collider().name
-		print(colliderName)
 		if colliderName.contains("spike") or colliderName.contains("saw") :
 			die()
 		elif colliderName.contains("block"):
 			block = true
-	
-	for area in $Area2D2.get_overlapping_areas():
-		if area.name.contains("d_block"):
-			d_block = true
-			break
 	
 	if block and !d_block:
 		die()
@@ -115,7 +110,14 @@ func collision_check():
 	else:
 		set_collision_mask_value(1, false) 
 		set_collision_mask_value(2, true) 
-	
+
+func check_for_d():
+	for area in $Area2D2.get_overlapping_areas():
+		if area.name.contains("d_block"):
+			d_block = true
+			return
+	d_block = false
+
 func _on_area_2d_2_body_entered(body: Node2D) -> void:
 	if Global.paused:
 		return
@@ -125,14 +127,17 @@ func _on_area_2d_2_body_entered(body: Node2D) -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if Global.paused:
 		return
-	if body.name.contains("block") or body.name.contains("ground"):
-		block = true
+	if body.name.contains("ground") or body.name.contains("block") :
+		die()
 
 func die(instant: bool = false):
 	Global.paused = true
 	
 	if not instant:
 		dying = true
+		return
+		
+	if not is_inside_tree():
 		return
 
 	get_tree().reload_current_scene()

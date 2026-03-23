@@ -113,6 +113,9 @@ func die(instant: bool = false):
 		dying = true
 		return
 		
+	if not is_inside_tree():
+		return
+
 	get_tree().reload_current_scene()
 
 func spidered():

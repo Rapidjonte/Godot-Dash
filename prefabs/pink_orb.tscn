@@ -53,7 +53,7 @@ scale_curve = SubResource("CurveTexture_e1m15")
 alpha_curve = SubResource("CurveTexture_ml2k8")
 
 [node name="pink_orb" type="Area2D" unique_id=484844631]
-z_index = -2
+z_index = -1
 script = ExtResource("1_4hpkh")
 boostStrength = 896.54
 

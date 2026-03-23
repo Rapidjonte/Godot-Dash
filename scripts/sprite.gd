@@ -19,6 +19,7 @@ var maxExcessive = 160
 var quick_jump_disable = false
 
 func _ready() -> void:
+	Global.bufferable = true
 	Global.player = self
 	$friction.emitting = false
 	
@@ -116,6 +117,9 @@ func die(instant: bool = false):
 	
 	if not instant:
 		dying = true
+		return
+		
+	if not is_inside_tree():
 		return
 
 	get_tree().reload_current_scene()

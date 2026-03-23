@@ -53,7 +53,7 @@ scale_curve = SubResource("CurveTexture_4g6t2")
 alpha_curve = SubResource("CurveTexture_enfvd")
 
 [node name="green_orb" type="Area2D" unique_id=484844631]
-z_index = -2
+z_index = -1
 script = ExtResource("1_vkpgr")
 boostStrength = -1201.0
 spin = true

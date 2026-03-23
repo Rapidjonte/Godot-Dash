@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://rkg4fmg5ut7r" path="res://images/triggers/D-Block.webp" id="2_jf11x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wntyn"]
-size = Vector2(70, 70)
+size = Vector2(64, 64)
 
 [node name="d_block" type="Area2D" unique_id=360967600]
 collision_layer = 3

@@ -14,10 +14,10 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 			
 			var gravMult = get_gravity_multiplier(rotation)
 			
-			teleport_until_surface(Vector2(0,gravMult))
-			
 			if Global.player.gravity != abs(Global.player.gravity) * gravMult:
 				Global.player.flip()
+			
+			teleport_until_surface(Vector2(0,gravMult))
 			
 			Global.player.velocity.y = 0
 			
@@ -55,6 +55,9 @@ func teleport_until_surface(direction: Vector2):
 			if distance < min_distance:
 				min_distance = distance
 				closest_hit = hit_pos + ray.get_collision_normal() * 1
+
+	if Global.player.has_method("check_for_d"):
+		Global.player.check_for_d()
 
 	if closest_hit != null:
 		Global.player.global_position.y = closest_hit.y

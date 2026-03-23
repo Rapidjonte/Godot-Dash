@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d1g5ww70mi205" path="res://scripts/node_2d.gd" id="1_lbhrr"]
 [ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="2_iywne"]
+[ext_resource type="Script" uid="uid://dsxc87efnhw04" path="res://scripts/pause_menu.gd" id="2_kvuet"]
 [ext_resource type="Script" uid="uid://ljvsqy3rhxo7" path="res://scripts/ground_script.gd" id="3_p57ef"]
 [ext_resource type="Texture2D" uid="uid://c708lwimqm01p" path="res://images/ground/groundSquare_01_001-uhd.png" id="4_p57ef"]
 [ext_resource type="PackedScene" uid="uid://brxago3ouvnj" path="res://scenes/gamemodes/cube.tscn" id="5_dinhu"]
@@ -73,7 +74,35 @@ shadow_offset = Vector2(2, 2)
 blend_mode = 1
 
 [node name="main" type="Node2D" unique_id=1281902414]
+process_mode = 1
 script = ExtResource("1_lbhrr")
+
+[node name="pause_menu" type="Control" parent="." unique_id=1401667925]
+process_mode = 3
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_kvuet")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="pause_menu" unique_id=787905998]
+layer = 404
+visible = false
+
+[node name="Button" type="Button" parent="pause_menu/CanvasLayer" unique_id=1214815590]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.0
+offset_top = -15.5
+offset_right = 78.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Resume"
 
 [node name="attempts" type="Label" parent="." unique_id=107369597]
 z_index = 100
@@ -347,3 +376,5 @@ material = SubResource("CanvasItemMaterial_u5sy4")
 position = Vector2(-26, 22.000002)
 scale = Vector2(0.665, 0.665)
 texture = ExtResource("7_u5sy4")
+
+[connection signal="pressed" from="pause_menu/CanvasLayer/Button" to="pause_menu" method="_on_button_pressed"]

@@ -14,6 +14,9 @@ func set_label_text(label: Label, text: String, base_size: int):
 	label.text = text
 	label.label_settings.font_size = base_size
 	
+	if not is_inside_tree():
+		return
+
 	await label.get_tree().process_frame  # wait for layout
 	
 	var min_size = 12
