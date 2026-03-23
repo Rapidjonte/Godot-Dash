@@ -87,8 +87,8 @@ exit={
 
 [physics]
 
+2d/run_on_separate_thread=true
 common/physics_ticks_per_second=240
-3d/physics_engine="Jolt Physics"
 
 [rendering]
 
@@ -96,4 +96,6 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/ssao/quality=0
+environment/glow/upscale_mode=0
 environment/defaults/default_clear_color=Color(0, 0.39215687, 0.9843137, 1)
