@@ -9,6 +9,7 @@ size = Vector2(14, 11.555)
 [node name="flat_spike" type="RigidBody2D" unique_id=1147703251]
 z_index = 1
 disable_mode = 1
+collision_layer = 3
 lock_rotation = true
 freeze = true
 script = ExtResource("1_frw22")

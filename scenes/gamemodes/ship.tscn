@@ -52,7 +52,7 @@ gamemode = "ship"
 jumpStrength = 18.63
 gravity = 2027.685
 max_velocity = 756.8
-spinSpeed = 9.46
+spinSpeed = 10.02
 center = Vector2(32, 32)
 
 [node name="sprite" type="TextureRect" parent="." unique_id=1922312551]

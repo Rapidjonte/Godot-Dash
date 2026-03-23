@@ -111,7 +111,8 @@ func die(instant: bool = false):
 	
 	if not instant:
 		dying = true
-	
+		return
+		
 	get_tree().reload_current_scene()
 
 func spidered():

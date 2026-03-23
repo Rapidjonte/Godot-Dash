@@ -44,14 +44,16 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 			Global.camera_y_lock = null
 
 func switch_gamemode():
-	var new 
+	var new
 	if Global.player.gamemode.contains("mini"):
 		new = mini_scene.instantiate()
 	else:
 		new = gamemode_scene.instantiate()
 	if new.gamemode == Global.player.gamemode:
 		return
-		
+	
+	Global.player.velocity.y *= 0.574 
+	
 	var node = circle_scene.instantiate()
 	node.scale = Vector2(0.35,0.35)
 	$GPUParticles2D.add_child(node)

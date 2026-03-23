@@ -41,3 +41,5 @@ toggle_trigger.tscn
 ufo_portal.tscn
 yellow_orb.tscn
 yellow_pad.tscn
+wave_portal.tscn
+d_block.tscn

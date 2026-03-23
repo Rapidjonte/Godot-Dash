@@ -4,9 +4,10 @@ var speed : float = Global.NORMAL_SPEED
 @export var gamemode : String
 
 @export var jumpStrength : float
-@export var gravity : float
 @export var max_velocity : float
 @export var spinSpeed : float
+@export var degrees : float
+var gravity = 1
 
 @onready var sprite = $sprite
 var startUpsideDown = false
@@ -19,15 +20,11 @@ var maxExcessive = 0
 var quick_jump_disable = false
 
 func _ready() -> void:
+	set_collision_mask_value(1, false) 
+	set_collision_mask_value(2, true) 
+	
 	if startUpsideDown:
 		flip(true)
-	if Input.is_action_pressed("jump") and Global.bufferable:
-		Global.bufferable = true
-		if sign(gravity) == 1:
-			velocity.y = min(0,velocity.y*0.2)
-		else:
-			velocity.y = max(0,velocity.y*0.2)
-		velocity.y -= jumpStrength
 
 var dying = false
 var respawnTimer = 0
@@ -51,57 +48,74 @@ func _physics_process(delta: float) -> void:
 		
 		if Input.is_action_just_pressed("jump"):
 			Global.bufferable = true
-			if sign(gravity) == 1:
-				velocity.y = min(0,velocity.y*0.2)
-			else:
-				velocity.y = max(0,velocity.y*0.2)
+
+		if Input.is_action_pressed("jump"):
 			velocity.y -= jumpStrength
-			
+		else:
+			velocity.y += jumpStrength
+	
 		if not is_on_floor():
 			grounded = false
-			velocity.y += gravity * delta
-
-			if excessiveForce > maxExcessive:
-				excessiveForce= maxExcessive
-			if excessiveForce < -maxExcessive:
-				excessiveForce = -maxExcessive
-				
-			velocity.y += excessiveForce
-			excessiveForce = velocity.y
-			
-			if velocity.y > max_velocity:
-				velocity.y = max_velocity
-			if velocity.y < -max_velocity:
-				velocity.y = -max_velocity
-				
-			excessiveForce -= velocity.y
 		else:
-			excessiveForce = 0
+			if grounded == false:
+				pass
+				#emit ground particles
+				
 			grounded = true
+
+		var speed_per_second = 64.0 * speed
+		max_velocity = speed_per_second * tan(deg_to_rad(degrees))
+		
+		if velocity.y > max_velocity:
+			velocity.y = max_velocity
+		if velocity.y < -max_velocity:
+			velocity.y = -max_velocity
+			
+		move_and_slide()
+		collision_check()
 		
 		if !grounded:
-			var target_rot = clamp(velocity.y / max_velocity, -1.0, 1.0) * deg_to_rad(15)
-			sprite.rotation = lerp_angle(sprite.rotation, -target_rot, spinSpeed * delta)
+			var target_rot = sign(velocity.y) * deg_to_rad(degrees)
+			sprite.rotation = lerp_angle(sprite.rotation, target_rot, spinSpeed * delta)
 		else:
 			sprite.rotation = lerp_angle(sprite.rotation, 0, spinSpeed * delta)
 
 		$Area2D2/spinbox.rotation = $sprite.rotation
-
-		move_and_slide()
-		collision_check()
 	
 	quick_jump_disable = false
+	
+	block = false
 
+var block = false
 func collision_check():
 	if Global.paused:
 		return
 	
+	var d_block = false
+	
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var colliderName = collision.get_collider().name
+		print(colliderName)
 		if colliderName.contains("spike") or colliderName.contains("saw") :
 			die()
-
+		elif colliderName.contains("block"):
+			block = true
+	
+	for area in $Area2D2.get_overlapping_areas():
+		if area.name.contains("d_block"):
+			d_block = true
+			break
+	
+	if block and !d_block:
+		die()
+	elif d_block:
+		set_collision_mask_value(1, true) 
+		set_collision_mask_value(2, false) 
+	else:
+		set_collision_mask_value(1, false) 
+		set_collision_mask_value(2, true) 
+	
 func _on_area_2d_2_body_entered(body: Node2D) -> void:
 	if Global.paused:
 		return
@@ -112,7 +126,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if Global.paused:
 		return
 	if body.name.contains("block") or body.name.contains("ground"):
-		die()
+		block = true
 
 func die(instant: bool = false):
 	Global.paused = true
@@ -120,7 +134,7 @@ func die(instant: bool = false):
 	if not instant:
 		dying = true
 		return
-	
+
 	get_tree().reload_current_scene()
 
 func spidered():
@@ -129,9 +143,6 @@ func spidered():
 func flip(skip_flip : bool = false):
 	if !skip_flip:
 		Global.flip_blocks.emit()
-	gravity *= -1
-	velocity.y += gravity * get_process_delta_time() * 0.1
 	up_direction.y *= -1
 	jumpStrength *= -1
-	excessiveForce = 0
-	sprite.scale.y *= -1
+	gravity *= -1

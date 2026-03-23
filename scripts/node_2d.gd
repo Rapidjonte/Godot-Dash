@@ -17,6 +17,8 @@ func _process(delta: float) -> void:
 			get_tree().change_scene_to_file("res://scenes/editor.tscn")
 		else:
 			get_tree().change_scene_to_file("res://scenes/menu.tscn")
+	if Global.entered_from_editor and Input.is_action_just_pressed("ui_text_newline"):
+		get_tree().change_scene_to_file("res://scenes/editor.tscn")
 	if not Global.paused:
 		var progress = Global.player.position.x / Global.endX
 		progress = min(max(progress, 0),1)

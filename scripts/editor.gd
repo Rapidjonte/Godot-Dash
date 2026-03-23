@@ -237,6 +237,8 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
+		var focus := get_viewport().gui_get_focus_owner()
+		var typing := focus is LineEdit or focus is SpinBox
 		var ctrl := Input.is_key_pressed(KEY_CTRL)
 		match event.keycode:
 			KEY_T: swipe_enabled = !swipe_enabled; _update_swipe_button()
@@ -249,14 +251,18 @@ func _input(event: InputEvent) -> void:
 				var angle := 45.0 if Input.is_key_pressed(KEY_SHIFT) else 90.0
 				_rotate_selection_around_pivot(angle)
 			KEY_ESCAPE: _hide_context_menu(); _cancel_placement()
+			KEY_ENTER:
+				if not typing:
+					_on_play()
 			KEY_DELETE:
 				_push_undo(Array(selected_nodes))
 				for n in selected_nodes: n.queue_free()
 				_deselect_all()
 			KEY_BACKSPACE:
-				_push_undo(Array(selected_nodes))
-				for n in selected_nodes: n.queue_free()
-				_deselect_all()
+				if not typing:
+					_push_undo(Array(selected_nodes))
+					for n in selected_nodes: n.queue_free()
+					_deselect_all()
 			KEY_D:
 				if ctrl: _duplicate_selected()
 			KEY_Z:
@@ -1155,7 +1161,7 @@ func _on_add_texture() -> void:
 	var header := HBoxContainer.new(); vbox.add_child(header)
 	var title := Label.new(); title.text = "Pick Texture"
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL; header.add_child(title)
-	var close_btn := Button.new(); close_btn.text = "✕"; close_btn.focus_mode = Control.FOCUS_NONE
+	var close_btn := Button.new(); close_btn.text = "x"; close_btn.focus_mode = Control.FOCUS_NONE
 	close_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	close_btn.pressed.connect(func(): popup_layer.queue_free(); _texture_popup_layer = null)
 	header.add_child(close_btn)
@@ -1363,7 +1369,7 @@ func _build_sidebar_buttons() -> void:
 		var hdr := HBoxContainer.new(); vb.add_child(hdr)
 		var ttl := Label.new(); ttl.text = "Help"; ttl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		ttl.add_theme_font_size_override("font_size", 16); hdr.add_child(ttl)
-		var x_btn := Button.new(); x_btn.text = "✕"; x_btn.focus_mode = Control.FOCUS_NONE
+		var x_btn := Button.new(); x_btn.text = "x"; x_btn.focus_mode = Control.FOCUS_NONE
 		x_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 		x_btn.pressed.connect(func(): popup_layer.queue_free()); hdr.add_child(x_btn)
 		_make_draggable(panel, hdr)
@@ -1850,7 +1856,7 @@ func _show_context_menu(node: Node) -> void:
 	var title := Label.new()
 	title.text = node.name + (" (%d selected)" % selected_nodes.size() if selected_nodes.size() > 1 else "")
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL; header.add_child(title)
-	var close_btn := Button.new(); close_btn.text = "✕"; close_btn.focus_mode = Control.FOCUS_NONE
+	var close_btn := Button.new(); close_btn.text = "x"; close_btn.focus_mode = Control.FOCUS_NONE
 	close_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	close_btn.pressed.connect(_hide_context_menu); header.add_child(close_btn)
 	_make_draggable(_ctx_panel, header)
@@ -1876,7 +1882,7 @@ func _fill_groups_tab(container: VBoxContainer) -> void:
 	for g in _ctx_node.get_groups():
 		var row := HBoxContainer.new(); container.add_child(row)
 		var lbl := Label.new(); lbl.text = str(g); lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL; row.add_child(lbl)
-		var rm := Button.new(); rm.text = "✕"; rm.focus_mode = Control.FOCUS_NONE
+		var rm := Button.new(); rm.text = "x"; rm.focus_mode = Control.FOCUS_NONE
 		rm.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 		var cg = g
 		rm.pressed.connect(func():

@@ -3,10 +3,13 @@ extends Line2D
 var queue : Array
 @export var MAX_LENGTH : int
 
+func _ready():
+	top_level = true
+
 func _physics_process(_delta):
 	if Global.paused:
 		return
-		
+
 	var pos = _get_position()
 	
 	queue.push_front(pos)
@@ -19,5 +22,5 @@ func _physics_process(_delta):
 	for point in queue:
 		add_point(point)
 
-func _get_position(): 
-	return Vector2(Global.player.position.x+64,Global.player.position.y-352) - Vector2(32,32)+Global.player.center
+func _get_position():
+	return get_parent().global_position + get_parent().center - Vector2(11,11)

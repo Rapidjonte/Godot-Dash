@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://d2a67v6a7m287"]
+
+[ext_resource type="Texture2D" uid="uid://rkg4fmg5ut7r" path="res://images/triggers/D-Block.webp" id="2_jf11x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wntyn"]
+size = Vector2(70, 70)
+
+[node name="d_block" type="Area2D" unique_id=360967600]
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=611420456]
+shape = SubResource("RectangleShape2D_wntyn")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1625099729]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_jf11x")
+expand_mode = 2

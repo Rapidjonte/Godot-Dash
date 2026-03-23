@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://dr86ew1881q5n"]
+
+[ext_resource type="Script" uid="uid://22fentvaqgka" path="res://scripts/wave.gd" id="1_0637h"]
+[ext_resource type="Texture2D" uid="uid://6qojtfraal1f" path="res://images/gamemodes/waves/wave_30.png" id="2_0637h"]
+[ext_resource type="Script" uid="uid://c2h5aae7kgvie" path="res://scripts/wave_trail.gd" id="3_ytaqh"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_78wdc"]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ytaqh"]
+blend_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6e84v"]
+size = Vector2(22, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvuet"]
+size = Vector2(6, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0637h"]
+size = Vector2(22, 22)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1621791113]
+script = ExtResource("1_0637h")
+gamemode = "wave"
+jumpStrength = 99999.0
+max_velocity = 953.505
+spinSpeed = 14.27
+degrees = 45.0
+center = Vector2(11, 11)
+
+[node name="Line2D" type="Line2D" parent="." unique_id=1542408696]
+z_index = -1
+material = SubResource("CanvasItemMaterial_78wdc")
+position = Vector2(11, 11)
+width = 26.975
+default_color = Color(0.9440807, 0.73403937, 1, 1)
+sharp_limit = 0.0
+round_precision = 1
+script = ExtResource("3_ytaqh")
+MAX_LENGTH = 193
+
+[node name="Line2D2" type="Line2D" parent="." unique_id=1977059347]
+modulate = Color(1, 1, 1, 0.6901961)
+z_index = -1
+material = SubResource("CanvasItemMaterial_ytaqh")
+position = Vector2(11, 11)
+width = 9.0
+script = ExtResource("3_ytaqh")
+MAX_LENGTH = 193
+
+[node name="sprite" type="TextureRect" parent="." unique_id=478105636]
+offset_left = 11.0
+offset_top = 11.0
+offset_right = 11.0
+offset_bottom = 11.0
+scale = Vector2(0.53, 0.53)
+texture = ExtResource("2_0637h")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="player_collision" type="CollisionShape2D" parent="." unique_id=1847450181]
+position = Vector2(11, 11)
+shape = SubResource("RectangleShape2D_6e84v")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1919142782]
+collision_layer = 3
+
+[node name="middle box" type="CollisionShape2D" parent="Area2D" unique_id=1391165727]
+position = Vector2(11, 11)
+shape = SubResource("RectangleShape2D_kvuet")
+
+[node name="Area2D2" type="Area2D" parent="." unique_id=1269910535]
+
+[node name="spinbox" type="CollisionShape2D" parent="Area2D2" unique_id=1363203289]
+position = Vector2(11, 11)
+shape = SubResource("RectangleShape2D_0637h")
+
+[node name="SpiderRay" type="RayCast2D" parent="." unique_id=988738009]
+position = Vector2(11, 11)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]

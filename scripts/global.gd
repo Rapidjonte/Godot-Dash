@@ -1,7 +1,9 @@
 extends Node
 
 signal flip_blocks
+
 var two_faced_blocks := false
+var controlling = false
 
 var player : CharacterBody2D
 

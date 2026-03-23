@@ -9,16 +9,18 @@ size = Vector2(8.5, 17)
 [node name="half_spike" type="RigidBody2D" unique_id=1147703251]
 z_index = 1
 disable_mode = 1
+collision_layer = 3
 lock_rotation = true
 freeze = true
 script = ExtResource("1_a8r24")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1186400863]
-offset_left = -21.0
-offset_top = -9.999999
-offset_right = 59.89383
-offset_bottom = 70.893814
+offset_left = -40.447
+offset_top = -17.775
+offset_right = 40.44683
+offset_bottom = 63.118813
 scale = Vector2(0.525, 0.525)
+pivot_offset = Vector2(40.447, 17.772)
 texture = ExtResource("2_a8r24")
 expand_mode = 1
 

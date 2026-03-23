@@ -99,6 +99,7 @@ z_index = 100
 z_as_relative = false
 position = Vector2(578.51, 480)
 disable_mode = 1
+collision_layer = 3
 lock_rotation = true
 freeze = true
 script = ExtResource("3_p57ef")
@@ -113,6 +114,7 @@ z_index = 100
 z_as_relative = false
 position = Vector2(0, -728.47)
 disable_mode = 1
+collision_layer = 3
 lock_rotation = true
 freeze = true
 
@@ -127,6 +129,7 @@ z_index = 100
 z_as_relative = false
 position = Vector2(578.51, 480)
 disable_mode = 1
+collision_layer = 3
 lock_rotation = true
 freeze = true
 

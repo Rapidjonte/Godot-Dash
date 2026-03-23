@@ -19,7 +19,6 @@ var maxExcessive = 160
 var quick_jump_disable = false
 
 func _ready() -> void:
-	Global.bufferable = true
 	Global.player = self
 	$friction.emitting = false
 	

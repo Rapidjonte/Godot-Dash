@@ -19,6 +19,10 @@ func _physics_process(delta: float) -> void:
 		return
 		
 	if Global.two_faced_blocks:
+		if Global.player.velocity.y == 0:
+			otherside.disabled = false
+			disabled = false
+			return
 		if sign(Global.player.gravity) * Global.player.velocity.y > 0:
 			disabled = false
 		else:
