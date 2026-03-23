@@ -30,6 +30,8 @@ func _process(delta: float) -> void:
  
 func activate():
 	triggered = true
+	if not is_inside_tree():
+		return
 	for node in get_tree().get_nodes_in_group(targetID):
 		if toggle:
 			node.process_mode = Node.PROCESS_MODE_INHERIT

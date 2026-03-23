@@ -38,6 +38,8 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("reset"):
 		die(true)
 	if Input.is_action_just_pressed("exit"):
+		if not is_inside_tree():
+			return
 		get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -19,5 +19,7 @@ func _process(_delta: float) -> void:
 func activate() -> void:
 	triggered = true
 
+	if not is_inside_tree():
+		return
 	for node in get_tree().get_nodes_in_group(targetID):
 		node.queue_free()

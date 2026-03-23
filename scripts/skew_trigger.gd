@@ -33,6 +33,8 @@ func _get_ease() -> int:
 
 func activate():
 	triggered = true
+	if not is_inside_tree():
+		return
 	for node in get_tree().get_nodes_in_group(targetID):
 		if node.get("skew") == null: continue
 		var t := create_tween()

@@ -38,6 +38,9 @@ func _get_ease() -> int:
 func activate():
 	triggered = true
 
+	if not is_inside_tree():
+		return
+	
 	for node in get_tree().get_nodes_in_group(targetID):
 		if node.name.contains("block") and node.get_child_count() > 0:
 			continue

@@ -15,6 +15,8 @@ func _process(delta: float) -> void:
 		
 func exit():
 	_on_button_pressed()
+	if not is_inside_tree():
+		return
 	if Global.entered_from_editor:
 		get_tree().change_scene_to_file("res://scenes/editor.tscn")
 	else:
@@ -22,5 +24,7 @@ func exit():
 
 # resume
 func _on_button_pressed() -> void:
+	if not is_inside_tree():
+		return
 	$CanvasLayer.visible = false
 	get_tree().paused = false
