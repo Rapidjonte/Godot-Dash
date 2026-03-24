@@ -19,7 +19,8 @@ var maxExcessive = 160
 var quick_jump_disable = false
 
 func _ready() -> void:
-	Global.bufferable = true
+	if Global.player and (Global.player.gamemode.contains("wave") or Global.player.gamemode.contains("ship")):
+		Global.bufferable = true
 	Global.player = self
 	$friction.emitting = false
 	
@@ -113,10 +114,14 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		die()
 
 func die(instant: bool = false):
+	$"../pause_menu".check_for_progress()
 	Global.paused = true
 	
 	if not instant:
-		dying = true
+		if !Global.noclip:
+			dying = true
+		else: 
+			Global.paused = false
 		return
 		
 	if not is_inside_tree():

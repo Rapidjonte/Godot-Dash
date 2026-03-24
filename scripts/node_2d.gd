@@ -10,18 +10,21 @@ func _physics_process(delta: float) -> void:
 	if !Global.paused and Global.player and Global.player.position.y <= -12161.0:
 		Global.player.die()
 
+var progress : float = 0 
 func _process(delta: float) -> void:
 	queue_redraw()
 	if Global.entered_from_editor and Input.is_action_just_pressed("ui_text_newline"):
 		if !Global.player.dying:
+			if not is_inside_tree():
+				return
 			get_tree().change_scene_to_file("res://scenes/editor.tscn")
 		else:
 			Global.player.die(true)
 	if not Global.paused:
-		var progress = Global.player.position.x / Global.endX
+		progress = Global.player.position.x / Global.endX
 		progress = min(max(progress, 0),1)
 		$cam/Control/Panel/ProgressBar.value = progress*100
-		$cam/Control/percent.text = str(floor(progress*10000)/100) + "%"
+		$cam/Control/percent.text = str("%0.2f" % (progress*100),"%")
 		if progress >= 1:
 			complete()
 
@@ -48,6 +51,7 @@ func load_level():
 	Global.paused = false
 
 func complete():
+	$pause_menu.check_for_progress()
 	Global.paused = true
 
 func _draw():

@@ -35,6 +35,7 @@ func _on_download_complete(result, response_code, headers, body):
 	if loaded_level == null:
 		push_error("Downloaded file is not a valid PackedScene: " + save_path)
 		return
-
+	
+	Global.loadedID = $"..".data["id"]
 	Global.load_level(loaded_level)
 	get_tree().change_scene_to_file("res://scenes/game.tscn")

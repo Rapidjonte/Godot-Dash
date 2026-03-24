@@ -118,10 +118,14 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		die()
 
 func die(instant: bool = false):
+	$"../pause_menu".check_for_progress()
 	Global.paused = true
 	
 	if not instant:
-		dying = true
+		if !Global.noclip:
+			dying = true
+		else: 
+			Global.paused = false
 		return
 		
 	if not is_inside_tree():

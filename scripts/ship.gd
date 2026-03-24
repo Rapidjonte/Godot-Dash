@@ -74,7 +74,11 @@ func _physics_process(delta: float) -> void:
 			excessiveForce = 0
 		
 		if !grounded:
-			var target_rot = clamp(velocity.y / max_velocity, -1.0, 1.0) * deg_to_rad(54)
+			var base_speed := 10.41667
+			var speed_factor = base_speed / max(speed, 0.001)
+			var max_angle = clamp(54.0 * speed_factor, 10.0, 54.0)
+
+			var target_rot = clamp(velocity.y / max_velocity, -1.0, 1.0) * deg_to_rad(max_angle)
 			sprite.rotation = lerp_angle(sprite.rotation, target_rot, spinSpeed * delta)
 		else:
 			sprite.rotation = lerp_angle(sprite.rotation, 0, spinSpeed * delta)
@@ -109,10 +113,14 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		die()
 
 func die(instant: bool = false):
+	$"../pause_menu".check_for_progress()
 	Global.paused = true
 	
 	if not instant:
-		dying = true
+		if !Global.noclip:
+			dying = true
+		else: 
+			Global.paused = false
 		return
 		
 	if not is_inside_tree():

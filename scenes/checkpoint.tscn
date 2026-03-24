@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://7pb31qjvmkfx"]
+
+[ext_resource type="Texture2D" uid="uid://c5dcv7c7v6u2" path="res://images/sheets/GJ_GameSheet02-uhd/checkpoint_01_001.png" id="1_yyywg"]
+
+[node name="checkpoint" type="TextureRect" unique_id=1067035369]
+scale = Vector2(0.534, 0.534)
+texture = ExtResource("1_yyywg")
+expand_mode = 1
+stretch_mode = 3

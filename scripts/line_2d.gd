@@ -3,6 +3,9 @@ extends Line2D
 var queue : Array
 @export var MAX_LENGTH : int
 
+func _ready() -> void:
+	Global.playtest.clear()
+
 func _physics_process(_delta):
 	if Global.paused:
 		return
@@ -10,6 +13,8 @@ func _physics_process(_delta):
 	var pos = _get_position()
 	
 	queue.push_front(pos)
+	if Global.entered_from_editor:
+		Global.playtest.insert(0, pos)
 	
 	if queue.size() > MAX_LENGTH:
 		queue.pop_back()

@@ -14,10 +14,14 @@ const TRIPLE_SPEED := 15.667
 const QUADRUPLE_SPEED := 19.2
 
 var levelOffset := 448
+var playtest : PackedVector2Array
+var checkpoints : Array[PackedScene]
 
-var bufferable := false
 var attempt := 0
+var bufferable := false
 var paused := true
+var noclip := false
+var practice_mode := false
 
 var respawn_time = 1
 func reset():
@@ -28,6 +32,7 @@ func reset():
 	camera_y_lock = null
 	two_faced_blocks = false
 	paused = false
+	#if 
 
 var last_editor_scene: PackedScene = null
 var entered_from_editor = false
@@ -35,6 +40,8 @@ var entered_from_editor = false
 var last_editor_cam_pos: Vector2 = Vector2.ZERO
 var last_editor_zoom: float = 1.0
 
+var loaded_data : Array[Dictionary]
+var loadedID : String
 var level : PackedScene
 func load_level(_level: PackedScene):
 	level = _level

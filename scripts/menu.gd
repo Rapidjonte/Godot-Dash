@@ -4,6 +4,8 @@ var level_button = preload("res://scenes/level_button.tscn")
 var _pending_download: HTTPRequest = null
 
 func _ready() -> void:
+	Global.practice_mode = false
+	Global.checkpoints.clear()
 	Global.entered_from_editor = false
 	Global.attempt = 0
 	refresh()
@@ -58,5 +60,6 @@ func _on_request_completed(result: int, response_code: int, headers: PackedStrin
 		var new = level_button.instantiate()
 		new.data = row
 		$ScrollContainer/VBoxContainer.add_child(new)
+		Global.loaded_data.append(row)
 	
 	$LoadingCircleUhd.visible = false

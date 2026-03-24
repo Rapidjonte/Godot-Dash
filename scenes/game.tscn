@@ -4,15 +4,101 @@
 [ext_resource type="FontFile" uid="uid://bh8abdn8p2nug" path="res://fonts/PUSAB___.otf" id="2_iywne"]
 [ext_resource type="Script" uid="uid://dsxc87efnhw04" path="res://scripts/pause_menu.gd" id="2_kvuet"]
 [ext_resource type="Script" uid="uid://ljvsqy3rhxo7" path="res://scripts/ground_script.gd" id="3_p57ef"]
+[ext_resource type="Texture2D" uid="uid://2v8v5874ofkf" path="res://images/ui/GJ_playBtn2_001.png" id="3_trtic"]
+[ext_resource type="Script" uid="uid://chwior2pk713k" path="res://scripts/resume_button.gd" id="4_264po"]
+[ext_resource type="Texture2D" uid="uid://g2utn1t0gjt3" path="res://images/ui/GJ_menuBtn_001.png" id="4_ir15t"]
 [ext_resource type="Texture2D" uid="uid://c708lwimqm01p" path="res://images/ground/groundSquare_01_001-uhd.png" id="4_p57ef"]
+[ext_resource type="Texture2D" uid="uid://mapq1ytdl4ju" path="res://images/ui/GJ_practiceBtn_001.png" id="5_ca42v"]
 [ext_resource type="PackedScene" uid="uid://brxago3ouvnj" path="res://scenes/gamemodes/cube.tscn" id="5_dinhu"]
 [ext_resource type="Texture2D" uid="uid://8w7is24iojs" path="res://images/bg/game_bg_01_001-uhd.png" id="5_iywne"]
+[ext_resource type="Script" uid="uid://cj5s0aarx331p" path="res://scripts/menu_button.gd" id="5_ssvqc"]
+[ext_resource type="Script" uid="uid://cj2ndleigyqqf" path="res://scripts/practice_button.gd" id="6_rysoc"]
 [ext_resource type="Script" uid="uid://c8ka8t08n5xf0" path="res://scripts/line_2d.gd" id="7_0tnpc"]
 [ext_resource type="Script" uid="uid://c23ly6o7rfkch" path="res://scripts/cam.gd" id="7_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://cmmvte7wddpqp" path="res://images/ground/line.png" id="7_u5sy4"]
 [ext_resource type="Script" uid="uid://iowxvugx06eo" path="res://scripts/counters.gd" id="8_vtaks"]
 [ext_resource type="Texture2D" uid="uid://dmtadlsknk8ok" path="res://images/other/slidergroove_02-uhd.png" id="9_dinhu"]
+[ext_resource type="Texture2D" uid="uid://dy8m3tq7j0yjb" path="res://images/other/GJ_progressBar_001-uhd.png" id="10_1kice"]
 [ext_resource type="Texture2D" uid="uid://bgbs07uahvnch" path="res://images/other/sliderBar2-uhd.png" id="10_kvuet"]
+[ext_resource type="Script" uid="uid://dmqruc6mn33l3" path="res://scripts/checkpoints.gd" id="14_5newe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trtic"]
+bg_color = Color(0, 0, 0, 0.54901963)
+corner_radius_top_left = 55
+corner_radius_top_right = 55
+corner_radius_bottom_right = 55
+corner_radius_bottom_left = 55
+
+[sub_resource type="Animation" id="Animation_yqeox"]
+length = 0.1935
+
+[sub_resource type="Animation" id="Animation_4h3mk"]
+resource_name = "hover"
+length = 0.193
+step = 0.0166
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06779661, 0.13559322, 0.18644068),
+"transitions": PackedFloat32Array(1, 0.23325819, 2.6390157, 5.278025),
+"update": 0,
+"values": [Vector2(0.565, 0.565), Vector2(0.722, 0.722), Vector2(0.657, 0.657), Vector2(0.722, 0.722)]
+}
+
+[sub_resource type="Animation" id="Animation_v86rl"]
+resource_name = "unhover"
+length = 0.193
+step = 0.0166
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06779661, 0.13559322, 0.18644068),
+"transitions": PackedFloat32Array(1, 0.23325819, 2.6390157, 5.278025),
+"update": 0,
+"values": [Vector2(0.722, 0.722), Vector2(0.512, 0.512), Vector2(0.637, 0.637), Vector2(0.565, 0.565)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rysoc"]
+_data = {
+&"RESET": SubResource("Animation_yqeox"),
+&"hover": SubResource("Animation_4h3mk"),
+&"unhover": SubResource("Animation_v86rl")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_264po"]
+line_spacing = 19.065
+font = ExtResource("2_iywne")
+font_size = 64
+outline_size = 17
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.36078432)
+shadow_offset = Vector2(5.385, 7.375)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1kice"]
+line_spacing = 19.065
+font = ExtResource("2_iywne")
+font_size = 35
+font_color = Color(1, 0.8, 0, 1)
+outline_size = 11
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.36078432)
+shadow_offset = Vector2(5.385, 7.375)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kvuet"]
+font = ExtResource("2_iywne")
+font_size = 33
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.36078432)
+shadow_offset = Vector2(2, 2)
 
 [sub_resource type="LabelSettings" id="LabelSettings_dubn7"]
 font = ExtResource("2_iywne")
@@ -62,14 +148,6 @@ texture = ExtResource("10_kvuet")
 axis_stretch_horizontal = 1
 modulate_color = Color(0.99985725, 0.82434523, 0.9999997, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_kvuet"]
-font = ExtResource("2_iywne")
-font_size = 33
-outline_size = 4
-outline_color = Color(0, 0, 0, 1)
-shadow_color = Color(0, 0, 0, 0.36078432)
-shadow_offset = Vector2(2, 2)
-
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u5sy4"]
 blend_mode = 1
 
@@ -88,21 +166,136 @@ script = ExtResource("2_kvuet")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="pause_menu" unique_id=787905998]
 layer = 404
-visible = false
 
-[node name="Button" type="Button" parent="pause_menu/CanvasLayer" unique_id=1214815590]
+[node name="Panel" type="Panel" parent="pause_menu/CanvasLayer" unique_id=1831706304]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_trtic")
+
+[node name="play" type="TextureButton" parent="pause_menu/CanvasLayer" unique_id=1600219253]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -78.0
-offset_top = -15.5
-offset_right = 78.0
-offset_bottom = 15.5
+offset_left = -153.185
+offset_top = -87.83
+offset_right = 160.815
+offset_bottom = 238.17004
 grow_horizontal = 2
 grow_vertical = 2
-text = "Resume"
+scale = Vector2(0.534, 0.534)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_trtic")
+script = ExtResource("4_264po")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="pause_menu/CanvasLayer/play" unique_id=340495402]
+libraries/ = SubResource("AnimationLibrary_rysoc")
+
+[node name="menu" type="TextureButton" parent="pause_menu/CanvasLayer" unique_id=1325608642]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.86499
+offset_top = -56.005005
+offset_right = 316.865
+offset_bottom = 201.995
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.534, 0.534)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+texture_normal = ExtResource("4_ir15t")
+script = ExtResource("5_ssvqc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="pause_menu/CanvasLayer/menu" unique_id=1887540103]
+libraries/ = SubResource("AnimationLibrary_rysoc")
+
+[node name="practice" type="TextureButton" parent="pause_menu/CanvasLayer" unique_id=223229693]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -313.325
+offset_top = -56.03
+offset_right = -67.32501
+offset_bottom = 201.97046
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.534, 0.534)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+texture_normal = ExtResource("5_ca42v")
+script = ExtResource("6_rysoc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="pause_menu/CanvasLayer/practice" unique_id=1051101946]
+libraries/ = SubResource("AnimationLibrary_rysoc")
+
+[node name="title" type="Label" parent="pause_menu/CanvasLayer" unique_id=213621397]
+z_index = 100
+offset_left = 40.0
+offset_top = 32.0
+offset_right = 1112.0
+offset_bottom = 144.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "Unnamed 40"
+label_settings = SubResource("LabelSettings_264po")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="creator" type="Label" parent="pause_menu/CanvasLayer" unique_id=1255891071]
+z_index = 100
+offset_left = 40.0
+offset_top = 84.0
+offset_right = 1112.0
+offset_bottom = 196.0
+pivot_offset_ratio = Vector2(0.5, 0)
+text = "by rapid"
+label_settings = SubResource("LabelSettings_1kice")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="pause_menu/CanvasLayer" unique_id=1071365509]
+offset_left = 207.13
+offset_top = 224.0
+offset_right = 944.875
+offset_bottom = 256.0
+pivot_offset_ratio = Vector2(0.5, 0)
+step = 0.01
+value = 1.0
+nine_patch_stretch = true
+texture_under = ExtResource("10_1kice")
+texture_over = ExtResource("9_dinhu")
+texture_progress = ExtResource("10_1kice")
+tint_under = Color(0, 0, 0, 0.5019608)
+tint_over = Color(0, 0, 0, 0.101960786)
+tint_progress = Color(0, 1, 0, 1)
+
+[node name="percent" type="Label" parent="pause_menu/CanvasLayer" unique_id=1240352424]
+z_index = 100
+offset_left = 488.0
+offset_top = 231.0
+offset_right = 664.0
+offset_bottom = 279.0
+pivot_offset_ratio = Vector2(0.5, 0)
+text = "0.00%"
+label_settings = SubResource("LabelSettings_kvuet")
+horizontal_alignment = 1
 
 [node name="attempts" type="Label" parent="." unique_id=107369597]
 z_index = 100
@@ -167,6 +360,9 @@ position = Vector2(4.98999, 109)
 shape = SubResource("RectangleShape2D_vtaks")
 one_way_collision = true
 one_way_collision_margin = 81.5
+
+[node name="checkpoints" type="Node2D" parent="." unique_id=1913989210]
+script = ExtResource("14_5newe")
 
 [node name="CharacterBody2D" parent="." unique_id=1621791113 instance=ExtResource("5_dinhu")]
 position = Vector2(-32, 384)
@@ -377,4 +573,4 @@ position = Vector2(-26, 22.000002)
 scale = Vector2(0.665, 0.665)
 texture = ExtResource("7_u5sy4")
 
-[connection signal="pressed" from="pause_menu/CanvasLayer/Button" to="pause_menu" method="_on_button_pressed"]
+[connection signal="pressed" from="pause_menu/CanvasLayer/play" to="pause_menu" method="_on_button_pressed"]

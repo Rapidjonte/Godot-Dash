@@ -1,6 +1,5 @@
 extends Node2D
 
-# ─── Inner class: circular rotation dial ──────────────────────────────────────
 class RotateDial extends Control:
 	var angle_rad := 0.0
 	var _dragging := false
@@ -46,8 +45,6 @@ class RotateDial extends Control:
 			queue_redraw()
 			dial_changed.emit(angle_rad)
 			accept_event()
-
-# ─── Main editor ──────────────────────────────────────────────────────────────
 
 @onready var level := $level
 @onready var cam   := $cam
@@ -105,12 +102,10 @@ var _scale_is_dragging := false
 var _last_paint_cell := Vector2(INF, INF)
 var _is_painting     := false
 
-# Context menu
 var _ctx_layer: CanvasLayer      = null
 var _ctx_panel: PanelContainer   = null
 var _ctx_node:  Node             = null
 
-# Undo / redo
 var _undo_stack: Array = []
 var _redo_stack: Array = []
 const MAX_UNDO    := 50
@@ -120,17 +115,16 @@ const MOVE_HOLD_DELAY := 0.4
 const MOVE_REPEAT_RATE := 0.07
 var _lmb_started_on_ui := false
 var _texture_popup_layer: CanvasLayer = null
+var _help_popup_layer: CanvasLayer = null
 
-# Transform panel (scale + rotate)
 var _transform_panel:     PanelContainer = null
-var _scale_slider:        HSlider        = null
+var _scale_slider_x:      HSlider        = null
+var _scale_slider_y:      HSlider        = null
 var _skew_slider:         HSlider        = null
 var _rot_spinbox:         SpinBox        = null
 var _rotate_dial:         RotateDial     = null
 var _updating_xform_ui   := false
 var _skew_is_dragging    := false
-
-# ─── UI blocking ──────────────────────────────────────────────────────────────
 
 func _is_over_ui() -> bool:
 	var h := get_viewport().gui_get_hovered_control()
@@ -147,8 +141,6 @@ func _is_transform_panel_active() -> bool:
 	if _skew_is_dragging: return true
 	if _rot_spinbox and _rot_spinbox.has_focus(): return true
 	return false
-
-# ─── Ready ────────────────────────────────────────────────────────────────────
 
 func _ready() -> void:
 	Global.paused = true
@@ -175,8 +167,6 @@ func _ready() -> void:
 		zoom_level = Global.last_editor_zoom
 		cam.zoom = Vector2(zoom_level, zoom_level)
 
-# ─── Process ──────────────────────────────────────────────────────────────────
-
 func _process(delta: float) -> void:
 	var _delta := delta
 	_draw_node.queue_redraw()
@@ -196,7 +186,6 @@ func _process(delta: float) -> void:
 		Global.last_editor_zoom = zoom_level
 		get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
-	# Hold Ctrl+Z to keep undoing
 	var ctrl_held := Input.is_key_pressed(KEY_CTRL)
 	if ctrl_held and Input.is_key_pressed(KEY_Z) and not Input.is_key_pressed(KEY_SHIFT):
 		_undo_hold_time += _delta
@@ -233,62 +222,59 @@ func _process(delta: float) -> void:
 		if _was_moving: _was_moving = false
 		_move_hold_time = 0.0
 
-# ─── Input ────────────────────────────────────────────────────────────────────
-
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		var focus := get_viewport().gui_get_focus_owner()
 		var typing := focus is LineEdit or focus is SpinBox
 		var ctrl := Input.is_key_pressed(KEY_CTRL)
-		match event.keycode:
-			KEY_T: swipe_enabled = !swipe_enabled; _update_swipe_button()
-			KEY_F: _set_mode(Mode.FREE_MOVE if mode != Mode.FREE_MOVE else Mode.SELECT)
-			KEY_G: free_move_snap = !free_move_snap; _update_snap_toggle_button()
-			KEY_Q:
-				var angle := -45.0 if Input.is_key_pressed(KEY_SHIFT) else -90.0
-				_rotate_selection_around_pivot(angle)
-			KEY_E:
-				var angle := 45.0 if Input.is_key_pressed(KEY_SHIFT) else 90.0
-				_rotate_selection_around_pivot(angle)
-			KEY_ESCAPE: _hide_context_menu(); _cancel_placement()
-			KEY_ENTER:
-				if not typing:
-					_on_play()
-			KEY_DELETE:
-				_push_undo(Array(selected_nodes))
-				for n in selected_nodes: n.queue_free()
-				_deselect_all()
-			KEY_BACKSPACE:
-				if not typing:
+		if not typing:
+			match event.keycode:
+				KEY_T: swipe_enabled = !swipe_enabled; _update_swipe_button()
+				KEY_F: _set_mode(Mode.FREE_MOVE if mode != Mode.FREE_MOVE else Mode.SELECT)
+				KEY_G: free_move_snap = !free_move_snap; _update_snap_toggle_button()
+				KEY_Q:
+					var angle := -45.0 if Input.is_key_pressed(KEY_SHIFT) else -90.0
+					_rotate_selection_around_pivot(angle)
+				KEY_E:
+					var angle := 45.0 if Input.is_key_pressed(KEY_SHIFT) else 90.0
+					_rotate_selection_around_pivot(angle)
+				KEY_ESCAPE: _hide_context_menu(); _cancel_placement()
+				KEY_ENTER: _on_play()
+				KEY_DELETE:
 					_push_undo(Array(selected_nodes))
 					for n in selected_nodes: n.queue_free()
 					_deselect_all()
-			KEY_D:
-				if ctrl: _duplicate_selected()
-			KEY_Z:
-				if ctrl:
-					if Input.is_key_pressed(KEY_SHIFT): _redo()
-					else: _undo()
-			KEY_Y:
-				if ctrl: _redo()
-		# Arrow key / WASD single press — move immediately, reset hold timer
-		var move_dir := Vector2.ZERO
-		if event.keycode == KEY_UP or event.keycode == KEY_W:    move_dir.y -= 1
-		if event.keycode == KEY_DOWN or event.keycode == KEY_S:  move_dir.y += 1
-		if event.keycode == KEY_LEFT or event.keycode == KEY_A:  move_dir.x -= 1
-		if (event.keycode == KEY_RIGHT or event.keycode == KEY_D) and not ctrl: move_dir.x += 1
-		if move_dir != Vector2.ZERO and not selected_nodes.is_empty():
-			_move_hold_time = 0.0
-			_push_undo()
-			var shift2 := Input.is_key_pressed(KEY_SHIFT)
-			for node in selected_nodes:
-				if shift2:
-					var step = max(1, float(GRID) / 10)
-					if node is Node2D:    node.position += move_dir * step
-					elif node is Control: node.position += move_dir * step
-				else:
-					if node is Node2D:    node.position += move_dir * GRID
-					elif node is Control: node.position += move_dir * GRID
+				KEY_BACKSPACE:
+					_push_undo(Array(selected_nodes))
+					for n in selected_nodes: n.queue_free()
+					_deselect_all()
+				KEY_D:
+					if ctrl: _duplicate_selected()
+				KEY_Z:
+					if ctrl:
+						if Input.is_key_pressed(KEY_SHIFT): _redo()
+						else: _undo()
+				KEY_Y:
+					if ctrl: _redo()
+
+		if not typing:
+			var move_dir := Vector2.ZERO
+			if event.keycode == KEY_UP or event.keycode == KEY_W:    move_dir.y -= 1
+			if event.keycode == KEY_DOWN or event.keycode == KEY_S:  move_dir.y += 1
+			if event.keycode == KEY_LEFT or event.keycode == KEY_A:  move_dir.x -= 1
+			if (event.keycode == KEY_RIGHT or event.keycode == KEY_D) and not ctrl: move_dir.x += 1
+			if move_dir != Vector2.ZERO and not selected_nodes.is_empty():
+				_move_hold_time = 0.0
+				_push_undo()
+				var shift2 := Input.is_key_pressed(KEY_SHIFT)
+				for node in selected_nodes:
+					if shift2:
+						var step = max(1, float(GRID) / 10)
+						if node is Node2D:    node.position += move_dir * step
+						elif node is Control: node.position += move_dir * step
+					else:
+						if node is Node2D:    node.position += move_dir * GRID
+						elif node is Control: node.position += move_dir * GRID
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -349,7 +335,7 @@ func _input(event: InputEvent) -> void:
 							elif n is Control: free_move_offsets[n] = n.position - wm
 						is_free_dragging = true
 				elif mode == Mode.PLACE and pending_scene_path != "":
-					_push_undo()  # capture state once before the whole paint stroke
+					_push_undo()
 					_place_object(get_global_mouse_position())
 					if swipe_enabled:
 						_last_paint_cell = _snap_to_cell_center(get_global_mouse_position())
@@ -419,8 +405,6 @@ func _input(event: InputEvent) -> void:
 						if _node_contains_point(child, get_global_mouse_position()): hit.append(child)
 					if hit.is_empty(): _start_pan(true)
 
-# ─── Undo / Redo (command-based — no full level packing) ─────────────────────
-
 func _sel_names() -> Array:
 	var r := []
 	for n in selected_nodes:
@@ -463,7 +447,6 @@ func _pack_subset(nodes: Array) -> PackedScene:
 	temp.free()
 	return ps
 
-# nodes_to_pack: pass selected_nodes before a deletion so they can be restored
 func _push_undo(nodes_to_pack: Array = []) -> void:
 	var packed = null
 	if not nodes_to_pack.is_empty():
@@ -481,12 +464,10 @@ func _push_undo(nodes_to_pack: Array = []) -> void:
 func _apply_undo_entry(entry: Dictionary) -> void:
 	var target_names: Array = entry["names"]
 
-	# Delete nodes not in target
 	for child in level.get_children().duplicate():
 		if child.name not in target_names:
 			child.free()
 
-	# Re-add missing nodes from packed data
 	if entry["packed"] != null:
 		var current := level.get_children().map(func(c): return c.name)
 		var missing := target_names.filter(func(n): return n not in current)
@@ -500,12 +481,11 @@ func _apply_undo_entry(entry: Dictionary) -> void:
 					_hide_particles(child)
 					_ignore_mouse_recursive(child)
 					level.add_child(child)
-					child.process_mode = Node.PROCESS_MODE_INHERIT  # will inherit DISABLED from level
+					child.process_mode = Node.PROCESS_MODE_INHERIT
 					_set_owner_recursive(child, level)
 					_restore_node_for_editor(child)
 			inst.free()
 
-	# Restore transforms
 	var snap: Dictionary = entry["snap"]
 	for child in level.get_children():
 		if not snap.has(child.name): continue
@@ -519,7 +499,6 @@ func _apply_undo_entry(entry: Dictionary) -> void:
 			child.rotation_degrees = s["rot"]
 			child.scale = s["scale"]
 
-	# Restore selection
 	selected_nodes.clear()
 	last_candidates.clear()
 	for child in level.get_children():
@@ -528,7 +507,6 @@ func _apply_undo_entry(entry: Dictionary) -> void:
 		if child.name in entry.get("lc", []):
 			last_candidates.append(child)
 
-	# Advance cycle_index past the restored selection so next click cycles forward
 	if not last_candidates.is_empty() and not selected_nodes.is_empty():
 		var last_sel_idx := -1
 		for i in last_candidates.size():
@@ -541,7 +519,6 @@ func _undo() -> void:
 	if _undo_stack.is_empty(): return
 	var entry = _undo_stack.pop_back()
 
-	# Pack any nodes that will be deleted by this undo (needed for redo)
 	var will_delete := []
 	for child in level.get_children():
 		if child.name not in entry["names"]:
@@ -582,20 +559,15 @@ func _redo() -> void:
 
 	_apply_undo_entry(entry)
 
-
-# Hold Ctrl+Z to keep undoing
 var _undo_hold_time   := 0.0
 var _undo_is_holding  := false
 const UNDO_HOLD_DELAY := 0.4
 const UNDO_REPEAT_RATE := 0.12
 
-# ─── Duplicate ────────────────────────────────────────────────────────────────
-
 func _duplicate_selected() -> void:
 	if selected_nodes.is_empty(): return
 	_push_undo()
 
-	# Only duplicate top-level selected nodes
 	var roots: Array[Node] = []
 	for node in selected_nodes:
 		var is_child_of_selected := false
@@ -607,7 +579,6 @@ func _duplicate_selected() -> void:
 
 	var stamp_mode := mode == Mode.FREE_MOVE and is_free_dragging
 
-	# Snapshot original positions BEFORE any duplication so originals are not affected
 	var original_positions: Dictionary = {}
 	for node in roots:
 		if node is Node2D:    original_positions[node] = node.position
@@ -624,10 +595,10 @@ func _duplicate_selected() -> void:
 		_set_owner_recursive(dup, level)
 
 		if stamp_mode:
-			# Stamp at the original position — originals keep moving, dupes stay behind
+
 			dup.position = original_positions[node]
 		else:
-			# Offset copy by one grid cell
+
 			dup.position = original_positions[node] + Vector2(GRID, GRID)
 
 		new_nodes.append(dup)
@@ -638,11 +609,9 @@ func _duplicate_selected() -> void:
 		selected_nodes.clear()
 		for n in new_nodes:
 			selected_nodes.append(n)
-		# Reset movement state so held arrow keys don't immediately move new dupes
+
 		_move_hold_time = 0.0
 		_was_moving = false
-
-# ─── Zoom ─────────────────────────────────────────────────────────────────────
 
 func _apply_zoom(delta: float, pivot_screen: Vector2) -> void:
 	var world_before := get_canvas_transform().affine_inverse() * pivot_screen
@@ -651,8 +620,6 @@ func _apply_zoom(delta: float, pivot_screen: Vector2) -> void:
 	await get_tree().process_frame
 	var world_after := get_canvas_transform().affine_inverse() * pivot_screen
 	cam.position += world_before - world_after
-
-# ─── Helpers ──────────────────────────────────────────────────────────────────
 
 func _snap_to_cell_center(world_pos: Vector2) -> Vector2:
 	return (world_pos / GRID).floor() * GRID + Vector2(GRID, GRID) / 2.0
@@ -679,8 +646,6 @@ func _ignore_mouse_recursive(node: Node) -> void:
 	if node is Control: node.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for child in node.get_children(): _ignore_mouse_recursive(child)
 
-# ─── Transform panel ──────────────────────────────────────────────────────────
-
 func _build_transform_panel() -> void:
 	var ui_layer := CanvasLayer.new()
 	ui_layer.layer = 67
@@ -700,31 +665,74 @@ func _build_transform_panel() -> void:
 	vbox.add_theme_constant_override("separation", 6)
 	_transform_panel.add_child(vbox)
 
-	var slbl := Label.new(); slbl.text = "Scale"
-	vbox.add_child(slbl)
-	_scale_slider = HSlider.new()
-	_scale_slider.min_value = 0.01; _scale_slider.max_value = 10.0
-	_scale_slider.step = 0.01; _scale_slider.value = 1.0
-	_scale_slider.custom_minimum_size = Vector2(180, 20)
-	vbox.add_child(_scale_slider)
-	var scale_val_label := Label.new(); scale_val_label.text = "1.0"
-	scale_val_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(scale_val_label)
-	_scale_slider.value_changed.connect(func(v: float):
+	var slbl_x := Label.new(); slbl_x.text = "Scale X"
+	vbox.add_child(slbl_x)
+	_scale_slider_x = HSlider.new()
+	_scale_slider_x.min_value = 0.01; _scale_slider_x.max_value = 10.0
+	_scale_slider_x.step = 0.01; _scale_slider_x.value = 1.0
+	_scale_slider_x.custom_minimum_size = Vector2(180, 20)
+	vbox.add_child(_scale_slider_x)
+	var scale_x_label := Label.new(); scale_x_label.text = "1.00"
+	scale_x_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(scale_x_label)
+	_scale_slider_x.value_changed.connect(func(v: float):
 		if _updating_xform_ui: return
-		scale_val_label.text = "%.2f" % v
-		_apply_scale(v)
+		scale_x_label.text = "%.2f" % v
+		_apply_scale_xy(_scale_slider_x.value, _scale_slider_y.value)
 	)
-	_scale_slider.drag_started.connect(func():
+	_scale_slider_x.drag_started.connect(func():
 		_scale_is_dragging = true
-		_push_undo()  # capture once at drag start
+		_push_undo()
 	)
-	_scale_slider.drag_ended.connect(func(_changed: bool):
+	_scale_slider_x.drag_ended.connect(func(_changed: bool):
 		_scale_is_dragging = false
-		_scale_slider.release_focus()
+		_scale_slider_x.release_focus()
 	)
 
-	# Skew
+	var slbl_y := Label.new(); slbl_y.text = "Scale Y"
+	vbox.add_child(slbl_y)
+	_scale_slider_y = HSlider.new()
+	_scale_slider_y.min_value = 0.01; _scale_slider_y.max_value = 10.0
+	_scale_slider_y.step = 0.01; _scale_slider_y.value = 1.0
+	_scale_slider_y.custom_minimum_size = Vector2(180, 20)
+	vbox.add_child(_scale_slider_y)
+	var scale_y_label := Label.new(); scale_y_label.text = "1.00"
+	scale_y_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(scale_y_label)
+	_scale_slider_y.value_changed.connect(func(v: float):
+		if _updating_xform_ui: return
+		scale_y_label.text = "%.2f" % v
+		_apply_scale_xy(_scale_slider_x.value, _scale_slider_y.value)
+	)
+	_scale_slider_y.drag_started.connect(func():
+		_scale_is_dragging = true
+		_push_undo()
+	)
+	_scale_slider_y.drag_ended.connect(func(_changed: bool):
+		_scale_is_dragging = false
+		_scale_slider_y.release_focus()
+	)
+
+	var flip_row := HBoxContainer.new()
+	flip_row.add_theme_constant_override("separation", 6)
+	vbox.add_child(flip_row)
+	var flip_h_btn := Button.new(); flip_h_btn.text = "Flip H"
+	flip_h_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	flip_h_btn.focus_mode = Control.FOCUS_NONE
+	flip_h_btn.pressed.connect(func():
+		_push_undo()
+		_flip_selection(true)
+	)
+	flip_row.add_child(flip_h_btn)
+	var flip_v_btn := Button.new(); flip_v_btn.text = "Flip V"
+	flip_v_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	flip_v_btn.focus_mode = Control.FOCUS_NONE
+	flip_v_btn.pressed.connect(func():
+		_push_undo()
+		_flip_selection(false)
+	)
+	flip_row.add_child(flip_v_btn)
+
 	var sklbl := Label.new(); sklbl.text = "Skew"
 	vbox.add_child(sklbl)
 	_skew_slider = HSlider.new()
@@ -745,7 +753,7 @@ func _build_transform_panel() -> void:
 	)
 	_skew_slider.drag_started.connect(func():
 		_skew_is_dragging = true
-		_push_undo()  # capture once at drag start
+		_push_undo()
 	)
 	_skew_slider.drag_ended.connect(func(_changed: bool):
 		_skew_is_dragging = false
@@ -764,8 +772,7 @@ func _build_transform_panel() -> void:
 	_rot_spinbox.value_changed.connect(func(v: float):
 		if _updating_xform_ui: return
 		if _rot_initial_state.is_empty(): _capture_rot_initial()
-		# v is the new absolute value for the first selected node
-		# compute delta from that node's initial rotation
+
 		var first_init_rot: float = 0.0
 		if not _rot_initial_state.is_empty():
 			first_init_rot = _rot_initial_state.values()[0]["rot"]
@@ -804,10 +811,45 @@ func _build_transform_panel() -> void:
 		_rot_initial_state.clear()
 	)
 
-func _apply_scale(v: float) -> void:
+func _apply_scale_xy(sx: float, sy: float) -> void:
 	if selected_nodes.is_empty(): return
 	if "trigger" in selected_nodes[0].name.to_lower(): return
-	_scale_selection_around_pivot(v)
+	if use_group_pivot and selected_nodes.size() > 1:
+		var pivot := _get_group_center()
+		for n in selected_nodes:
+			if not is_instance_valid(n): continue
+			var old_sx = n.scale.x if n.scale.x != 0.0 else 1.0
+			var old_sy = n.scale.y if n.scale.y != 0.0 else 1.0
+			var offset: Vector2 = n.global_position - pivot
+			offset = Vector2(offset.x * (sx / old_sx), offset.y * (sy / old_sy))
+			n.global_position = pivot + offset
+			n.scale = Vector2(sx, sy)
+	else:
+		for n in selected_nodes:
+			if not is_instance_valid(n): continue
+			n.scale = Vector2(sx, sy)
+
+func _flip_selection(horizontal: bool) -> void:
+	if selected_nodes.is_empty(): return
+	var pivot := _get_group_center() if use_group_pivot and selected_nodes.size() > 1 else Vector2.ZERO
+	for n in selected_nodes:
+		if not is_instance_valid(n): continue
+		_flip_node_recursive(n, horizontal)
+		if use_group_pivot and selected_nodes.size() > 1:
+			var offset = n.global_position - pivot
+			if horizontal: offset.x *= -1
+			else: offset.y *= -1
+			n.global_position = pivot + offset
+
+func _flip_node_recursive(node: Node, horizontal: bool) -> void:
+	if node is Sprite2D:
+		if horizontal: node.flip_h = !node.flip_h
+		else: node.flip_v = !node.flip_v
+	elif node is TextureRect:
+		if horizontal: node.flip_h = !node.flip_h
+		else: node.flip_v = !node.flip_v
+	for child in node.get_children():
+		_flip_node_recursive(child, horizontal)
 
 func _sync_transform_panel() -> void:
 	var has_sel := not selected_nodes.is_empty()
@@ -817,12 +859,11 @@ func _sync_transform_panel() -> void:
 	if not is_instance_valid(first): return
 	_updating_xform_ui = true
 	var is_trigger := "trigger" in first.name.to_lower()
-	if _scale_slider:
-		var sc := 1.0
-		if first is Node2D:    sc = first.scale.x
-		elif first is Control: sc = first.scale.x
-		_scale_slider.editable = not is_trigger
-		_scale_slider.value = sc
+	if _scale_slider_x and _scale_slider_y:
+		_scale_slider_x.editable = not is_trigger
+		_scale_slider_y.editable = not is_trigger
+		_scale_slider_x.value = first.scale.x
+		_scale_slider_y.value = first.scale.y
 	if _skew_slider:
 		var has_skew := not is_trigger and first.get("skew") != null
 		_skew_slider.editable = has_skew
@@ -837,8 +878,6 @@ func _sync_transform_panel() -> void:
 		_rot_spinbox.value = rd
 		if _rotate_dial: _rotate_dial.set_angle_degrees(rd)
 	_updating_xform_ui = false
-
-# ─── Top toolbar ──────────────────────────────────────────────────────────────
 
 func _build_top_toolbar() -> void:
 	var ui_layer := CanvasLayer.new()
@@ -907,7 +946,7 @@ func _strip_signals_recursive(node: Node) -> Array:
 		for conn in node.get_signal_connection_list(sname).duplicate():
 			var cb: Callable = conn["callable"]
 			var obj = cb.get_object()
-			# Only strip connections to scripted nodes — ignore engine-internal callables
+
 			if obj != null and obj is Node and obj.get_script() != null:
 				saved.append([node, sname, cb, conn.get("flags", 0)])
 				node.disconnect(sname, cb)
@@ -949,8 +988,10 @@ func _on_export() -> void:
 	ps.pack(level)
 	_restore_signals(saved_signals)
 	_restore_level_after_save()
+
 	if OS.get_name() == "Web":
-		var tmp := "user://exported_level.scn"
+
+		var tmp := "user://export_level.scn"
 		ResourceSaver.save(ps, tmp, ResourceSaver.FLAG_COMPRESS)
 		var f := FileAccess.open(tmp, FileAccess.READ)
 		var raw := f.get_buffer(f.get_length())
@@ -970,6 +1011,7 @@ func _on_export() -> void:
 			})();
 		""" % b64)
 		return
+
 	var dialog := FileDialog.new()
 	dialog.file_mode  = FileDialog.FILE_MODE_SAVE_FILE
 	dialog.access     = FileDialog.ACCESS_FILESYSTEM
@@ -1005,7 +1047,7 @@ func _load_packed_scene_into_level(ps: PackedScene) -> void:
 		children_to_move.append(child)
 	for child in children_to_move:
 		inst.remove_child(child)
-		child.owner = null  # clear owner before add_child to avoid inconsistency warning
+		child.owner = null
 		_safe_disconnect_recursive(child)
 		_hide_particles(child)
 		_ignore_mouse_recursive(child)
@@ -1025,7 +1067,7 @@ func _fix_texturerect_pivots(node: Node) -> void:
 
 func _on_import() -> void:
 	if OS.get_name() == "Web":
-		# Use browser file picker on web
+
 		JavaScriptBridge.eval("""
 			(function() {
 				var input = document.createElement('input');
@@ -1047,7 +1089,7 @@ func _on_import() -> void:
 				input.click();
 			})();
 		""")
-		# Poll for the result
+
 		var timer := get_tree().create_timer(0.2)
 		await timer.timeout
 		var attempts := 0
@@ -1067,7 +1109,7 @@ func _on_import() -> void:
 			await get_tree().create_timer(0.1).timeout
 			attempts += 1
 		return
- 
+
 	var dialog := FileDialog.new()
 	dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 	dialog.access    = FileDialog.ACCESS_FILESYSTEM
@@ -1077,7 +1119,6 @@ func _on_import() -> void:
 	add_child(dialog)
 	dialog.popup_centered(Vector2i(700, 450))
 	dialog.file_selected.connect(func(path: String):
-		# Check for missing dependencies first
 		var missing: Array[String] = []
 		for dep in ResourceLoader.get_dependencies(path):
 			var dep_path := dep
@@ -1099,8 +1140,6 @@ func _on_import() -> void:
 		dialog.queue_free()
 	)
 	dialog.canceled.connect(func(): dialog.queue_free())
-
-# ─── Share ────────────────────────────────────────────────────────────────────
 
 const GOOGLE_FORM_URL   := "https://docs.google.com/forms/d/e/1FAIpQLSftEGau3sHF5EqUirW0ovkFYRMBus-5bKHFWNpsOfk799UAcA/viewform?usp=dialog"
 const GOOGLE_FORM_ENTRY := "entry.000000000"
@@ -1136,8 +1175,6 @@ func _on_share() -> void:
 	popup.popup_centered()
 	popup.confirmed.connect(func(): popup.queue_free())
 
-# ─── Add Texture ──────────────────────────────────────────────────────────────
-
 const TEXTURE_SCALE := 0.533
 const IMAGES_FOLDER := "res://images"
 
@@ -1161,7 +1198,7 @@ func _on_add_texture() -> void:
 	var header := HBoxContainer.new(); vbox.add_child(header)
 	var title := Label.new(); title.text = "Pick Texture"
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL; header.add_child(title)
-	var close_btn := Button.new(); close_btn.text = "x"; close_btn.focus_mode = Control.FOCUS_NONE
+	var close_btn := Button.new(); close_btn.text = "✕"; close_btn.focus_mode = Control.FOCUS_NONE
 	close_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	close_btn.pressed.connect(func(): popup_layer.queue_free(); _texture_popup_layer = null)
 	header.add_child(close_btn)
@@ -1240,7 +1277,7 @@ func _scan_images(path: String, out: Array[String]) -> void:
 			if line.length() > 0: out.append(line)
 		index_file.close()
 		return
-	# Fallback: DirAccess (editor only, when script not generated yet)
+
 	var dir := DirAccess.open(path)
 	if dir == null: return
 	dir.list_dir_begin()
@@ -1318,7 +1355,6 @@ func _build_sidebar_buttons() -> void:
 	_pivot_btn.pressed.connect(func(): use_group_pivot = !use_group_pivot; _update_pivot_button())
 	vbox.add_child(_pivot_btn); _update_pivot_button()
 
-	# Select All — bottom right toolbar-style button
 	var sel_all_layer := CanvasLayer.new(); sel_all_layer.layer = 65; add_child(sel_all_layer)
 	var sel_all_btn := _make_toolbar_button("Select All", Color(0.18, 0.18, 0.20))
 	sel_all_btn.anchor_right  = 1.0; sel_all_btn.anchor_bottom = 1.0
@@ -1334,16 +1370,15 @@ func _build_sidebar_buttons() -> void:
 	)
 	sel_all_layer.add_child(sel_all_btn)
 
-	# Help button — bottom left, shows info popup
-	var help_layer := CanvasLayer.new(); help_layer.layer = 65; add_child(help_layer)
+	var help_layer := CanvasLayer.new(); help_layer.layer = 70; add_child(help_layer)
 	var help_btn := Button.new()
 	help_btn.text = "?"
 	help_btn.custom_minimum_size = Vector2(36, 36)
 	help_btn.focus_mode = Control.FOCUS_NONE
-	help_btn.anchor_bottom = 1.0; help_btn.anchor_top    = 1.0
-	help_btn.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	help_btn.anchor_bottom = 0.0; help_btn.anchor_top    = 0.0
+	help_btn.grow_vertical = Control.GROW_DIRECTION_END
 	help_btn.offset_left = 10; help_btn.offset_right  = 46
-	help_btn.offset_top  = -46; help_btn.offset_bottom = -10
+	help_btn.offset_top  = 10; help_btn.offset_bottom = 46
 	var hs := StyleBoxFlat.new(); hs.bg_color = Color(0.18, 0.18, 0.20)
 	hs.corner_radius_top_left = 5; hs.corner_radius_top_right = 5
 	hs.corner_radius_bottom_left = 5; hs.corner_radius_bottom_right = 5
@@ -1358,36 +1393,41 @@ func _build_sidebar_buttons() -> void:
 	help_layer.add_child(help_btn)
 
 	help_btn.pressed.connect(func():
-		var popup_layer := CanvasLayer.new(); popup_layer.layer = 400; add_child(popup_layer)
+		if is_instance_valid(_help_popup_layer):
+			_help_popup_layer.queue_free()
+			_help_popup_layer = null
+			return
+		_help_popup_layer = CanvasLayer.new()
+		_help_popup_layer.layer = 400
+		add_child(_help_popup_layer)
 		var panel := PanelContainer.new()
 		panel.set_anchors_preset(Control.PRESET_CENTER)
 		panel.custom_minimum_size = Vector2(480, 500)
 		panel.offset_left = -240; panel.offset_right  =  240
 		panel.offset_top  = -250; panel.offset_bottom =  250
-		popup_layer.add_child(panel)
+		_help_popup_layer.add_child(panel)
 		var vb := VBoxContainer.new(); vb.add_theme_constant_override("separation", 8); panel.add_child(vb)
 		var hdr := HBoxContainer.new(); vb.add_child(hdr)
 		var ttl := Label.new(); ttl.text = "Help"; ttl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		ttl.add_theme_font_size_override("font_size", 16); hdr.add_child(ttl)
-		var x_btn := Button.new(); x_btn.text = "x"; x_btn.focus_mode = Control.FOCUS_NONE
+		var x_btn := Button.new(); x_btn.text = "✕"; x_btn.focus_mode = Control.FOCUS_NONE
 		x_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-		x_btn.pressed.connect(func(): popup_layer.queue_free()); hdr.add_child(x_btn)
+		x_btn.pressed.connect(func(): _help_popup_layer.queue_free()); hdr.add_child(x_btn)
 		_make_draggable(panel, hdr)
 		var scroll := ScrollContainer.new(); scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL; vb.add_child(scroll)
 		var lbl := Label.new()
 		lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		# ── Edit this text to your liking ──
+
 		lbl.text = """Controls:
 - Arrow keys / WASD: Move selected
-- Shift + move: 1/10th movement
-- Q / E: Rotate 90 degrees (Shift = 45 degrees)
+- Shift + move: Fine movement
+- Q / E: Rotate 90 deg (Shift = 45 deg)
 - Ctrl+D: Duplicate
-- Ctrl+Z: Undo 
-- Ctrl+Y: Redo
+- Ctrl+Z / Y: Undo / Redo
 - Delete: Delete selected
-- F: Toggle free move
-- T: Toggle swipe
+- F: Free move mode
+- T: Toggle swipe select
 - G: Toggle snap to grid
 
 Toolbar:
@@ -1395,17 +1435,18 @@ Toolbar:
 - Export: Save .scn file
 - Import: Load .scn file
 - Share: Copy level as Base64
-- Texture: Import texture from Geometry Dash
+- Texture: Place a custom sprite
 
 Right panel:
-- Desel: Deselect all objects
-- Swipe: Enable rectangle selection
-- Move: Free move mode
+- Scale: Resize selected
+- Skew: Shear selected
+- Rotation: Rotate selected
+- Pivot: Rotate/scale around selected center
 - Snap: Snap to grid on release
-- Align: Snap all selected to grid
-- Pivot: Rotate/scale around group center"""
+- Move: Free drag mode
+- Align: Snap selected to grid now"""
 		scroll.add_child(lbl)
-		popup_layer.add_child(panel) if false else null  # already added above
+		_help_popup_layer.add_child(panel) if false else null
 	)
 
 func _set_mode(new_mode: Mode) -> void:
@@ -1468,7 +1509,7 @@ func _capture_rot_initial() -> void:
 		_rot_initial_state[n] = {"pos": pos, "rot": n.rotation_degrees if n is Node2D else n.rotation_degrees}
 
 func _apply_rotation_delta(delta_deg: float) -> void:
-	# Additive: each node rotates by delta_deg from its own initial rotation
+
 	if _rot_initial_state.is_empty(): return
 	var delta_rad := deg_to_rad(delta_deg)
 	for n in selected_nodes:
@@ -1487,11 +1528,9 @@ func _apply_rotation_delta(delta_deg: float) -> void:
 func _apply_rotation_from_initial(target_deg: float) -> void:
 	if _rot_initial_state.is_empty(): return
 	if selected_nodes.size() > 1 and use_group_pivot:
-		# All nodes orbit around pivot + rotate on own axis, relative to initial snapshot
+
 		var angle_rad := deg_to_rad(target_deg - (_rot_initial_state.values()[0]["rot"] if not _rot_initial_state.is_empty() else 0.0))
-		# Use first node's initial rotation as reference for the dial angle
-		# Actually: rotate ALL nodes by the SAME delta from their own initial rotation
-		# and orbit them around the pivot by that same delta
+
 		var first_initial_rot: float = 0.0
 		if not _rot_initial_state.is_empty():
 			first_initial_rot = _rot_initial_state.values()[0]["rot"]
@@ -1511,7 +1550,7 @@ func _apply_rotation_from_initial(target_deg: float) -> void:
 				n.global_position = new_pos
 				n.rotation_degrees = new_rot
 	else:
-		# Single selection or no group pivot: just set rotation
+
 		for n in selected_nodes:
 			if not is_instance_valid(n): continue
 			if n is Node2D:    n.rotation_degrees = target_deg
@@ -1563,7 +1602,7 @@ func _scale_selection_around_pivot(v: float) -> void:
 	var pivot := _get_group_center()
 	for n in selected_nodes:
 		if not is_instance_valid(n): continue
-		# Move node so distance from pivot scales proportionally
+
 		var old_scale := 1.0
 		if n is Node2D:    old_scale = n.scale.x
 		elif n is Control: old_scale = n.scale.x
@@ -1579,8 +1618,6 @@ func _scale_selection_around_pivot(v: float) -> void:
 		elif n is Control:
 			n.global_position = pivot + offset * ratio
 			n.scale = Vector2(v, v)
-
-# ─── Object Panel ─────────────────────────────────────────────────────────────
 
 func _build_object_panel() -> void:
 	var ui_layer := CanvasLayer.new(); ui_layer.layer = 64; add_child(ui_layer)
@@ -1700,8 +1737,6 @@ func _cancel_placement() -> void:
 		active_panel_button = null
 	if mode == Mode.PLACE: mode = Mode.SELECT
 
-# ─── Placement ────────────────────────────────────────────────────────────────
-
 func _set_owner_recursive(node: Node, owner: Node) -> void:
 	node.owner = owner
 
@@ -1767,8 +1802,6 @@ func _ensure_blend_mode(node: Node) -> void:
 		node.material = mat
 	for child in node.get_children(): _ensure_blend_mode(child)
 
-# ─── Pre/post save helpers ────────────────────────────────────────────────────
-
 func _prepare_level_for_save() -> void:
 	level.process_mode = Node.PROCESS_MODE_INHERIT
 	for child in level.get_children():
@@ -1779,7 +1812,7 @@ func _restore_node_for_save(node: Node) -> void:
 		node.visible = true
 	if node is Control:
 		node.mouse_filter = Control.MOUSE_FILTER_STOP
-		# Save triggers as visible so they reload correctly in the editor
+
 		if node is TextureRect and "trigger" in node.name.to_lower():
 			node.visible = true
 	node.process_mode = Node.PROCESS_MODE_INHERIT
@@ -1796,13 +1829,11 @@ func _restore_node_for_editor(node: Node) -> void:
 		node.visible = false
 	if node is Control:
 		node.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		# Triggers hide themselves in-game — make them visible again in editor
+
 		if node is TextureRect and "trigger" in node.name.to_lower():
 			node.visible = true
 	for child in node.get_children():
 		_restore_node_for_editor(child)
-
-# ─── Preview Bounds ───────────────────────────────────────────────────────────
 
 func _get_preview_bounds(node: Node) -> Rect2:
 	var combined := Rect2(); var found := false
@@ -1822,8 +1853,6 @@ func _get_preview_bounds(node: Node) -> Rect2:
 func _collect_visual_nodes(node: Node, out: Array[Node]) -> void:
 	if node is Sprite2D or node is TextureRect: out.append(node)
 	for child in node.get_children(): _collect_visual_nodes(child, out)
-
-# ─── Context Menu ─────────────────────────────────────────────────────────────
 
 func _make_draggable(panel: Control, drag_handle: Control) -> void:
 	var drag_start_mouse := Vector2.ZERO
@@ -1856,7 +1885,7 @@ func _show_context_menu(node: Node) -> void:
 	var title := Label.new()
 	title.text = node.name + (" (%d selected)" % selected_nodes.size() if selected_nodes.size() > 1 else "")
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL; header.add_child(title)
-	var close_btn := Button.new(); close_btn.text = "x"; close_btn.focus_mode = Control.FOCUS_NONE
+	var close_btn := Button.new(); close_btn.text = "✕"; close_btn.focus_mode = Control.FOCUS_NONE
 	close_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	close_btn.pressed.connect(_hide_context_menu); header.add_child(close_btn)
 	_make_draggable(_ctx_panel, header)
@@ -1882,7 +1911,7 @@ func _fill_groups_tab(container: VBoxContainer) -> void:
 	for g in _ctx_node.get_groups():
 		var row := HBoxContainer.new(); container.add_child(row)
 		var lbl := Label.new(); lbl.text = str(g); lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL; row.add_child(lbl)
-		var rm := Button.new(); rm.text = "x"; rm.focus_mode = Control.FOCUS_NONE
+		var rm := Button.new(); rm.text = "✕"; rm.focus_mode = Control.FOCUS_NONE
 		rm.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 		var cg = g
 		rm.pressed.connect(func():
@@ -1981,8 +2010,6 @@ func _make_prop_editor(row: HBoxContainer, type: int, prop_name: String, value: 
 		_:
 			var lbl := Label.new(); lbl.text = str(value); row.add_child(lbl)
 
-# ─── Overlay Draw ─────────────────────────────────────────────────────────────
-
 func _on_overlay_draw() -> void:
 	var vp         := get_viewport().get_visible_rect()
 	var cam_offset := get_canvas_transform().origin
@@ -2035,7 +2062,6 @@ func _on_overlay_draw() -> void:
 			if poly.size() >= 4:
 				for i in range(4): _draw_node.draw_line(poly[i], poly[(i + 1) % 4], Color(1, 0.7, 0.1, 0.8), 2.0)
 
-	# Draw group pivot point
 	if use_group_pivot and selected_nodes.size() > 1:
 		var ct := get_canvas_transform()
 		var pivot_screen := ct * _get_group_center()
@@ -2043,8 +2069,6 @@ func _on_overlay_draw() -> void:
 		_draw_node.draw_arc(pivot_screen, 7.0, 0, TAU, 24, Color(1, 1, 1, 0.8), 1.5)
 		_draw_node.draw_line(pivot_screen - Vector2(10, 0), pivot_screen + Vector2(10, 0), Color(1, 1, 1, 0.8), 1.5)
 		_draw_node.draw_line(pivot_screen - Vector2(0, 10), pivot_screen + Vector2(0, 10), Color(1, 1, 1, 0.8), 1.5)
-
-# ─── Selection / Hit Detection / Visual Polygon ──────────────────────────────
 
 func _first_visual(node: Node) -> Node:
 	if node is Sprite2D and node.texture: return node
@@ -2101,8 +2125,6 @@ func _world_to_screen_poly(world_poly: PackedVector2Array) -> PackedVector2Array
 func _get_visual_screen_poly(node: Node) -> PackedVector2Array:
 	return _world_to_screen_poly(_node_world_poly(node))
 
-# ─── Selection ────────────────────────────────────────────────────────────────
-
 func _deselect_all() -> void:
 	selected_nodes.clear(); last_candidates.clear()
 
@@ -2121,18 +2143,21 @@ func _handle_click(pos: Vector2) -> void:
 	last_candidates = candidates
 	var picked := candidates[cycle_index]
 	if picked not in selected_nodes:
+		_push_undo()
 		selected_nodes.append(picked)
 
 func _finish_swipe(_pos: Vector2) -> void:
 	var ct := get_canvas_transform()
 	var world_rect := Rect2(ct.affine_inverse() * swipe_rect.position, swipe_rect.size / ct.get_scale())
+	var added := false
 	for child in level.get_children():
 		var bounds := _get_node_bounds(child)
 		if bounds != Rect2() and world_rect.intersects(bounds):
 			if child not in selected_nodes:
+				if not added:
+					_push_undo()
+					added = true
 				selected_nodes.append(child)
-
-# ─── Hit Detection ────────────────────────────────────────────────────────────
 
 func _node_contains_point(node: Node, world_pos: Vector2) -> bool:
 	var wpoly := _node_world_poly(node)
