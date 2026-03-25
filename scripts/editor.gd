@@ -421,16 +421,25 @@ func _snap_transforms() -> Dictionary:
 	var r := {}
 	for child in level.get_children():
 		if not is_instance_valid(child): continue
-		var s := {"pos": child.position}
-		if child is Node2D:
-			s["rot"]   = child.rotation_degrees
-			s["scale"] = child.scale
-			s["skew"]  = child.skew if child.get("skew") != null else 0.0
-		elif child is Control:
-			s["rot"]   = child.rotation_degrees
-			s["scale"] = child.scale
-		r[child.name] = s
+		_snap_node(child, r)
 	return r
+
+func _snap_node(node: Node, r: Dictionary) -> void:
+	var key := str(level.get_path_to(node))
+	var s := {"pos": node.position}
+	if node is Node2D:
+		s["rot"]   = node.rotation_degrees
+		s["scale"] = node.scale
+		s["skew"]  = node.skew if node.get("skew") != null else 0.0
+	elif node is Control:
+		s["rot"]   = node.rotation_degrees
+		s["scale"] = node.scale
+	if node is Sprite2D or node is TextureRect:
+		s["fh"] = node.flip_h
+		s["fv"] = node.flip_v
+	r[key] = s
+	for child in node.get_children():
+		_snap_node(child, r)
 
 func _pack_subset(nodes: Array) -> PackedScene:
 	var temp := Node2D.new()
@@ -488,16 +497,7 @@ func _apply_undo_entry(entry: Dictionary) -> void:
 
 	var snap: Dictionary = entry["snap"]
 	for child in level.get_children():
-		if not snap.has(child.name): continue
-		var s = snap[child.name]
-		child.position = s["pos"]
-		if child is Node2D:
-			child.rotation_degrees = s["rot"]
-			child.scale = s["scale"]
-			if child.get("skew") != null: child.skew = s["skew"]
-		elif child is Control:
-			child.rotation_degrees = s["rot"]
-			child.scale = s["scale"]
+		_restore_node_snap(child, snap)
 
 	selected_nodes.clear()
 	last_candidates.clear()
@@ -514,6 +514,24 @@ func _apply_undo_entry(entry: Dictionary) -> void:
 				last_sel_idx = i
 		if last_sel_idx >= 0:
 			cycle_index = (last_sel_idx + 1) % last_candidates.size()
+
+func _restore_node_snap(node: Node, snap: Dictionary) -> void:
+	var key := str(level.get_path_to(node))
+	if snap.has(key):
+		var s = snap[key]
+		node.position = s["pos"]
+		if node is Node2D:
+			node.rotation_degrees = s["rot"]
+			node.scale = s["scale"]
+			if node.get("skew") != null: node.skew = s["skew"]
+		elif node is Control:
+			node.rotation_degrees = s["rot"]
+			node.scale = s["scale"]
+		if node is Sprite2D or node is TextureRect:
+			if s.has("fh"): node.flip_h = s["fh"]
+			if s.has("fv"): node.flip_v = s["fv"]
+	for child in node.get_children():
+		_restore_node_snap(child, snap)
 
 func _undo() -> void:
 	if _undo_stack.is_empty(): return
@@ -657,7 +675,7 @@ func _build_transform_panel() -> void:
 	_transform_panel.anchor_top    = 0.5; _transform_panel.anchor_bottom  = 0.5
 	_transform_panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	_transform_panel.offset_left   = -215; _transform_panel.offset_right  = -70
-	_transform_panel.offset_top    = -220; _transform_panel.offset_bottom  = 220
+	_transform_panel.offset_top    = -269; _transform_panel.offset_bottom  = 269
 	_transform_panel.visible = false
 	ui_layer.add_child(_transform_panel)
 
@@ -746,10 +764,23 @@ func _build_transform_panel() -> void:
 	_skew_slider.value_changed.connect(func(v: float):
 		if _updating_xform_ui: return
 		skew_val_label.text = "%.1f" % v
-		for n in selected_nodes:
-			if "trigger" in n.name.to_lower(): continue
-			if n.get("skew") != null:
-				n.set("skew", deg_to_rad(v))
+		var skew_rad = deg_to_rad(v)
+		if use_group_pivot and selected_nodes.size() > 1:
+			var pivot := _get_group_center()
+			for n in selected_nodes:
+				if "trigger" in n.name.to_lower(): continue
+				var offset: Vector2 = n.global_position - pivot
+				n.global_position = pivot + Vector2(
+					offset.x + offset.y * tan(skew_rad),
+					offset.y
+				)
+				if n.get("skew") != null:
+					n.set("skew", skew_rad)
+		else:
+			for n in selected_nodes:
+				if "trigger" in n.name.to_lower(): continue
+				if n.get("skew") != null:
+					n.set("skew", skew_rad)
 	)
 	_skew_slider.drag_started.connect(func():
 		_skew_is_dragging = true
@@ -786,8 +817,8 @@ func _build_transform_panel() -> void:
 	_rot_spinbox.focus_exited.connect(func(): _rot_initial_state.clear())
 
 	var dial_margin := MarginContainer.new()
-	dial_margin.add_theme_constant_override("margin_top", 47)
-	dial_margin.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	dial_margin.add_theme_constant_override("margin_top", 35)
+	dial_margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vbox.add_child(dial_margin)
 	_rotate_dial = RotateDial.new()
 	_rotate_dial.custom_minimum_size = Vector2(100, 100)
@@ -1393,26 +1424,20 @@ func _build_sidebar_buttons() -> void:
 	help_layer.add_child(help_btn)
 
 	help_btn.pressed.connect(func():
-		if is_instance_valid(_help_popup_layer):
-			_help_popup_layer.queue_free()
-			_help_popup_layer = null
-			return
-		_help_popup_layer = CanvasLayer.new()
-		_help_popup_layer.layer = 400
-		add_child(_help_popup_layer)
+		var popup_layer := CanvasLayer.new(); popup_layer.layer = 400; add_child(popup_layer)
 		var panel := PanelContainer.new()
 		panel.set_anchors_preset(Control.PRESET_CENTER)
 		panel.custom_minimum_size = Vector2(480, 500)
 		panel.offset_left = -240; panel.offset_right  =  240
 		panel.offset_top  = -250; panel.offset_bottom =  250
-		_help_popup_layer.add_child(panel)
+		popup_layer.add_child(panel)
 		var vb := VBoxContainer.new(); vb.add_theme_constant_override("separation", 8); panel.add_child(vb)
 		var hdr := HBoxContainer.new(); vb.add_child(hdr)
 		var ttl := Label.new(); ttl.text = "Help"; ttl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		ttl.add_theme_font_size_override("font_size", 16); hdr.add_child(ttl)
 		var x_btn := Button.new(); x_btn.text = "✕"; x_btn.focus_mode = Control.FOCUS_NONE
 		x_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-		x_btn.pressed.connect(func(): _help_popup_layer.queue_free()); hdr.add_child(x_btn)
+		x_btn.pressed.connect(func(): popup_layer.queue_free()); hdr.add_child(x_btn)
 		_make_draggable(panel, hdr)
 		var scroll := ScrollContainer.new(); scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL; vb.add_child(scroll)
 		var lbl := Label.new()
@@ -1441,12 +1466,12 @@ Right panel:
 - Scale: Resize selected
 - Skew: Shear selected
 - Rotation: Rotate selected
-- Pivot: Rotate/scale around selected center
+- Pivot: Rotate/scale around group center
 - Snap: Snap to grid on release
 - Move: Free drag mode
 - Align: Snap selected to grid now"""
 		scroll.add_child(lbl)
-		_help_popup_layer.add_child(panel) if false else null
+		popup_layer.add_child(panel) if false else null
 	)
 
 func _set_mode(new_mode: Mode) -> void:
@@ -1794,6 +1819,13 @@ func _show_particles(node: Node) -> void:
 		return
 	for child in node.get_children(): _show_particles(child)
 
+func _find_first_canvas_item(node: Node) -> CanvasItem:
+	if node is CanvasItem and node.get_script() == null: return node
+	for child in node.get_children():
+		var r := _find_first_canvas_item(child)
+		if r != null: return r
+	return null
+
 func _ensure_blend_mode(node: Node) -> void:
 	if node is CanvasItem and node.material == null and node.get_script() == null:
 		var mat := CanvasItemMaterial.new()
@@ -1940,16 +1972,19 @@ func _fill_props_tab(container: VBoxContainer) -> void:
 	blend_opt.add_item("Mix", 0); blend_opt.add_item("Add", 1); blend_opt.add_item("Sub", 2)
 	blend_opt.add_item("Mul", 3); blend_opt.add_item("PremAl", 4)
 	blend_opt.focus_mode = Control.FOCUS_NONE
-	if _ctx_node is CanvasItem and _ctx_node.material is CanvasItemMaterial:
-		blend_opt.selected = _ctx_node.material.blend_mode
+	if _ctx_node != null:
+		var ci := _find_first_canvas_item(_ctx_node)
+		if ci != null and ci.material is CanvasItemMaterial:
+			blend_opt.selected = ci.material.blend_mode
 	blend_opt.item_selected.connect(func(idx: int):
 		for n in targets:
 			if not is_instance_valid(n): continue
-			if not n is CanvasItem: continue
+			var target_ci := _find_first_canvas_item(n)
+			if target_ci == null: continue
 			var mat := CanvasItemMaterial.new()
 			mat.resource_local_to_scene = true
 			mat.blend_mode = idx
-			n.material = mat)
+			target_ci.material = mat)
 	blend_row.add_child(blend_opt)
 	container.add_child(HSeparator.new())
 	if _ctx_node.get_script() == null:
@@ -2074,8 +2109,8 @@ func _first_visual(node: Node) -> Node:
 	if node is Sprite2D and node.texture: return node
 	if node is TextureRect: return node
 	for child in node.get_children():
-		if child is Sprite2D and child.texture: return child
-		if child is TextureRect: return child
+		var r := _first_visual(child)
+		if r != null: return r
 	return null
 
 func _node_world_poly(node: Node) -> PackedVector2Array:

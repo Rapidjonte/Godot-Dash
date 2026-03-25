@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d2pneeifygawe"]
 
 [ext_resource type="Script" uid="uid://spbqvbfjktbe" path="res://scripts/menu.gd" id="1_13sgg"]
+[ext_resource type="Script" uid="uid://dnhdjekc8ckn1" path="res://scripts/scroll_container.gd" id="2_ufwb2"]
 [ext_resource type="Texture2D" uid="uid://bsmn8idn3rgnw" path="res://images/ui/GJ_table_bottom_001.png" id="2_vjb58"]
 [ext_resource type="Texture2D" uid="uid://c6qu78nuubhly" path="res://images/ui/GJ_table_side_001.png" id="3_mhnvy"]
 [ext_resource type="Texture2D" uid="uid://crbp5qe8bjvp2" path="res://images/ui/GJ_table_top_001.png" id="5_4ytvr"]
@@ -88,10 +89,13 @@ grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 size_flags_horizontal = 4
 size_flags_vertical = 4
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=233528514]
 layout_mode = 2
 theme_override_constants/separation = 128
+script = ExtResource("2_ufwb2")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1501260160]
 

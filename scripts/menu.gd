@@ -62,4 +62,9 @@ func _on_request_completed(result: int, response_code: int, headers: PackedStrin
 		$ScrollContainer/VBoxContainer.add_child(new)
 		Global.loaded_data.append(row)
 	
+	if data.size() > 0:
+		var new = level_button.instantiate()
+		new.data = data[0]
+		new.visible = false
+		$ScrollContainer/VBoxContainer.add_child(new)
 	$LoadingCircleUhd.visible = false

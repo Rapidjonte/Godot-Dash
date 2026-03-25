@@ -8,6 +8,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if !Global.practice_mode or Global.paused:
+		return
 	if Input.is_action_just_pressed("place_checkpoint"):
 		var checkpoint = checkpoint_scene.instantiate()
 		checkpoint.position = Global.player.global_position+Global.player.center

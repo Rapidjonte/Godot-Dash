@@ -18,6 +18,6 @@ func activate():
 		Global.practice_mode = true
 	else:
 		texture_normal = enter_practice
-		Global.practice_mode = false
 		if Global.player:
 			Global.player.die(true)
+		Global.practice_mode = false

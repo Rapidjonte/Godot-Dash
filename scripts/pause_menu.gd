@@ -17,7 +17,7 @@ func _ready() -> void:
 		Global.loaded_data[loadedIndex]["best"] = 0.0
 
 func check_for_progress():
-	if Global.entered_from_editor:
+	if Global.entered_from_editor or Global.practice_mode:
 		return
 	if $"..".progress*100 > Global.loaded_data[loadedIndex]["best"]:
 		Global.loaded_data[loadedIndex]["best"] = $"..".progress*100

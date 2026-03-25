@@ -33,6 +33,7 @@ func _on_download_complete(result, response_code, headers, body):
 
 	loaded_level = load(save_path)
 	if loaded_level == null:
+		texture_normal = green_button
 		push_error("Downloaded file is not a valid PackedScene: " + save_path)
 		return
 	

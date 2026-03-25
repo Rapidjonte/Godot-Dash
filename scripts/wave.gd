@@ -99,7 +99,7 @@ func collision_check():
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var colliderName = collision.get_collider().name
-		if colliderName.contains("spike") or colliderName.contains("saw") :
+		if colliderName.contains("spike") or colliderName.contains("saw"):
 			die()
 		elif colliderName.contains("block"):
 			block = true
