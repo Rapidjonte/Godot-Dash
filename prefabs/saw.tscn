@@ -10,6 +10,7 @@ radius = 65.85
 [node name="saw" type="RigidBody2D" unique_id=1147703251]
 z_index = 1
 disable_mode = 1
+collision_layer = 3
 lock_rotation = true
 freeze = true
 script = ExtResource("1_quier")
